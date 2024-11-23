@@ -1,0 +1,70 @@
+import 'package:flutter/material.dart';
+
+class AnimatedButtonsRow extends StatefulWidget {
+  @override
+  _AnimatedButtonsRowState createState() => _AnimatedButtonsRowState();
+}
+
+class _AnimatedButtonsRowState extends State<AnimatedButtonsRow> {
+  bool _isFirstButtonActive = true; // Steuert, welcher Button aktiv ist
+
+  @override
+  void initState() {
+    super.initState();
+    _startAnimation();
+  }
+
+  // Die Animation wechseln
+  void _startAnimation() {
+    Future.delayed(Duration(seconds: 2), () {
+      if (mounted) {
+        setState(() {
+          _isFirstButtonActive = !_isFirstButtonActive;
+        });
+        _startAnimation();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        AnimatedContainer(
+          duration: Duration(seconds: 2),
+          curve: Curves.easeInOut,
+          decoration: BoxDecoration(
+            color: _isFirstButtonActive
+                ? Colors.transparent
+                : Theme.of(context).primaryColor,
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: ElevatedButton(
+            onPressed: null,
+            child: Text('Kooperieren', style: TextStyle(color: Colors.white)),
+          ),
+        ),
+        SizedBox(width: 10),
+        AnimatedContainer(
+          duration: Duration(seconds: 2),
+          curve: Curves.easeInOut,
+          decoration: BoxDecoration(
+            color: !_isFirstButtonActive
+                ? Colors.transparent
+                : Theme.of(context).primaryColor,
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: ElevatedButton(
+            onPressed: null,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.transparent,
+              shadowColor: Colors.transparent,
+            ),
+            child: Text('Defektieren', style: TextStyle(color: Colors.white)),
+          ),
+        ),
+      ],
+    );
+  }
+}
