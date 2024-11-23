@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/services.dart';
+import 'package:unigame/core/text_validators.dart';
 import 'package:unigame/logic/game/game_bloc.dart';
 import 'package:unigame/logic/game/game_event.dart';
 import 'package:unigame/logic/game/models/profile_model.dart';
 
 class ProfileDialog extends StatefulWidget {
-  const ProfileDialog({super.key});
+  const ProfileDialog({required this.gameBloc, super.key});
+  final GameBloc gameBloc;
 
   @override
   State<ProfileDialog> createState() => _ProfileDialogState();
@@ -14,15 +16,11 @@ class ProfileDialog extends StatefulWidget {
 class _ProfileDialogState extends State<ProfileDialog> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
-  int? selectedSalutation;
+  final _ageController = TextEditingController();
+  final _jobController = TextEditingController();
+  final _yearsOfExperienceController = TextEditingController();
 
-  final ProfileModel profileDummy = ProfileModel(
-    name: 'Testmann',
-    age: 23,
-    salutation: 'M',
-    yearsOfExperience: 6,
-    jobTitle: 'Student',
-  );
+  int selectedSalutation = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +29,14 @@ class _ProfileDialogState extends State<ProfileDialog> {
         child: Container(
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(24),
           ),
           padding: const EdgeInsets.all(12.0),
           child: SingleChildScrollView(
             child: Form(
               key: _formKey,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text('Stell dich vor bevor du spielst.'),
                   SizedBox(height: 16),
@@ -101,6 +100,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
                   SizedBox(height: 16),
                   TextFormField(
                     controller: _nameController,
+                    validator: Validators.required,
                     decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
                       labelText: 'Wie heißt du?',
@@ -108,7 +108,11 @@ class _ProfileDialogState extends State<ProfileDialog> {
                   ),
                   SizedBox(height: 16),
                   TextFormField(
-                    controller: TextEditingController(),
+                    controller: _ageController,
+                    validator: Validators.required,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                    ],
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
@@ -117,7 +121,8 @@ class _ProfileDialogState extends State<ProfileDialog> {
                   ),
                   SizedBox(height: 16),
                   TextFormField(
-                    controller: TextEditingController(),
+                    controller: _jobController,
+                    validator: Validators.required,
                     decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
                       labelText: 'Womit verdienst du dein Brot',
@@ -125,9 +130,12 @@ class _ProfileDialogState extends State<ProfileDialog> {
                   ),
                   SizedBox(height: 16),
                   TextFormField(
-                    controller: TextEditingController(),
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
+                    controller: _yearsOfExperienceController,
+                    validator: Validators.required,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                    ],
+                    keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
                       labelText: 'Wie lang machst du das schon (in Jahren)',
@@ -135,12 +143,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
                   ),
                   SizedBox(height: 16),
                   ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      BlocProvider.of<GameBloc>(context).add(
-                        SaveProfile(profile: profileDummy),
-                      );
-                    },
+                    onPressed: () => save(context),
                     child: Text('Speichern'),
                   ),
                   SizedBox(height: 16),
@@ -151,5 +154,33 @@ class _ProfileDialogState extends State<ProfileDialog> {
         ),
       ),
     );
+  }
+
+  save(BuildContext context) {
+    if (_formKey.currentState?.validate() ?? false) {
+      _formKey.currentState?.save();
+
+      final profile = ProfileModel(
+        name: _nameController.text,
+        age: int.parse(_ageController.text),
+        salutation: getSalutation(),
+        yearsOfExperience: int.parse(_yearsOfExperienceController.text),
+        jobTitle: _jobController.text,
+      );
+
+      widget.gameBloc.add(SaveProfile(profile: profile));
+      Navigator.of(context).pop();
+    }
+  }
+
+  String getSalutation() {
+    switch (selectedSalutation) {
+      case 0:
+        return 'M';
+      case 1:
+        return 'F';
+      default:
+        return 'D';
+    }
   }
 }

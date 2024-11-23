@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:unigame/logic/game/game_bloc.dart';
-import 'package:unigame/logic/game/game_event.dart';
 import 'package:unigame/logic/game/game_state.dart';
 import 'package:unigame/logic/game/models/profile_model.dart';
 import 'package:unigame/pages/game/profile_dialog.dart';
@@ -26,6 +25,12 @@ class GamePage extends StatelessWidget {
         children: [
           Text(
               'Hallo ${state.profile?.name}, bist du bereit dein Hab und Gut zu verspielen?'),
+          Text('''
+                Geschlecht: ${state.profile?.salutation}
+                Alter: ${state.profile?.age}
+                Beruf: ${state.profile?.jobTitle}
+                Seit: ${state.profile?.yearsOfExperience} Jahren
+              '''),
         ],
       ),
     );
@@ -47,7 +52,9 @@ class GamePage extends StatelessWidget {
                 showDialog(
                   context: context,
                   builder: (innerContext) {
-                    return ProfileDialog();
+                    return ProfileDialog(
+                      gameBloc: BlocProvider.of<GameBloc>(context),
+                    );
                   },
                 );
               },
