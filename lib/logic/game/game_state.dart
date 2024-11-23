@@ -10,10 +10,15 @@ class GameStateLoading extends GameState {}
 
 class GameStateLoaded extends GameState {
   final ProfileModel? profile;
+  final bool? profileSafed;
   final int currentRound;
 
-  GameStateLoaded({required this.currentRound, this.profile});
+  GameStateLoaded({
+    required this.currentRound,
+    this.profile,
+    this.profileSafed,
+  });
 
   @override
-  List<Object?> get props => [currentRound, profile];
+  List<Object?> get props => [currentRound, profile, profileSafed];
 }

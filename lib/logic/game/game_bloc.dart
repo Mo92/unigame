@@ -13,11 +13,17 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
       emit(
         GameStateLoaded(
-            currentRound: currentState.currentRound, profile: event.profile),
+          currentRound: currentState.currentRound,
+          profile: event.profile,
+        ),
       );
       return;
     }
 
-    emit(GameStateLoaded(currentRound: 0, profile: event.profile));
+    emit(GameStateLoaded(
+      currentRound: 0,
+      profile: event.profile,
+      profileSafed: true,
+    ));
   }
 }
