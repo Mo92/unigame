@@ -38,6 +38,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  // TODO: Change Text
                   Text('Stell dich vor bevor du spielst.'),
                   SizedBox(height: 16),
                   Center(
@@ -103,6 +104,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
                     validator: Validators.required,
                     decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
+                      // TODO: Change Text
                       labelText: 'Wie heißt du?',
                     ),
                   ),
@@ -116,6 +118,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
+                      // TODO: Change Text
                       labelText: 'Wie alt bist du',
                     ),
                   ),
@@ -125,6 +128,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
                     validator: Validators.required,
                     decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
+                      // TODO: Change Text
                       labelText: 'Womit verdienst du dein Brot',
                     ),
                   ),
@@ -138,12 +142,14 @@ class _ProfileDialogState extends State<ProfileDialog> {
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
+                      // TODO: Change Text
                       labelText: 'Wie lang machst du das schon (in Jahren)',
                     ),
                   ),
                   SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () => save(context),
+                    // TODO: Change Text
                     child: Text('Speichern'),
                   ),
                   SizedBox(height: 16),

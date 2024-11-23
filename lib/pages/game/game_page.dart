@@ -3,19 +3,10 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:unigame/logic/game/game_bloc.dart';
 import 'package:unigame/logic/game/game_state.dart';
-import 'package:unigame/logic/game/models/profile_model.dart';
 import 'package:unigame/pages/game/profile_dialog.dart';
 
 class GamePage extends StatelessWidget {
-  GamePage({super.key});
-
-  final ProfileModel profileDummy = ProfileModel(
-    name: 'Testmann',
-    age: 23,
-    salutation: 'M',
-    yearsOfExperience: 6,
-    jobTitle: 'Student',
-  );
+  const GamePage({super.key});
 
   Widget _buildBody(BuildContext context, GameStateLoaded state) {
     return Center(
