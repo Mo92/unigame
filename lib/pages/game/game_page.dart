@@ -17,6 +17,7 @@ class GamePage extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           SizedBox(height: 84),
+          // TODO: add text
           Text(
             '''Hallo ${state.profile?.name},
                Ziel des Spielst ist es: Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
@@ -40,9 +41,11 @@ class GamePage extends StatelessWidget {
                     '${state.profile?.name}',
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
+                  // TODO: Make dynamic
                   Text('Punkte: 3'),
                   SizedBox(height: 24),
                   Image.asset(
+                    // TODO: add image
                     'assets/images/obelisk.jpg',
                     fit: BoxFit.contain,
                     height: 350,
@@ -74,8 +77,10 @@ class GamePage extends StatelessWidget {
                     'Joffrey',
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
+                  // TODO: Make dynamic
                   Text('Punkte: 0'),
                   SizedBox(height: 24),
+                  // TODO: add image
                   Image.asset(
                     'assets/images/joffrey.jpg',
                     fit: BoxFit.contain,
