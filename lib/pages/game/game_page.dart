@@ -5,6 +5,7 @@ import 'package:unigame/logic/game/game_bloc.dart';
 import 'package:unigame/logic/game/game_event.dart';
 import 'package:unigame/logic/game/game_state.dart';
 import 'package:unigame/logic/game/models/profile_model.dart';
+import 'package:unigame/pages/game/profile_dialog.dart';
 
 class GamePage extends StatelessWidget {
   GamePage({super.key});
@@ -41,30 +42,16 @@ class GamePage extends StatelessWidget {
       body: BlocBuilder<GameBloc, GameState>(
         builder: (context, state) {
           if (state is GameStateLoading) {
-            SchedulerBinding.instance.addPostFrameCallback((_) {
-              showDialog(
+            SchedulerBinding.instance.addPostFrameCallback(
+              (_) {
+                showDialog(
                   context: context,
                   builder: (innerContext) {
-                    return AlertDialog(
-                      content: Column(
-                        children: [
-                          Text('Stell dich ma vor Olem'),
-                        ],
-                      ),
-                      actions: [
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            BlocProvider.of<GameBloc>(context).add(
-                              SaveProfile(profile: profileDummy),
-                            );
-                          },
-                          child: Text('Speichern'),
-                        )
-                      ],
-                    );
-                  });
-            });
+                    return ProfileDialog();
+                  },
+                );
+              },
+            );
             return Center(
               child: CircularProgressIndicator(),
             );
