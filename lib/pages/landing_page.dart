@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:unigame/logic/game/game_bloc.dart';
 import 'package:unigame/pages/game/game_page.dart';
 
 class LandingPage extends StatelessWidget {
@@ -28,7 +30,10 @@ class LandingPage extends StatelessWidget {
             // TODO: Discuss Routing
             onPressed: () => Navigator.of(context).pushReplacement(
               MaterialPageRoute(
-                builder: (_) => const GamePage(),
+                builder: (context) => BlocProvider(
+                  create: (_) => GameBloc(),
+                  child: GamePage(),
+                ),
               ),
             ),
             // TODO: Adjust Text

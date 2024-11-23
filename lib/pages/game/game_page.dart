@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:unigame/logic/game/game_bloc.dart';
+import 'package:unigame/logic/game/game_state.dart';
 
 class GamePage extends StatelessWidget {
   const GamePage({super.key});
@@ -15,7 +18,11 @@ class GamePage extends StatelessWidget {
         // TODO: Page Title
         title: const Text('Lets Gamble'),
       ),
-      body: _buildBody(context),
+      body: BlocBuilder<GameBloc, GameState>(
+        builder: (context, state) {
+          return _buildBody(context);
+        },
+      ),
     );
   }
 }
