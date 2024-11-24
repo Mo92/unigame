@@ -16,7 +16,7 @@ class GamePage extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          SizedBox(height: 84),
+          SizedBox(height: 42),
           // TODO: add text
           Text(
             '''Hallo ${state.profile?.name},
@@ -26,7 +26,7 @@ class GamePage extends StatelessWidget {
               ''',
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 24),
+          SizedBox(height: 12),
           Text(
             'Runde: ${state.currentRound}',
             style: Theme.of(context).textTheme.bodyLarge,
@@ -42,7 +42,7 @@ class GamePage extends StatelessWidget {
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   // TODO: Make dynamic
-                  Text('Punkte: 3'),
+                  Text('Punkte: ${state.playerScore}'),
                   SizedBox(height: 24),
                   Image.asset(
                     // TODO: add image
@@ -55,12 +55,16 @@ class GamePage extends StatelessWidget {
                   Row(
                     children: [
                       ElevatedButton(
-                        onPressed: () => print('lala'),
+                        onPressed: () => BlocProvider.of<GameBloc>(context).add(
+                          PlayerMove(decision: 'C'),
+                        ),
                         child: Text('Kooperieren'),
                       ),
                       SizedBox(width: 8),
                       ElevatedButton(
-                        onPressed: () => print('lulu'),
+                        onPressed: () => BlocProvider.of<GameBloc>(context).add(
+                          PlayerMove(decision: 'D'),
+                        ),
                         child: Text('Defektieren'),
                       ),
                     ],
@@ -78,7 +82,7 @@ class GamePage extends StatelessWidget {
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   // TODO: Make dynamic
-                  Text('Punkte: 0'),
+                  Text('Punkte: ${state.cpuScore}'),
                   SizedBox(height: 24),
                   // TODO: add image
                   Image.asset(
