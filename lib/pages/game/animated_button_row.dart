@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class AnimatedButtonsRow extends StatefulWidget {
+  const AnimatedButtonsRow({super.key});
+
   @override
-  _AnimatedButtonsRowState createState() => _AnimatedButtonsRowState();
+  AnimatedButtonsRowState createState() => AnimatedButtonsRowState();
 }
 
-class _AnimatedButtonsRowState extends State<AnimatedButtonsRow> {
+class AnimatedButtonsRowState extends State<AnimatedButtonsRow> {
   bool _isFirstButtonActive = true; // Steuert, welcher Button aktiv ist
 
   @override

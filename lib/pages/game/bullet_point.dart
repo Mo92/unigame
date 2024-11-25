@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class BulletPoint extends StatelessWidget {
+  const BulletPoint({super.key, required this.text});
+
   final String text;
-  BulletPoint({required this.text});
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:unigame/logic/game/models/profile_model.dart';
+import 'package:shadow_deals/logic/game/models/post_questions_model.dart';
+import 'package:shadow_deals/logic/game/models/profile_model.dart';
 
 abstract class GameEvent extends Equatable {
   @override
@@ -26,15 +27,11 @@ class PlayerMove extends GameEvent {
   List<Object> get props => [decision];
 }
 
-class RoundEnd extends GameEvent {
-  final int roundCounter;
+class SavePostQuestions extends GameEvent {
+  final PostQuestionsModel postQuestions;
 
-  RoundEnd({required this.roundCounter});
+  SavePostQuestions({required this.postQuestions});
 
   @override
-  List<Object> get props => [roundCounter];
+  List<Object> get props => [postQuestions];
 }
-
-class NextRound extends GameEvent {}
-
-class GameEnd extends GameEvent {}

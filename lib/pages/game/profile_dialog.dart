@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:unigame/core/text_validators.dart';
-import 'package:unigame/logic/game/game_bloc.dart';
-import 'package:unigame/logic/game/game_event.dart';
-import 'package:unigame/logic/game/models/profile_model.dart';
+import 'package:shadow_deals/core/text_validators.dart';
+import 'package:shadow_deals/logic/game/game_bloc.dart';
+import 'package:shadow_deals/logic/game/game_event.dart';
+import 'package:shadow_deals/logic/game/models/profile_model.dart';
 
 class ProfileDialog extends StatefulWidget {
   const ProfileDialog({required this.gameBloc, super.key});
@@ -38,7 +38,6 @@ class _ProfileDialogState extends State<ProfileDialog> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // TODO: Change Text
                   Text('Stell dich vor, bevor du Spielst:'),
                   SizedBox(height: 16),
                   Text('Was ist dein Geschlecht?'),

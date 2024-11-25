@@ -1,5 +1,5 @@
-name: unigame
-description: "A new Flutter project."
+name: shadow_deals
+description: "Erlebe ein strategisches Spielerlebnis, bei dem Entscheidungen über Profit und Verlust bestimmen. Schließe Deals, handle geschickt und finde deinen Weg in der Unterwelt. Jede Runde birgt neue Chancen – die Wahl liegt bei dir."
 publish_to: "none"
 version: 1.0.0+1
 
@@ -23,5 +23,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/joffrey.jpg
-    - assets/images/obelisk.jpg
+    - assets/images/player.png
+    - assets/images/cpu.png

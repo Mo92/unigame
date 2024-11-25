@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:unigame/logic/game/game_bloc.dart';
-import 'package:unigame/logic/game/game_event.dart';
-import 'package:unigame/logic/game/game_state.dart';
-import 'package:unigame/logic/game/models/profile_model.dart';
-import 'package:unigame/pages/game/animated_button_row.dart';
-import 'package:unigame/pages/game/profile_dialog.dart';
+import 'package:shadow_deals/logic/game/game_bloc.dart';
+import 'package:shadow_deals/logic/game/game_event.dart';
+import 'package:shadow_deals/logic/game/game_state.dart';
+import 'package:shadow_deals/pages/game/animated_button_row.dart';
+import 'package:shadow_deals/pages/game/post_game_dialog.dart';
+import 'package:shadow_deals/pages/game/profile_dialog.dart';
 
 class GamePage extends StatelessWidget {
   const GamePage({super.key});
@@ -14,13 +14,15 @@ class GamePage extends StatelessWidget {
   Widget _buildBody(BuildContext context, GameStateLoaded state) {
     if ((state.prevCpuChoice != null && state.prevCpuChoice != null) &&
         (state.prevScores != null && state.prevScores!.isNotEmpty) &&
-        !state.isLoading) {
+        !state.isLoading &&
+        state.postQuestions == null) {
       SchedulerBinding.instance.addPostFrameCallback(
         (_) {
           showDialog(
             context: context,
             builder: (innerContext) {
               Future.delayed(Duration(milliseconds: 2000), () {
+                // ignore: use_build_context_synchronously
                 if (Navigator.canPop(context)) Navigator.of(context).pop(true);
               });
               return AlertDialog(
@@ -42,27 +44,38 @@ class GamePage extends StatelessWidget {
         },
       );
     }
-    if (state.hasGameEnded) {
+    if (state.hasGameEnded && state.postQuestions == null) {
+      return PostGameDialog(gameBloc: BlocProvider.of<GameBloc>(context));
+    }
+    if (state.hasGameEnded && state.postQuestions != null) {
       return Center(
         child: SingleChildScrollView(
-            child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Text('So ma lieber, der Spaß is rum nh',
-                style: Theme.of(context).textTheme.headlineMedium),
-            SizedBox(height: 12),
-            if (state.playerScore > state.cpuScore) Text('Du hast gewonnen'),
-            if (state.playerScore < state.cpuScore) Text('Du bist ein niemand'),
-            if (state.playerScore == state.cpuScore)
-              Text('Ihr seid beide Betrüger lol xD'),
-            SizedBox(height: 12),
-            Text(
-                'Gesamtergebnis: Du: ${state.playerScore} / Gegner: ${state.cpuScore}'),
-            SizedBox(height: 12),
-            Text('Ergbenisse der jeweiligen Runden'),
-            SizedBox(height: 12),
-            ..._buildScores(context, state),
-          ],
+            child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 48),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Text('Vielen Dank für deine Teilnahme',
+                  style: Theme.of(context).textTheme.headlineMedium),
+              SizedBox(height: 12),
+              if (state.playerScore > state.cpuScore)
+                Text(
+                    'Gratulation! Du hast das Geschäft dominiert und deinen Gegner übertroffen. Deine Entscheidungen haben dir den höchsten Profit eingebracht - eine beeindruckende Leistung in einer Welt voller Risiko und Misstrauen. Der Erfolg ist dein!'),
+              if (state.playerScore < state.cpuScore)
+                Text(
+                    'Das Geschäft ist vorbei und dein Gegener hat dich überlistet. In der Unterwelt zählt jeder Deal, jede Entscheidung. Diesmal hast du Verloren, aber die Straßen von Gotham bieten immer eine neue Chance - bereit es beim nächsten mal besser zu machen?'),
+              if (state.playerScore == state.cpuScore)
+                Text(
+                    'Das Geschäft endet im Gleichstand. Selbst in der Unterwelt hast du bewiesen, dass Täuschung, List und Risiko deine Waffen sind – und für einen Moment warst du deinem Gegenüber ebenbürtig.'),
+              SizedBox(height: 12),
+              Text(
+                  'Gesamtergebnis: Du: ${state.playerScore} / Gegner: ${state.cpuScore}'),
+              SizedBox(height: 12),
+              Text('Ergbenisse der jeweiligen Runden'),
+              SizedBox(height: 12),
+              ..._buildScores(context, state),
+            ],
+          ),
         )),
       );
     }
@@ -72,13 +85,12 @@ class GamePage extends StatelessWidget {
         children: [
           SizedBox(height: 42),
           Text(
-            'Willkommen zum Bachelor Game!',
+            'Willkommen in der Unterwelt!',
             style: Theme.of(context).textTheme.headlineMedium,
           ),
           Text(
             '''Hier geht es um Deals, Täuschung und das richtige Timing. 
 Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opfer eines Betrugs, der dich alles kostet?
-
 ''',
             style: Theme.of(context).textTheme.bodyMedium,
             textAlign: TextAlign.center,
@@ -88,6 +100,7 @@ Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opf
             'Runde: ${state.currentRound}',
             style: Theme.of(context).textTheme.bodyLarge,
           ),
+          SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -101,8 +114,7 @@ Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opf
                   Text('Punkte: ${state.playerScore}'),
                   SizedBox(height: 24),
                   Image.asset(
-                    // TODO: add image
-                    'assets/images/obelisk.jpg',
+                    'assets/images/player.png',
                     fit: BoxFit.contain,
                     height: 350,
                     width: 275,
@@ -138,15 +150,13 @@ Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opf
               Column(
                 children: [
                   Text(
-                    'Joffrey',
+                    'Zen Dominator',
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
-                  // TODO: Make dynamic
                   Text(''),
                   SizedBox(height: 24),
-                  // TODO: add image
                   Image.asset(
-                    'assets/images/joffrey.jpg',
+                    'assets/images/cpu.png',
                     fit: BoxFit.contain,
                     height: 350,
                     width: 275,
@@ -209,64 +219,47 @@ Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opf
       input == 'C' ? 'Kooperiert' : 'Defektiert ';
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // TODO: Page Title
-        title: const Text('Lets Gamble'),
-      ),
-      body: BlocBuilder<GameBloc, GameState>(
-        builder: (context, state) {
-          if (state is GameStateLoading) {
-            SchedulerBinding.instance.addPostFrameCallback((_) {
-              BlocProvider.of<GameBloc>(context).add(
-                SaveProfile(
-                  profile: ProfileModel(
-                    name: 'Obelisk der Peiniger',
-                    age: 72,
-                    salutation: 'M',
-                    yearsOfExperience: 58,
-                    jobTitle: 'Peinigen',
-                  ),
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: const Text('Shadow Deals'),
+        ),
+        body: BlocBuilder<GameBloc, GameState>(
+          builder: (context, state) {
+            if (state is GameStateLoading) {
+              SchedulerBinding.instance.addPostFrameCallback(
+                (_) {
+                  showDialog(
+                    context: context,
+                    builder: (innerContext) {
+                      return ProfileDialog(
+                        gameBloc: BlocProvider.of<GameBloc>(context),
+                      );
+                    },
+                  );
+                },
+              );
+              return Center(
+                child: Text(
+                  'Du hast dein Profil nicht gespeichert, bitte lade die Seite neu.',
                 ),
               );
-            });
-            // TODO: uncomment when game goes life
-            //   SchedulerBinding.instance.addPostFrameCallback(
-            //     (_) {
-            //       showDialog(
-            //         context: context,
-            //         builder: (innerContext) {
-            //           return ProfileDialog(
-            //             gameBloc: BlocProvider.of<GameBloc>(context),
-            //           );
-            //         },
-            //       );
-            //     },
-            //   );
+            }
+
+            if (state is GameStateLoaded) {
+              return _buildBody(context, state);
+            }
+
             return Center(
               child: Text(
-                'Du hast dein Profil nicht gespeichert, bitte lade die Seite neu.',
+                'FEHLER LAN FEHLER',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge
+                    ?.copyWith(color: Colors.red),
               ),
             );
-          }
-
-          if (state is GameStateLoaded) {
-            return _buildBody(context, state);
-          }
-
-          return Center(
-            child: Text(
-              'FEHLER LAN FEHLER',
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyLarge
-                  ?.copyWith(color: Colors.red),
-            ),
-          );
-        },
-      ),
-    );
-  }
+          },
+        ),
+      );
 }

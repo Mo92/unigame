@@ -1,6 +1,6 @@
 {
-    "name": "unigame",
-    "short_name": "unigame",
+    "name": "shadow_deals",
+    "short_name": "shadow_deals",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
