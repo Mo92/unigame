@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:unigame/logic/game/game_bloc.dart';
 import 'package:unigame/pages/game/bullet_point.dart';
 import 'package:unigame/pages/game/game_page.dart';
+import 'package:unigame/pages/game/post_game_dialog.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
@@ -164,7 +165,8 @@ class LandingPage extends StatelessWidget {
         // TODO: Page Title
         title: const Text('Bachelor Game'),
       ),
-      body: _buildBody(context),
+      // body: _buildBody(context),
+      body: PostGameDialog(),
     );
   }
 }
