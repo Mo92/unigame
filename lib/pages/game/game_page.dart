@@ -17,13 +17,16 @@ class GamePage extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           SizedBox(height: 42),
-          // TODO: add text
           Text(
-            '''Hallo ${state.profile?.name},
-               Ziel des Spielst ist es: Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, 
-                
-              ''',
+            'Willkommen zum Bachelor Game!',
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
+          Text(
+            '''Hier geht es um Deals, Täuschung und das richtige Timing. 
+Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opfer eines Betrugs, der dich alles kostet?
+
+''',
+            style: Theme.of(context).textTheme.bodyMedium,
             textAlign: TextAlign.center,
           ),
           SizedBox(height: 12),
@@ -41,7 +44,6 @@ class GamePage extends StatelessWidget {
                     '${state.profile?.name}',
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
-                  // TODO: Make dynamic
                   Text('Punkte: ${state.playerScore}'),
                   SizedBox(height: 24),
                   Image.asset(
