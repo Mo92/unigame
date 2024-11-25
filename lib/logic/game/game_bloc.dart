@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,6 +36,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
           profile: event.profile,
           history: [],
           cpuScore: 0,
+          isLoading: false,
           playerScore: 0,
         ),
       );
@@ -47,10 +49,11 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       history: [],
       cpuScore: 0,
       playerScore: 0,
+      isLoading: false,
     ));
   }
 
-  void _onPlayerMove(PlayerMove event, Emitter<GameState> emit) {
+  Future<void> _onPlayerMove(PlayerMove event, Emitter<GameState> emit) async {
     Random random = Random();
     final currentState = (state as GameStateLoaded);
     int humanScore = currentState.playerScore;
@@ -59,6 +62,10 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
     final currentRound = currentState.currentRound;
 
+    if (currentState.isLoading) {
+      return;
+    }
+
     if (currentRound == 0) {
       // Bei Runde 0 einfach OK anzeigen und keine Punkte vergeben
       //emit(currentState);
@@ -66,6 +73,10 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       emit(currentState.copyWith(currentRound: currentRound + 1));
       return;
     } else {
+      emit(currentState.copyWith(isLoading: true));
+      int timeoutMillis = 1000 + Random().nextInt(2000);
+
+      await Future.delayed(Duration(milliseconds: timeoutMillis));
       // Computerentscheidung basierend auf ZDS
       String computerChoice;
       if (currentRound == 1) {
@@ -104,6 +115,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
             cpuScore: computerScore,
             playerScore: humanScore,
             currentRound: currentRound + 1,
+            prevScores: prevScores,
+            isLoading: false,
           ),
         );
         print(
@@ -116,6 +129,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
           history: _history,
           currentRound: currentRound + 1,
           cpuScore: computerScore,
+          isLoading: false,
           playerScore: humanScore,
         ));
       }

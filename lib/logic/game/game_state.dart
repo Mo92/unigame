@@ -19,8 +19,11 @@ class GameStateLoaded extends GameState {
   final int cpuScore;
   final String? prevHumanChoice;
   final String? prevCpuChoice;
+  final List<int>? prevScores;
+  final bool isLoading;
 
   GameStateLoaded({
+    required this.isLoading,
     required this.currentRound,
     this.profile,
     this.profileSafed,
@@ -29,10 +32,12 @@ class GameStateLoaded extends GameState {
     required this.playerScore,
     this.prevHumanChoice,
     this.prevCpuChoice,
+    this.prevScores,
   });
 
   @override
   List<Object?> get props => [
+        isLoading,
         currentRound,
         profile,
         profileSafed,
@@ -41,9 +46,11 @@ class GameStateLoaded extends GameState {
         playerScore,
         prevCpuChoice,
         prevHumanChoice,
+        prevScores,
       ];
 
   GameStateLoaded copyWith({
+    bool? isLoading,
     ProfileModel? profile,
     bool? profileSafed,
     int? currentRound,
@@ -52,8 +59,10 @@ class GameStateLoaded extends GameState {
     int? cpuScore,
     String? prevHumanChoice,
     String? prevCpuChoice,
+    final List<int>? prevScores,
   }) =>
       GameStateLoaded(
+        isLoading: isLoading ?? this.isLoading,
         profile: profile ?? this.profile,
         profileSafed: profileSafed ?? this.profileSafed,
         currentRound: currentRound ?? this.currentRound,
@@ -62,6 +71,7 @@ class GameStateLoaded extends GameState {
         cpuScore: cpuScore ?? this.cpuScore,
         prevHumanChoice: prevHumanChoice ?? this.prevHumanChoice,
         prevCpuChoice: prevCpuChoice ?? this.prevCpuChoice,
+        prevScores: prevScores ?? this.prevScores,
       );
 
   @override

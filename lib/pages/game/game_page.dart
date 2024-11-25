@@ -12,6 +12,36 @@ class GamePage extends StatelessWidget {
   const GamePage({super.key});
 
   Widget _buildBody(BuildContext context, GameStateLoaded state) {
+    if ((state.prevCpuChoice != null && state.prevCpuChoice != null) &&
+        (state.prevScores != null && state.prevScores!.isNotEmpty) &&
+        !state.isLoading) {
+      SchedulerBinding.instance.addPostFrameCallback(
+        (_) {
+          showDialog(
+            context: context,
+            builder: (innerContext) {
+              Future.delayed(Duration(milliseconds: 2500), () {
+                if (Navigator.canPop(context)) Navigator.of(context).pop(true);
+              });
+              return AlertDialog(
+                title: Center(child: Text('Runde: ${state.currentRound}')),
+                content: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(state.prevCpuChoice == 'C'
+                        ? 'Der Gegner hat kooperiert'
+                        : 'Der Gegner hat Defektiert'),
+                    Text(
+                        'Punkte: Sie = ${state.prevScores![0]} / Gegner = ${state.prevScores![1]}')
+                  ],
+                ),
+              );
+            },
+          );
+        },
+      );
+    }
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.max,
@@ -57,16 +87,20 @@ Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opf
                   Row(
                     children: [
                       ElevatedButton(
-                        onPressed: () => BlocProvider.of<GameBloc>(context).add(
-                          PlayerMove(decision: 'C'),
-                        ),
+                        onPressed: state.isLoading
+                            ? null
+                            : () => BlocProvider.of<GameBloc>(context).add(
+                                  PlayerMove(decision: 'C'),
+                                ),
                         child: Text('Kooperieren'),
                       ),
                       SizedBox(width: 8),
                       ElevatedButton(
-                        onPressed: () => BlocProvider.of<GameBloc>(context).add(
-                          PlayerMove(decision: 'D'),
-                        ),
+                        onPressed: state.isLoading
+                            ? null
+                            : () => BlocProvider.of<GameBloc>(context).add(
+                                  PlayerMove(decision: 'D'),
+                                ),
                         child: Text('Defektieren'),
                       ),
                     ],
@@ -100,7 +134,16 @@ Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opf
             ],
           ),
           SizedBox(height: 24),
-          Text('Hier kann noch irgenein Text stehen'),
+          if ((state.prevCpuChoice != null && state.prevCpuChoice != null) &&
+              (state.prevScores != null && state.prevScores!.isNotEmpty) &&
+              !state.isLoading) ...[
+            Text('Ergebnis der letzten Runde:'),
+            Text(state.prevCpuChoice == 'C'
+                ? 'Der Gegner hat kooperiert'
+                : 'Der Gegner hat Defektiert'),
+            Text(
+                'Punkte: Sie = ${state.prevScores![0]} / Gegner = ${state.prevScores![1]}')
+          ],
         ],
       ),
     );
