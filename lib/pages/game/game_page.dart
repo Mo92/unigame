@@ -43,30 +43,38 @@ class GamePage extends StatelessWidget {
         },
       );
     }
-    if (!state.hasGameEnded && state.postQuestions == null) {
+    if (state.hasGameEnded && state.postQuestions == null) {
       return PostGameDialog(gameBloc: BlocProvider.of<GameBloc>(context));
     }
     if (state.hasGameEnded && state.postQuestions != null) {
       return Center(
         child: SingleChildScrollView(
-            child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Text('So ma lieber, der Spaß is rum nh',
-                style: Theme.of(context).textTheme.headlineMedium),
-            SizedBox(height: 12),
-            if (state.playerScore > state.cpuScore) Text('Du hast gewonnen'),
-            if (state.playerScore < state.cpuScore) Text('Du bist ein niemand'),
-            if (state.playerScore == state.cpuScore)
-              Text('Ihr seid beide Betrüger lol xD'),
-            SizedBox(height: 12),
-            Text(
-                'Gesamtergebnis: Du: ${state.playerScore} / Gegner: ${state.cpuScore}'),
-            SizedBox(height: 12),
-            Text('Ergbenisse der jeweiligen Runden'),
-            SizedBox(height: 12),
-            ..._buildScores(context, state),
-          ],
+            child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 48),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Text('Vielen Dank für deine Teilnahme',
+                  style: Theme.of(context).textTheme.headlineMedium),
+              SizedBox(height: 12),
+              if (state.playerScore > state.cpuScore)
+                Text(
+                    'Gratulation! Du hast das Geschäft dominiert und deinen Gegner übertroffen. Deine Entscheidungen haben dir den höchsten Profit eingebracht - eine beeindruckende Leistung in einer Welt voller Risiko und Misstrauen. Der Erfolg ist dein!'),
+              if (state.playerScore < state.cpuScore)
+                Text(
+                    'Das Geschäft ist vorbei und dein Gegener hat dich überlistet. In der Unterwelt zählt jeder Deal, jede Entscheidung. Diesmal hast du Verloren, aber die Straßen von Gotham bieten immer eine neue Chance - bereit es beim nächsten mal besser zu machen?'),
+              if (state.playerScore == state.cpuScore)
+                Text(
+                    'Das Geschäft endet im Gleichstand. Selbst in der Unterwelt hast du bewiesen, dass Täuschung, List und Risiko deine Waffen sind – und für einen Moment warst du deinem Gegenüber ebenbürtig.'),
+              SizedBox(height: 12),
+              Text(
+                  'Gesamtergebnis: Du: ${state.playerScore} / Gegner: ${state.cpuScore}'),
+              SizedBox(height: 12),
+              Text('Ergbenisse der jeweiligen Runden'),
+              SizedBox(height: 12),
+              ..._buildScores(context, state),
+            ],
+          ),
         )),
       );
     }
