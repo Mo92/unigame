@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:unigame/core/text_validators.dart';
 import 'package:unigame/logic/game/game_bloc.dart';
+import 'package:unigame/logic/game/game_event.dart';
+import 'package:unigame/logic/game/models/post_questions_model.dart';
 
 class PostGameDialog extends StatefulWidget {
   const PostGameDialog({super.key, required this.gameBloc});
@@ -16,8 +18,8 @@ class _PostGameDialogState extends State<PostGameDialog> {
   final _decisionMaking = TextEditingController();
   final _didYouAnalyzeComputer = TextEditingController();
   final _didCpuManipulate = TextEditingController();
+  final _optimization = TextEditingController();
   final _suggestions = TextEditingController();
-  final _miscIdeas = TextEditingController();
   int understanding = -1;
   int struggles = -1;
   int fairness = -1;
@@ -659,9 +661,137 @@ class _PostGameDialogState extends State<PostGameDialog> {
     setState(() {
       showError = false;
     });
+
     if (_formKey.currentState?.validate() ?? false) {
       _formKey.currentState?.save();
+
+      final PostQuestionsModel postQuestionsModel = PostQuestionsModel(
+        understanding: mapUnderstanding(),
+        struggles: mapStruggles(),
+        fairness: mapFairness(),
+        cooperations: mapCooperations(),
+        decisions: _decisionMaking.text,
+        enemyAnalytic: mapDidAnalyze(),
+        enemyStrategy: mapHowWasEnemy(),
+        enemyDidManipulate: mapDidCpuManipulate(),
+        performance: mapPerformance(),
+        optimization: _optimization.text,
+        suggestions: _suggestions.text,
+      );
+
+      widget.gameBloc.add(SavePostQuestions(postQuestions: postQuestionsModel));
     }
+  }
+
+  String mapUnderstanding() {
+    switch (understanding) {
+      case 0:
+        return 'Garnicht';
+      case 1:
+        return 'Wenig';
+      case 2:
+        return 'Mittelmässig';
+      case 3:
+        return 'Gut';
+      case 4:
+        return 'Sehr gut';
+    }
+    return 'Error';
+  }
+
+  String mapStruggles() {
+    switch (struggles) {
+      case 0:
+        return 'Ja: ${_gameStruggles.text}';
+      case 1:
+        return 'Nein';
+    }
+    return 'Error';
+  }
+
+  String mapFairness() {
+    switch (fairness) {
+      case 0:
+        return 'Sehr unfair';
+      case 1:
+        return 'Unfair';
+      case 2:
+        return 'Neutral';
+      case 3:
+        return 'Fair';
+      case 4:
+        return 'Sehr fair';
+    }
+    return 'Error';
+  }
+
+  String mapCooperations() {
+    switch (cooperations) {
+      case 0:
+        return 'Nie';
+      case 1:
+        return 'Selten';
+      case 2:
+        return 'Manchmal';
+      case 3:
+        return 'Oft';
+      case 4:
+        return 'Immer';
+    }
+    return 'Error';
+  }
+  // TEXT FRAGE
+
+  String mapDidAnalyze() {
+    switch (didAnalyze) {
+      case 0:
+        return 'Ja: ${_didYouAnalyzeComputer.text}';
+      case 1:
+        return 'Nein';
+    }
+    return 'Error';
+  }
+
+  String mapHowWasEnemy() {
+    switch (howWasEnemy) {
+      case 0:
+        return 'Sehr kooperativ';
+      case 1:
+        return 'Kooperativ';
+      case 2:
+        return 'Neutral';
+      case 3:
+        return 'Konkurrenzorientiert';
+      case 4:
+        return 'Sehr konkurrenzorientiert';
+    }
+    return 'Error';
+  }
+
+  String mapDidCpuManipulate() {
+    switch (didCpuManipulate) {
+      case 0:
+        return 'Ja: ${_didCpuManipulate.text}';
+      case 1:
+        return 'Nein';
+    }
+    return 'Error';
+  }
+
+  String mapPerformance() {
+    switch (performance) {
+      case 0:
+        return 'Sehr unzufrieden';
+      case 1:
+        return 'Unzufrieden';
+      case 2:
+        return 'Neutral';
+      case 3:
+        return 'Zufrieden';
+      case 4:
+        return 'Sehr unzufrieden';
+    }
+    return 'Error';
   }
 
   @override
@@ -784,7 +914,7 @@ class _PostGameDialogState extends State<PostGameDialog> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
-                    controller: _suggestions,
+                    controller: _optimization,
                     decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
                       labelText: 'Bitte beschreiben',
@@ -798,7 +928,7 @@ class _PostGameDialogState extends State<PostGameDialog> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
-                    controller: _miscIdeas,
+                    controller: _suggestions,
                     decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
                       labelText: 'Bitte beschreiben',
