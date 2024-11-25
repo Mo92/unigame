@@ -23,5 +23,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/joffrey.jpg
-    - assets/images/obelisk.jpg
+    - assets/images/player.png
+    - assets/images/cpu.png

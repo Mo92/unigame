@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:unigame/logic/game/game_bloc.dart';
 import 'package:unigame/logic/game/game_event.dart';
 import 'package:unigame/logic/game/game_state.dart';
-import 'package:unigame/logic/game/models/profile_model.dart';
 import 'package:unigame/pages/game/animated_button_row.dart';
 import 'package:unigame/pages/game/post_game_dialog.dart';
 import 'package:unigame/pages/game/profile_dialog.dart';
@@ -15,7 +14,8 @@ class GamePage extends StatelessWidget {
   Widget _buildBody(BuildContext context, GameStateLoaded state) {
     if ((state.prevCpuChoice != null && state.prevCpuChoice != null) &&
         (state.prevScores != null && state.prevScores!.isNotEmpty) &&
-        !state.isLoading) {
+        !state.isLoading &&
+        state.hasGameEnded) {
       SchedulerBinding.instance.addPostFrameCallback(
         (_) {
           showDialog(
@@ -100,6 +100,7 @@ Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opf
             'Runde: ${state.currentRound}',
             style: Theme.of(context).textTheme.bodyLarge,
           ),
+          SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -113,8 +114,7 @@ Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opf
                   Text('Punkte: ${state.playerScore}'),
                   SizedBox(height: 24),
                   Image.asset(
-                    // TODO: add image
-                    'assets/images/obelisk.jpg',
+                    'assets/images/player.png',
                     fit: BoxFit.contain,
                     height: 350,
                     width: 275,
@@ -150,15 +150,13 @@ Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opf
               Column(
                 children: [
                   Text(
-                    'Joffrey',
+                    'Zen Dominator',
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
-
                   Text(''),
                   SizedBox(height: 24),
-                  // TODO: add image
                   Image.asset(
-                    'assets/images/joffrey.jpg',
+                    'assets/images/cpu.png',
                     fit: BoxFit.contain,
                     height: 350,
                     width: 275,
@@ -221,63 +219,47 @@ Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opf
       input == 'C' ? 'Kooperiert' : 'Defektiert ';
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Bachelor Game'),
-      ),
-      body: BlocBuilder<GameBloc, GameState>(
-        builder: (context, state) {
-          if (state is GameStateLoading) {
-            SchedulerBinding.instance.addPostFrameCallback((_) {
-              BlocProvider.of<GameBloc>(context).add(
-                SaveProfile(
-                  profile: ProfileModel(
-                    name: 'Obelisk der Peiniger',
-                    age: 72,
-                    salutation: 'M',
-                    yearsOfExperience: 58,
-                    jobTitle: 'Peinigen',
-                  ),
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: const Text('Bachelor Game'),
+        ),
+        body: BlocBuilder<GameBloc, GameState>(
+          builder: (context, state) {
+            if (state is GameStateLoading) {
+              SchedulerBinding.instance.addPostFrameCallback(
+                (_) {
+                  showDialog(
+                    context: context,
+                    builder: (innerContext) {
+                      return ProfileDialog(
+                        gameBloc: BlocProvider.of<GameBloc>(context),
+                      );
+                    },
+                  );
+                },
+              );
+              return Center(
+                child: Text(
+                  'Du hast dein Profil nicht gespeichert, bitte lade die Seite neu.',
                 ),
               );
-            });
-            // TODO: uncomment when game goes life
-            //   SchedulerBinding.instance.addPostFrameCallback(
-            //     (_) {
-            //       showDialog(
-            //         context: context,
-            //         builder: (innerContext) {
-            //           return ProfileDialog(
-            //             gameBloc: BlocProvider.of<GameBloc>(context),
-            //           );
-            //         },
-            //       );
-            //     },
-            //   );
+            }
+
+            if (state is GameStateLoaded) {
+              return _buildBody(context, state);
+            }
+
             return Center(
               child: Text(
-                'Du hast dein Profil nicht gespeichert, bitte lade die Seite neu.',
+                'FEHLER LAN FEHLER',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge
+                    ?.copyWith(color: Colors.red),
               ),
             );
-          }
-
-          if (state is GameStateLoaded) {
-            return _buildBody(context, state);
-          }
-
-          return Center(
-            child: Text(
-              'FEHLER LAN FEHLER',
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyLarge
-                  ?.copyWith(color: Colors.red),
-            ),
-          );
-        },
-      ),
-    );
-  }
+          },
+        ),
+      );
 }

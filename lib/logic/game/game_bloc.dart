@@ -25,7 +25,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   };
 
   /// Maximale Rundenanzahl
-  static const maxRounds = 4;
+  static const maxRounds = 10;
 
   void _onSaveProfile(SaveProfile event, Emitter<GameState> emit) {
     if (state is GameStateLoaded) {
