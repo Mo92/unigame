@@ -42,6 +42,27 @@ class GamePage extends StatelessWidget {
         },
       );
     }
+    if (state.hasGameEnded) {
+      return Center(
+        child: SingleChildScrollView(
+            child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Text('So ma lieber, der Spaß is rum nh',
+                style: Theme.of(context).textTheme.headlineMedium),
+            SizedBox(height: 12),
+            if (state.playerScore > state.cpuScore) Text('Du hast gewonnen'),
+            if (state.playerScore < state.cpuScore) Text('Du bist ein niemand'),
+            if (state.playerScore == state.cpuScore)
+              Text('Ihr seid beide Betrüger lol xD'),
+            SizedBox(height: 12),
+            Text('Ergbenisse der jeweiligen Runden'),
+            SizedBox(height: 12),
+            ..._buildScores(context, state),
+          ],
+        )),
+      );
+    }
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.max,
@@ -148,6 +169,39 @@ Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opf
       ),
     );
   }
+
+  List<Widget> _buildScores(BuildContext context, GameStateLoaded state) {
+    final List<Widget> rows = [];
+    int roundCount = 1;
+
+    for (final round in state.history) {
+      roundCount = roundCount + 1;
+      final hChoice = round[0];
+      final cChoice = round[1];
+      final scores = round[2];
+
+      rows.add(
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(width: 12),
+            Text('Runde ${roundCount + 1}:'),
+            SizedBox(width: 4),
+            Text(
+                'Sie = ${defectOrCoop(hChoice)}, Gegner =  ${defectOrCoop(cChoice)}'),
+            SizedBox(width: 4),
+            Text('Punkte: Sie = ${scores[0]}, Gegner= ${scores[1]}'),
+            SizedBox(width: 12),
+          ],
+        ),
+      );
+    }
+
+    return rows;
+  }
+
+  String defectOrCoop(String input) =>
+      input == 'C' ? 'Kooperiert' : 'Defektiert ';
 
   @override
   Widget build(BuildContext context) {

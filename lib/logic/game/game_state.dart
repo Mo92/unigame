@@ -21,6 +21,7 @@ class GameStateLoaded extends GameState {
   final String? prevCpuChoice;
   final List<int>? prevScores;
   final bool isLoading;
+  final bool hasGameEnded;
 
   GameStateLoaded({
     required this.isLoading,
@@ -33,6 +34,7 @@ class GameStateLoaded extends GameState {
     this.prevHumanChoice,
     this.prevCpuChoice,
     this.prevScores,
+    required this.hasGameEnded,
   });
 
   @override
@@ -47,6 +49,7 @@ class GameStateLoaded extends GameState {
         prevCpuChoice,
         prevHumanChoice,
         prevScores,
+        hasGameEnded,
       ];
 
   GameStateLoaded copyWith({
@@ -59,7 +62,8 @@ class GameStateLoaded extends GameState {
     int? cpuScore,
     String? prevHumanChoice,
     String? prevCpuChoice,
-    final List<int>? prevScores,
+    List<int>? prevScores,
+    bool? hasGameEnded,
   }) =>
       GameStateLoaded(
         isLoading: isLoading ?? this.isLoading,
@@ -72,6 +76,7 @@ class GameStateLoaded extends GameState {
         prevHumanChoice: prevHumanChoice ?? this.prevHumanChoice,
         prevCpuChoice: prevCpuChoice ?? this.prevCpuChoice,
         prevScores: prevScores ?? this.prevScores,
+        hasGameEnded: hasGameEnded ?? this.hasGameEnded,
       );
 
   @override
