@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
+import 'package:unigame/logic/game/models/post_questions_model.dart';
 
 import 'package:unigame/logic/game/models/profile_model.dart';
 
@@ -22,6 +23,7 @@ class GameStateLoaded extends GameState {
   final List<int>? prevScores;
   final bool isLoading;
   final bool hasGameEnded;
+  final PostQuestionsModel? postQuestions;
 
   GameStateLoaded({
     required this.isLoading,
@@ -35,6 +37,7 @@ class GameStateLoaded extends GameState {
     this.prevCpuChoice,
     this.prevScores,
     required this.hasGameEnded,
+    this.postQuestions,
   });
 
   @override
@@ -50,6 +53,7 @@ class GameStateLoaded extends GameState {
         prevHumanChoice,
         prevScores,
         hasGameEnded,
+        postQuestions,
       ];
 
   GameStateLoaded copyWith({
@@ -64,6 +68,7 @@ class GameStateLoaded extends GameState {
     String? prevCpuChoice,
     List<int>? prevScores,
     bool? hasGameEnded,
+    PostQuestionsModel? postQuestions,
   }) =>
       GameStateLoaded(
         isLoading: isLoading ?? this.isLoading,
@@ -77,10 +82,10 @@ class GameStateLoaded extends GameState {
         prevCpuChoice: prevCpuChoice ?? this.prevCpuChoice,
         prevScores: prevScores ?? this.prevScores,
         hasGameEnded: hasGameEnded ?? this.hasGameEnded,
+        postQuestions: postQuestions ?? this.postQuestions,
       );
 
   @override
-  String toString() {
-    return 'GameStateLoaded { currentRound: $currentRound | history: ${history.length} | CPU Score: $cpuScore | Player Score: $playerScore }';
-  }
+  String toString() =>
+      'GameStateLoaded { currentRound: $currentRound | history: ${history.length} | CPU Score: $cpuScore | Player Score: $playerScore }';
 }

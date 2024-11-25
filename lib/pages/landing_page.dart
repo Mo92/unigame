@@ -17,7 +17,6 @@ class LandingPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 42),
-              // TODO: Adjust Text
               Text(
                 'Das Spiel ums große Geld',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -137,7 +136,6 @@ class LandingPage extends StatelessWidget {
               ),
               const SizedBox(height: 14),
               ElevatedButton(
-                // TODO: Discuss Routing
                 onPressed: () => Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (context) => BlocProvider(
@@ -146,8 +144,7 @@ class LandingPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                // TODO: Adjust Text
-                child: const Text('Start Game'),
+                child: const Text('Spiel starten'),
               ),
               const SizedBox(height: 140),
             ],
@@ -162,11 +159,9 @@ class LandingPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // TODO: Page Title
         title: const Text('Bachelor Game'),
       ),
-      // body: _buildBody(context),
-      body: PostGameDialog(),
+      body: _buildBody(context),
     );
   }
 }

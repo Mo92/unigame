@@ -38,7 +38,6 @@ class _ProfileDialogState extends State<ProfileDialog> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // TODO: Change Text
                   Text('Stell dich vor, bevor du Spielst:'),
                   SizedBox(height: 16),
                   Text('Was ist dein Geschlecht?'),

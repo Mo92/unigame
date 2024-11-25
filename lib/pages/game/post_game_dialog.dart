@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:unigame/core/text_validators.dart';
+import 'package:unigame/logic/game/game_bloc.dart';
 
 class PostGameDialog extends StatefulWidget {
-  const PostGameDialog({super.key});
+  const PostGameDialog({super.key, required this.gameBloc});
+  final GameBloc gameBloc;
 
   @override
   State<PostGameDialog> createState() => _PostGameDialogState();
@@ -16,14 +18,14 @@ class _PostGameDialogState extends State<PostGameDialog> {
   final _didCpuManipulate = TextEditingController();
   final _suggestions = TextEditingController();
   final _miscIdeas = TextEditingController();
-  int understanding = 0;
-  int struggles = 0;
-  int fairness = 0;
-  int cooperations = 0;
-  int didAnalyze = 0;
-  int howWasEnemy = 0;
-  int didCpuManipulate = 0;
-  int performance = 0;
+  int understanding = -1;
+  int struggles = -1;
+  int fairness = -1;
+  int cooperations = -1;
+  int didAnalyze = -1;
+  int howWasEnemy = -1;
+  int didCpuManipulate = -1;
+  int performance = -1;
 
   Widget _buildUnderstandingRadio(BuildContext context) {
     return Row(

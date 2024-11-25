@@ -6,6 +6,7 @@ import 'package:unigame/logic/game/game_event.dart';
 import 'package:unigame/logic/game/game_state.dart';
 import 'package:unigame/logic/game/models/profile_model.dart';
 import 'package:unigame/pages/game/animated_button_row.dart';
+import 'package:unigame/pages/game/post_game_dialog.dart';
 import 'package:unigame/pages/game/profile_dialog.dart';
 
 class GamePage extends StatelessWidget {
@@ -42,7 +43,10 @@ class GamePage extends StatelessWidget {
         },
       );
     }
-    if (state.hasGameEnded) {
+    if (!state.hasGameEnded && state.postQuestions == null) {
+      return PostGameDialog(gameBloc: BlocProvider.of<GameBloc>(context));
+    }
+    if (state.hasGameEnded && state.postQuestions != null) {
       return Center(
         child: SingleChildScrollView(
             child: Column(
@@ -141,7 +145,7 @@ Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opf
                     'Joffrey',
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
-                  // TODO: Make dynamic
+
                   Text(''),
                   SizedBox(height: 24),
                   // TODO: add image
@@ -213,8 +217,7 @@ Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opf
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // TODO: Page Title
-        title: const Text('Lets Gamble'),
+        title: const Text('Bachelor Game'),
       ),
       body: BlocBuilder<GameBloc, GameState>(
         builder: (context, state) {

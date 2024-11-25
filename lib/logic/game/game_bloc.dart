@@ -9,6 +9,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   GameBloc() : super(GameStateLoading()) {
     on<SaveProfile>(_onSaveProfile);
     on<PlayerMove>(_onPlayerMove);
+    on<SavePostQuestions>(_onSavePostQuestions);
   }
   static const zdsParams = {"p1": 0.7, "p2": 0.3, "p3": 0.4, "p4": 0.6};
 
@@ -24,7 +25,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   };
 
   /// Maximale Rundenanzahl
-  static const maxRounds = 10;
+  static const maxRounds = 4;
 
   void _onSaveProfile(SaveProfile event, Emitter<GameState> emit) {
     if (state is GameStateLoaded) {
@@ -137,6 +138,14 @@ class GameBloc extends Bloc<GameEvent, GameState> {
           playerScore: humanScore,
         ));
       }
+    }
+  }
+
+  void _onSavePostQuestions(SavePostQuestions event, Emitter<GameState> emit) {
+    if (state is GameStateLoaded) {
+      final currentState = state as GameStateLoaded;
+
+      emit(currentState.copyWith(postQuestions: event.postQuestions));
     }
   }
 }
