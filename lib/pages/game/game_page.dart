@@ -20,11 +20,11 @@ class GamePage extends StatelessWidget {
           showDialog(
             context: context,
             builder: (innerContext) {
-              Future.delayed(Duration(milliseconds: 2500), () {
+              Future.delayed(Duration(milliseconds: 2000), () {
                 if (Navigator.canPop(context)) Navigator.of(context).pop(true);
               });
               return AlertDialog(
-                title: Center(child: Text('Runde: ${state.currentRound}')),
+                title: Center(child: Text('Runde: ${state.currentRound - 1}')),
                 content: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
@@ -33,7 +33,7 @@ class GamePage extends StatelessWidget {
                         ? 'Der Gegner hat kooperiert'
                         : 'Der Gegner hat Defektiert'),
                     Text(
-                        'Punkte: Sie = ${state.prevScores![0]} / Gegner = ${state.prevScores![1]}')
+                        'Punkte: Du = ${state.prevScores![0]} / Gegner = ${state.prevScores![1]}')
                   ],
                 ),
               );
@@ -55,6 +55,9 @@ class GamePage extends StatelessWidget {
             if (state.playerScore < state.cpuScore) Text('Du bist ein niemand'),
             if (state.playerScore == state.cpuScore)
               Text('Ihr seid beide Betrüger lol xD'),
+            SizedBox(height: 12),
+            Text(
+                'Gesamtergebnis: Du: ${state.playerScore} / Gegner: ${state.cpuScore}'),
             SizedBox(height: 12),
             Text('Ergbenisse der jeweiligen Runden'),
             SizedBox(height: 12),
@@ -139,7 +142,7 @@ Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opf
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   // TODO: Make dynamic
-                  Text('Punkte: ${state.cpuScore}'),
+                  Text(''),
                   SizedBox(height: 24),
                   // TODO: add image
                   Image.asset(
@@ -163,7 +166,7 @@ Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opf
                 ? 'Der Gegner hat kooperiert'
                 : 'Der Gegner hat Defektiert'),
             Text(
-                'Punkte: Sie = ${state.prevScores![0]} / Gegner = ${state.prevScores![1]}')
+                'Punkte: Du = ${state.prevScores![0]} / Gegner = ${state.prevScores![1]}')
           ],
         ],
       ),
@@ -172,7 +175,7 @@ Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opf
 
   List<Widget> _buildScores(BuildContext context, GameStateLoaded state) {
     final List<Widget> rows = [];
-    int roundCount = 1;
+    int roundCount = -1;
 
     for (final round in state.history) {
       roundCount = roundCount + 1;
@@ -181,18 +184,20 @@ Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opf
       final scores = round[2];
 
       rows.add(
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(width: 12),
-            Text('Runde ${roundCount + 1}:'),
-            SizedBox(width: 4),
-            Text(
-                'Sie = ${defectOrCoop(hChoice)}, Gegner =  ${defectOrCoop(cChoice)}'),
-            SizedBox(width: 4),
-            Text('Punkte: Sie = ${scores[0]}, Gegner= ${scores[1]}'),
-            SizedBox(width: 12),
-          ],
+        Center(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(width: 12),
+              Text('Runde ${roundCount + 1}:'),
+              SizedBox(width: 4),
+              Text(
+                  'Du = ${defectOrCoop(hChoice)}, Gegner =  ${defectOrCoop(cChoice)}'),
+              SizedBox(width: 4),
+              Text('Punkte: Du = ${scores[0]}, Gegner= ${scores[1]}'),
+              SizedBox(width: 12),
+            ],
+          ),
         ),
       );
     }

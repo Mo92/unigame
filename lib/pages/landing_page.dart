@@ -92,7 +92,7 @@ class LandingPage extends StatelessWidget {
                     ),
                     TextSpan(
                       text:
-                          ', hat eine eigene Strategie. Er wird versuchen, dich zu manipulieren und auszutricksen, um seinen Gewinn zu maximieren. Kannst du ihn durchschauen?',
+                          ', hat eine eigene Strategie, die von uns entwickelt wurde. Kannst du ihn durchschauen?',
                     ),
                   ],
                 ),
@@ -112,14 +112,19 @@ class LandingPage extends StatelessWidget {
                 text:
                     'Ehrlich + Ehrlich (Kooperation): Beide halten sich an den Deal und verdienen solide.',
               ),
+              BulletPoint(text: '3 Punkte für beide.'),
+              SizedBox(height: 8),
               BulletPoint(
                 text:
                     'Ehrlich + Betrügen: Der Betrüger räumt ab, der Ehrliche geht leer aus.',
               ),
+              BulletPoint(text: 'Betrüger: 5 Punkte, Ehrlicher: 0 Punkte.'),
+              SizedBox(height: 8),
               BulletPoint(
                 text:
                     'Betrügen + Betrügen: Ihr versucht beide, euch zu überlisten. Der Deal scheitert, und der Gewinn ist minimal.',
               ),
+              BulletPoint(text: '1 Punkt für beide.'),
               SizedBox(height: 16),
               Text(
                 'Rundenanzahl:',

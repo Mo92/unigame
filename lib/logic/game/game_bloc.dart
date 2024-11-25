@@ -24,7 +24,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   };
 
   /// Maximale Rundenanzahl
-  static const maxRounds = 4;
+  static const maxRounds = 10;
 
   void _onSaveProfile(SaveProfile event, Emitter<GameState> emit) {
     if (state is GameStateLoaded) {
@@ -76,7 +76,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       return;
     } else {
       emit(currentState.copyWith(isLoading: true));
-      int timeoutMillis = 1000 + Random().nextInt(2000);
+      int timeoutMillis = Random().nextInt(1500);
 
       await Future.delayed(Duration(milliseconds: timeoutMillis));
       // Computerentscheidung basierend auf ZDS
