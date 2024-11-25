@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:unigame/core/text_validators.dart';
-import 'package:unigame/logic/game/game_bloc.dart';
-import 'package:unigame/logic/game/game_event.dart';
-import 'package:unigame/logic/game/models/post_questions_model.dart';
+import 'package:shadow_deals/core/text_validators.dart';
+import 'package:shadow_deals/logic/game/game_bloc.dart';
+import 'package:shadow_deals/logic/game/game_event.dart';
+import 'package:shadow_deals/logic/game/models/post_questions_model.dart';
 
 class PostGameDialog extends StatefulWidget {
   const PostGameDialog({super.key, required this.gameBloc});

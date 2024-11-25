@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:unigame/logic/game/models/post_questions_model.dart';
-import 'package:unigame/logic/game/models/profile_model.dart';
+import 'package:shadow_deals/logic/game/models/post_questions_model.dart';
+import 'package:shadow_deals/logic/game/models/profile_model.dart';
 
 abstract class GameEvent extends Equatable {
   @override

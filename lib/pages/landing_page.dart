@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:unigame/logic/game/game_bloc.dart';
-import 'package:unigame/pages/game/bullet_point.dart';
-import 'package:unigame/pages/game/game_page.dart';
+import 'package:shadow_deals/logic/game/game_bloc.dart';
+import 'package:shadow_deals/pages/game/bullet_point.dart';
+import 'package:shadow_deals/pages/game/game_page.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
@@ -158,7 +158,7 @@ class LandingPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Bachelor Game'),
+        title: const Text('Shadow Deals'),
       ),
       body: _buildBody(context),
     );

@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:math';
-
+import 'dart:developer' as dev;
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:unigame/logic/game/game_event.dart';
-import 'package:unigame/logic/game/game_state.dart';
+import 'package:shadow_deals/logic/game/game_event.dart';
+import 'package:shadow_deals/logic/game/game_state.dart';
 
 class GameBloc extends Bloc<GameEvent, GameState> {
   GameBloc() : super(GameStateLoading()) {
@@ -71,8 +71,6 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
     if (currentRound == 0) {
       // Bei Runde 0 einfach OK anzeigen und keine Punkte vergeben
-      //emit(currentState);
-      print('No Round');
       emit(currentState.copyWith(currentRound: currentRound + 1));
       return;
     } else {
@@ -93,7 +91,6 @@ class GameBloc extends Bloc<GameEvent, GameState> {
           computerChoice = random.nextDouble() < zdsParams["p3"]! ? "C" : "D";
         }
       }
-      print('Computer Choice: $computerChoice');
 
       // Ergebnisse berechnen
       var roundScore = payoffMatrix[event.decision]?[computerChoice];
@@ -102,8 +99,6 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         computerScore += roundScore[1];
         localHistory.add([event.decision, computerChoice, roundScore]);
       }
-
-      print('roundscore: $roundScore');
 
       // Ergebnisse der vorherigen Runde anzeigen
       if (currentRound > 0) {
@@ -124,7 +119,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
             hasGameEnded: currentRound >= maxRounds,
           ),
         );
-        print(
+        dev.log(
           "Runde $prevRound: GESMAT: $roundScore "
           "Runde $prevRound: Sie = $prevHumanChoice, Spieler 2 = $prevComputerChoice, "
           "Punkte: Sie = ${prevScores[0]}, Spieler 2 = ${prevScores[1]}",

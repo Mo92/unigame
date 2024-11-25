@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:unigame/logic/game/game_bloc.dart';
-import 'package:unigame/logic/game/game_event.dart';
-import 'package:unigame/logic/game/game_state.dart';
-import 'package:unigame/pages/game/animated_button_row.dart';
-import 'package:unigame/pages/game/post_game_dialog.dart';
-import 'package:unigame/pages/game/profile_dialog.dart';
+import 'package:shadow_deals/logic/game/game_bloc.dart';
+import 'package:shadow_deals/logic/game/game_event.dart';
+import 'package:shadow_deals/logic/game/game_state.dart';
+import 'package:shadow_deals/pages/game/animated_button_row.dart';
+import 'package:shadow_deals/pages/game/post_game_dialog.dart';
+import 'package:shadow_deals/pages/game/profile_dialog.dart';
 
 class GamePage extends StatelessWidget {
   const GamePage({super.key});
@@ -15,13 +15,14 @@ class GamePage extends StatelessWidget {
     if ((state.prevCpuChoice != null && state.prevCpuChoice != null) &&
         (state.prevScores != null && state.prevScores!.isNotEmpty) &&
         !state.isLoading &&
-        state.hasGameEnded) {
+        state.postQuestions == null) {
       SchedulerBinding.instance.addPostFrameCallback(
         (_) {
           showDialog(
             context: context,
             builder: (innerContext) {
               Future.delayed(Duration(milliseconds: 2000), () {
+                // ignore: use_build_context_synchronously
                 if (Navigator.canPop(context)) Navigator.of(context).pop(true);
               });
               return AlertDialog(
@@ -84,13 +85,12 @@ class GamePage extends StatelessWidget {
         children: [
           SizedBox(height: 42),
           Text(
-            'Willkommen zum Bachelor Game!',
+            'Willkommen in der Unterwelt!',
             style: Theme.of(context).textTheme.headlineMedium,
           ),
           Text(
             '''Hier geht es um Deals, Täuschung und das richtige Timing. 
 Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opfer eines Betrugs, der dich alles kostet?
-
 ''',
             style: Theme.of(context).textTheme.bodyMedium,
             textAlign: TextAlign.center,
@@ -222,7 +222,7 @@ Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opf
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: const Text('Bachelor Game'),
+          title: const Text('Shadow Deals'),
         ),
         body: BlocBuilder<GameBloc, GameState>(
           builder: (context, state) {

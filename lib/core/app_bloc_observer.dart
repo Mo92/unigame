@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppBlocObserver extends BlocObserver {
@@ -7,14 +9,14 @@ class AppBlocObserver extends BlocObserver {
     super.onCreate(bloc);
 
     ///We can check, if the BlocBase is a Bloc or a Cubit
-    print('$bloc created');
+    log('$bloc created');
   }
 
   ///We can react to events
   @override
   void onEvent(Bloc bloc, Object? event) {
     super.onEvent(bloc, event);
-    print(event);
+    log(event.toString());
   }
 
   ///We can even react to transitions
@@ -23,22 +25,20 @@ class AppBlocObserver extends BlocObserver {
     super.onTransition(bloc, transition);
 
     /// With this we can specifically know, when and what changed in our Bloc
-    print(
-        "Transition from ${transition.currentState} to ${transition.nextState}");
+    log("Transition from ${transition.currentState} to ${transition.nextState}");
   }
 
   ///We can react to errors, and we will know the error and the StackTrace
   @override
   void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
     super.onError(bloc, error, stackTrace);
-    print(
-        "Error happened in $bloc with error $error and the stacktrace is $stackTrace");
+    log("Error happened in $bloc with error $error and the stacktrace is $stackTrace");
   }
 
   ///We can even run something, when we close our Bloc
   @override
   void onClose(BlocBase bloc) {
     super.onClose(bloc);
-    print("$bloc is closed");
+    log("$bloc is closed");
   }
 }

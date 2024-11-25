@@ -1,4 +1,4 @@
-package com.example.unigame
+package com.example.shadow_deals
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,8 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
-import 'package:unigame/logic/game/models/post_questions_model.dart';
+import 'package:shadow_deals/logic/game/models/post_questions_model.dart';
 
-import 'package:unigame/logic/game/models/profile_model.dart';
+import 'package:shadow_deals/logic/game/models/profile_model.dart';
 
 abstract class GameState extends Equatable {
   @override
