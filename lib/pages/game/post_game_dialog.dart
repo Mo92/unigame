@@ -26,6 +26,7 @@ class _PostGameDialogState extends State<PostGameDialog> {
   int howWasEnemy = -1;
   int didCpuManipulate = -1;
   int performance = -1;
+  bool showError = false;
 
   Widget _buildUnderstandingRadio(BuildContext context) {
     return Row(
@@ -641,6 +642,28 @@ class _PostGameDialogState extends State<PostGameDialog> {
     );
   }
 
+  void submitData(BuildContext context) {
+    if (understanding < 0 ||
+        struggles < 0 ||
+        fairness < 0 ||
+        cooperations < 0 ||
+        didAnalyze < 0 ||
+        howWasEnemy < 0 ||
+        didCpuManipulate < 0 ||
+        performance < 0) {
+      setState(() {
+        showError = true;
+      });
+      return;
+    }
+    setState(() {
+      showError = false;
+    });
+    if (_formKey.currentState?.validate() ?? false) {
+      _formKey.currentState?.save();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -657,6 +680,15 @@ class _PostGameDialogState extends State<PostGameDialog> {
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
+                if (showError)
+                  ListTile(
+                    iconColor: Colors.red,
+                    textColor: Colors.red,
+                    leading: Icon(Icons.warning),
+                    title: Text(
+                      'Es wurden nicht alle Felder ausgewählt',
+                    ),
+                  ),
                 SizedBox(height: 32),
                 Text('Wie gut haben Sie das Ziel des Experiments verstanden?'),
                 SizedBox(height: 16),
@@ -784,7 +816,7 @@ class _PostGameDialogState extends State<PostGameDialog> {
                     'Durch das Abesenden dieses Fragebogens erkläre ich mich damit einverstanden, dass meine Daten analysiert und ausschließlich zu wissenschaftlichen Zwecken verwendet werden.'),
                 SizedBox(height: 32),
                 ElevatedButton(
-                  onPressed: () => print('Gaga oulala'),
+                  onPressed: () => submitData(context),
                   child: Text('Absenden'),
                 )
               ],
