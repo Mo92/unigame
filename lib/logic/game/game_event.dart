@@ -18,7 +18,7 @@ class SaveProfile extends GameEvent {
 class StartGame extends GameEvent {}
 
 class PlayerMove extends GameEvent {
-  final int decision;
+  final String decision;
 
   PlayerMove({required this.decision});
 

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:unigame/core/app_bloc_observer.dart';
 import 'package:unigame/pages/landing_page.dart';
 
 void main() {
+  Bloc.observer = AppBlocObserver();
   runApp(const UniGame());
 }
 

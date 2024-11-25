@@ -39,8 +39,9 @@ class _ProfileDialogState extends State<ProfileDialog> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   // TODO: Change Text
-                  Text('Stell dich vor bevor du spielst.'),
+                  Text('Stell dich vor, bevor du Spielst:'),
                   SizedBox(height: 16),
+                  Text('Was ist dein Geschlecht?'),
                   Center(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -104,8 +105,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
                     validator: Validators.required,
                     decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
-                      // TODO: Change Text
-                      labelText: 'Wie heißt du?',
+                      labelText: 'Wie lautet dein Spielername?',
                     ),
                   ),
                   SizedBox(height: 16),
@@ -118,8 +118,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
-                      // TODO: Change Text
-                      labelText: 'Wie alt bist du',
+                      labelText: 'Wie alt bist du?',
                     ),
                   ),
                   SizedBox(height: 16),
@@ -128,8 +127,10 @@ class _ProfileDialogState extends State<ProfileDialog> {
                     validator: Validators.required,
                     decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
-                      // TODO: Change Text
-                      labelText: 'Womit verdienst du dein Brot',
+                      labelText:
+                          'Was machst du beruflich? Und in welchem Bereich? ',
+                      helperText:
+                          '(Zb. Student der Wirttschaftswissenschaften, Junior Analyst im Controlling)',
                     ),
                   ),
                   SizedBox(height: 16),
@@ -142,14 +143,12 @@ class _ProfileDialogState extends State<ProfileDialog> {
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
-                      // TODO: Change Text
-                      labelText: 'Wie lang machst du das schon (in Jahren)',
+                      labelText: 'Wieviele Jahre machst du das schon?',
                     ),
                   ),
                   SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () => save(context),
-                    // TODO: Change Text
                     child: Text('Speichern'),
                   ),
                   SizedBox(height: 16),
