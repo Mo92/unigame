@@ -13,7 +13,6 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     on<SavePostQuestions>(_onSavePostQuestions);
     on<UploadResults>(_uploadResults);
   }
-  static const zdsParams = {"p1": 0.7, "p2": 0.3, "p3": 0.4, "p4": 0.6};
 
   static const payoffMatrix = {
     "C": {
@@ -26,11 +25,19 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     }
   };
 
+  /// Hier die Liste erweitern für die Strategien
+  /// ['Zen Dominator', 'Den Zominator'] <- das wären
+  /// Zwei Strategien
+  List<String> strategies = ['Zen Dominator'];
+
   /// Maximale Rundenanzahl
   static const maxRounds = 4;
 
   Future<void> _onSaveProfile(
       SaveProfile event, Emitter<GameState> emit) async {
+    // sucht sich eine zufällige strategie aus
+    final selectedStrategy = strategies[Random().nextInt(strategies.length)];
+
     if (state is GameStateLoaded) {
       final currentState = state as GameStateLoaded;
 
@@ -43,6 +50,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
           isLoading: false,
           playerScore: 0,
           hasGameEnded: false,
+          usedStrategy: selectedStrategy,
         ),
       );
       return;
@@ -56,6 +64,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       playerScore: 0,
       isLoading: false,
       hasGameEnded: false,
+      usedStrategy: selectedStrategy,
     ));
   }
 
@@ -83,16 +92,31 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       await Future.delayed(Duration(milliseconds: timeoutMillis));
       // Computerentscheidung basierend auf ZDS
       String computerChoice;
-      if (currentRound == 1) {
-        computerChoice = "C"; // Startet kooperativ
-      } else {
-        String lastHumanChoice =
-            localHistory.last[0]; // Letzte Wahl des Menschen
-        if (lastHumanChoice == "C") {
-          computerChoice = random.nextDouble() < zdsParams["p1"]! ? "C" : "D";
-        } else {
-          computerChoice = random.nextDouble() < zdsParams["p3"]! ? "C" : "D";
-        }
+
+      /// Hier wird die ausgewählte Strategie überprüft
+      /// Um das zu erweitern, einfach mehr `case` einfügen und break nicht vergessen
+      /// Dafür muss eine neue function erstellt werden siehe `zenDominator`
+      ///
+      /// Bsp:
+      ///   case 'Zen Dominator':
+      ///      computerChoice = zenDominator(currentRound, localHistory, random);
+      ///      break;
+      ///   case 'Den Zominator':
+      ///      computerChoice = neueMethode(currentRound, localHistory, random);
+      ///      break;
+      switch (currentState.usedStrategy) {
+        case 'Zen Dominator':
+          computerChoice = zenDominator(currentRound, localHistory, random);
+          break;
+
+        /// case 'Den Zominator':
+        ///  computerChoice = neueMethode(currentRound, localHistory, random);
+        ///  break;
+
+        /// Die Standard Strategie, falls keine zugeordnet werden kann
+        /// (das sollte nicht passieren)
+        default:
+          computerChoice = zenDominator(currentRound, localHistory, random);
       }
 
       // Ergebnisse berechnen
@@ -138,6 +162,43 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       }
     }
   }
+
+  /// Die erste ZDS Strategie, hier kann man sich für zukünfite Strategien orientieren
+  String zenDominator(
+      int currentRound, List<List<dynamic>> localHistory, Random random) {
+    String computerChoice;
+    const zdsParams = {"p1": 0.7, "p2": 0.3, "p3": 0.4, "p4": 0.6};
+    if (currentRound == 1) {
+      computerChoice = "C"; // Startet kooperativ
+    } else {
+      String lastHumanChoice = localHistory.last[0]; // Letzte Wahl des Menschen
+      if (lastHumanChoice == "C") {
+        computerChoice = random.nextDouble() < zdsParams["p1"]! ? "C" : "D";
+      } else {
+        computerChoice = random.nextDouble() < zdsParams["p3"]! ? "C" : "D";
+      }
+    }
+    return computerChoice;
+  }
+
+  /// BEISPIEL:
+  /// Eine Strategie die Analog zum Zen Dominator eine invertierte Matrix hat
+  // String denZominator(
+  //     int currentRound, List<List<dynamic>> localHistory, Random random) {
+  //   String computerChoice;
+  //   const zdsParams = {"p1": 0.3, "p2": 0.7, "p3": 0.6, "p4": 0.4};
+  //   if (currentRound == 1) {
+  //     computerChoice = "C"; // Startet kooperativ
+  //   } else {
+  //     String lastHumanChoice = localHistory.last[0]; // Letzte Wahl des Menschen
+  //     if (lastHumanChoice == "C") {
+  //       computerChoice = random.nextDouble() < zdsParams["p1"]! ? "C" : "D";
+  //     } else {
+  //       computerChoice = random.nextDouble() < zdsParams["p3"]! ? "C" : "D";
+  //     }
+  //   }
+  //   return computerChoice;
+  // }
 
   void _onSavePostQuestions(SavePostQuestions event, Emitter<GameState> emit) {
     if (state is GameStateLoaded) {

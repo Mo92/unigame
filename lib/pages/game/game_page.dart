@@ -150,7 +150,7 @@ Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opf
               Column(
                 children: [
                   Text(
-                    'Zen Dominator',
+                    state.usedStrategy,
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   Text(''),
