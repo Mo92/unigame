@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shadow_deals/core/helpers.dart';
 import 'package:shadow_deals/logic/game/game_bloc.dart';
 import 'package:shadow_deals/logic/game/game_event.dart';
 import 'package:shadow_deals/logic/game/game_state.dart';
-import 'package:shadow_deals/pages/game/animated_button_row.dart';
+import 'package:shadow_deals/pages/game/widgets/animated_button_row.dart';
 import 'package:shadow_deals/pages/game/post_game_dialog.dart';
 import 'package:shadow_deals/pages/game/profile_dialog.dart';
 
@@ -31,9 +32,7 @@ class GamePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(state.prevCpuChoice == 'C'
-                        ? 'Der Gegner hat kooperiert'
-                        : 'Der Gegner hat Defektiert'),
+                    Text(defectOrCoop(state.prevCpuChoice!, extended: true)),
                     Text(
                         'Punkte: Du = ${state.prevScores![0]} / Gegner = ${state.prevScores![1]}')
                   ],
@@ -172,9 +171,7 @@ Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opf
               (state.prevScores != null && state.prevScores!.isNotEmpty) &&
               !state.isLoading) ...[
             Text('Ergebnis der letzten Runde:'),
-            Text(state.prevCpuChoice == 'C'
-                ? 'Der Gegner hat kooperiert'
-                : 'Der Gegner hat Defektiert'),
+            Text(defectOrCoop(state.prevCpuChoice!, extended: true)),
             Text(
                 'Punkte: Du = ${state.prevScores![0]} / Gegner = ${state.prevScores![1]}')
           ],
@@ -214,9 +211,6 @@ Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opf
 
     return rows;
   }
-
-  String defectOrCoop(String input) =>
-      input == 'C' ? 'Kooperiert' : 'Defektiert ';
 
   @override
   Widget build(BuildContext context) => Scaffold(

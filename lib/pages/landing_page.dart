@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shadow_deals/logic/game/game_bloc.dart';
-import 'package:shadow_deals/pages/game/bullet_point.dart';
+import 'package:shadow_deals/pages/game/widgets/bullet_point.dart';
 import 'package:shadow_deals/pages/game/game_page.dart';
 
 class LandingPage extends StatelessWidget {

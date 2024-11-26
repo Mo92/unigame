@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shadow_deals/core/helpers.dart';
 import 'package:shadow_deals/core/text_validators.dart';
 import 'package:shadow_deals/logic/game/game_bloc.dart';
 import 'package:shadow_deals/logic/game/game_event.dart';
@@ -29,6 +30,16 @@ class _PostGameDialogState extends State<PostGameDialog> {
   int didCpuManipulate = -1;
   int performance = -1;
   bool showError = false;
+
+  bool get noRadiosSelected =>
+      understanding < 0 ||
+      struggles < 0 ||
+      fairness < 0 ||
+      cooperations < 0 ||
+      didAnalyze < 0 ||
+      howWasEnemy < 0 ||
+      didCpuManipulate < 0 ||
+      performance < 0;
 
   Widget _buildUnderstandingRadio(BuildContext context) {
     return Row(
@@ -645,14 +656,7 @@ class _PostGameDialogState extends State<PostGameDialog> {
   }
 
   void submitData(BuildContext context) {
-    if (understanding < 0 ||
-        struggles < 0 ||
-        fairness < 0 ||
-        cooperations < 0 ||
-        didAnalyze < 0 ||
-        howWasEnemy < 0 ||
-        didCpuManipulate < 0 ||
-        performance < 0) {
+    if (noRadiosSelected) {
       setState(() {
         showError = true;
       });
@@ -666,132 +670,22 @@ class _PostGameDialogState extends State<PostGameDialog> {
       _formKey.currentState?.save();
 
       final PostQuestionsModel postQuestionsModel = PostQuestionsModel(
-        understanding: mapUnderstanding(),
-        struggles: mapStruggles(),
-        fairness: mapFairness(),
-        cooperations: mapCooperations(),
+        understanding: mapUnderstanding(understanding),
+        struggles: mapStruggles(struggles, _gameStruggles.text),
+        fairness: mapFairness(fairness),
+        cooperations: mapCooperations(cooperations),
         decisions: _decisionMaking.text,
-        enemyAnalytic: mapDidAnalyze(),
-        enemyStrategy: mapHowWasEnemy(),
-        enemyDidManipulate: mapDidCpuManipulate(),
-        performance: mapPerformance(),
+        enemyAnalytic: mapDidAnalyze(didAnalyze, _didYouAnalyzeComputer.text),
+        enemyStrategy: mapHowWasEnemy(howWasEnemy),
+        enemyDidManipulate:
+            mapDidCpuManipulate(didCpuManipulate, _didYouAnalyzeComputer.text),
+        performance: mapPerformance(performance),
         optimization: _optimization.text,
         suggestions: _suggestions.text,
       );
 
       widget.gameBloc.add(SavePostQuestions(postQuestions: postQuestionsModel));
     }
-  }
-
-  String mapUnderstanding() {
-    switch (understanding) {
-      case 0:
-        return 'Garnicht';
-      case 1:
-        return 'Wenig';
-      case 2:
-        return 'Mittelmässig';
-      case 3:
-        return 'Gut';
-      case 4:
-        return 'Sehr gut';
-    }
-    return 'Error';
-  }
-
-  String mapStruggles() {
-    switch (struggles) {
-      case 0:
-        return 'Ja: ${_gameStruggles.text}';
-      case 1:
-        return 'Nein';
-    }
-    return 'Error';
-  }
-
-  String mapFairness() {
-    switch (fairness) {
-      case 0:
-        return 'Sehr unfair';
-      case 1:
-        return 'Unfair';
-      case 2:
-        return 'Neutral';
-      case 3:
-        return 'Fair';
-      case 4:
-        return 'Sehr fair';
-    }
-    return 'Error';
-  }
-
-  String mapCooperations() {
-    switch (cooperations) {
-      case 0:
-        return 'Nie';
-      case 1:
-        return 'Selten';
-      case 2:
-        return 'Manchmal';
-      case 3:
-        return 'Oft';
-      case 4:
-        return 'Immer';
-    }
-    return 'Error';
-  }
-  // TEXT FRAGE
-
-  String mapDidAnalyze() {
-    switch (didAnalyze) {
-      case 0:
-        return 'Ja: ${_didYouAnalyzeComputer.text}';
-      case 1:
-        return 'Nein';
-    }
-    return 'Error';
-  }
-
-  String mapHowWasEnemy() {
-    switch (howWasEnemy) {
-      case 0:
-        return 'Sehr kooperativ';
-      case 1:
-        return 'Kooperativ';
-      case 2:
-        return 'Neutral';
-      case 3:
-        return 'Konkurrenzorientiert';
-      case 4:
-        return 'Sehr konkurrenzorientiert';
-    }
-    return 'Error';
-  }
-
-  String mapDidCpuManipulate() {
-    switch (didCpuManipulate) {
-      case 0:
-        return 'Ja: ${_didCpuManipulate.text}';
-      case 1:
-        return 'Nein';
-    }
-    return 'Error';
-  }
-
-  String mapPerformance() {
-    switch (performance) {
-      case 0:
-        return 'Sehr unzufrieden';
-      case 1:
-        return 'Unzufrieden';
-      case 2:
-        return 'Neutral';
-      case 3:
-        return 'Zufrieden';
-      case 4:
-        return 'Sehr unzufrieden';
-    }
-    return 'Error';
   }
 
   @override
