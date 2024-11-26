@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:developer' as dev;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shadow_deals/logic/game/data/game_repository.dart';
 import 'package:shadow_deals/logic/game/game_event.dart';
 import 'package:shadow_deals/logic/game/game_state.dart';
 
@@ -10,6 +11,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     on<SaveProfile>(_onSaveProfile);
     on<PlayerMove>(_onPlayerMove);
     on<SavePostQuestions>(_onSavePostQuestions);
+    on<UploadResults>(_uploadResults);
   }
   static const zdsParams = {"p1": 0.7, "p2": 0.3, "p3": 0.4, "p4": 0.6};
 
@@ -27,7 +29,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   /// Maximale Rundenanzahl
   static const maxRounds = 10;
 
-  void _onSaveProfile(SaveProfile event, Emitter<GameState> emit) {
+  Future<void> _onSaveProfile(
+      SaveProfile event, Emitter<GameState> emit) async {
     if (state is GameStateLoaded) {
       final currentState = state as GameStateLoaded;
 
@@ -142,5 +145,12 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
       emit(currentState.copyWith(postQuestions: event.postQuestions));
     }
+  }
+
+  FutureOr<void> _uploadResults(
+      UploadResults event, Emitter<GameState> emit) async {
+    final repo = GameRepository();
+
+    await repo.getDriveApi();
   }
 }

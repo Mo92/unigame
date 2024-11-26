@@ -16,7 +16,7 @@ class SaveProfile extends GameEvent {
   List<Object> get props => [profile];
 }
 
-class StartGame extends GameEvent {}
+class UploadResults extends GameEvent {}
 
 class PlayerMove extends GameEvent {
   final String decision;

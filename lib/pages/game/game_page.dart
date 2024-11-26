@@ -246,6 +246,19 @@ Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opf
               );
             }
 
+            /// Uncomment to test File upload
+// return Center(
+//               child: Column(
+//                 children: [
+//                   Text('TEST'),
+//                   ElevatedButton(
+//                     onPressed: () =>
+//                         BlocProvider.of<GameBloc>(context).add(UploadResults()),
+//                     child: Text('TU ES'),
+//                   ),
+//                 ],
+//               ),
+//             );
             if (state is GameStateLoaded) {
               return _buildBody(context, state);
             }
