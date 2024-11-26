@@ -31,12 +31,25 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   List<String> strategies = ['Zen Dominator'];
 
   /// Maximale Rundenanzahl
-  static const maxRounds = 4;
+  int maxRounds = 0;
+
+  /// Die grenze für das zufällige ende
+  int maxRoundsScope = 22;
+
+  /// Die mindestanzahl der Runden für das zufällige ende
+  int minRoundsScope = 18;
 
   Future<void> _onSaveProfile(
       SaveProfile event, Emitter<GameState> emit) async {
     // sucht sich eine zufällige strategie aus
     final selectedStrategy = strategies[Random().nextInt(strategies.length)];
+
+    /// Wählt eine zufällige Zahl zwischen der Differenz von `minRoundsScope`
+    /// und `maxRoundsScope`, daraufhin wird die Mindestanforderung addiert.
+    /// Das Ergebnis ist die Anzahl der Gesamtrunden.
+    maxRounds =
+        Random().nextInt(maxRoundsScope - minRoundsScope) + minRoundsScope;
+    print(maxRounds);
 
     if (state is GameStateLoaded) {
       final currentState = state as GameStateLoaded;
