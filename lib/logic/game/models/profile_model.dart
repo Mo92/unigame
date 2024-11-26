@@ -6,6 +6,7 @@ class ProfileModel extends Equatable {
   final String salutation;
   final int yearsOfExperience;
   final String jobTitle;
+  final String gamePlayed;
 
   const ProfileModel({
     required this.name,
@@ -13,6 +14,7 @@ class ProfileModel extends Equatable {
     required this.salutation,
     required this.yearsOfExperience,
     required this.jobTitle,
+    required this.gamePlayed,
   });
 
   @override
@@ -22,5 +24,6 @@ class ProfileModel extends Equatable {
         salutation,
         yearsOfExperience,
         jobTitle,
+        gamePlayed,
       ];
 }

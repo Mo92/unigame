@@ -19,8 +19,10 @@ class _ProfileDialogState extends State<ProfileDialog> {
   final _ageController = TextEditingController();
   final _jobController = TextEditingController();
   final _yearsOfExperienceController = TextEditingController();
+  final _gamePlayedController = TextEditingController();
 
   int selectedSalutation = 0;
+  int gamePlayed = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -146,6 +148,23 @@ class _ProfileDialogState extends State<ProfileDialog> {
                     ),
                   ),
                   SizedBox(height: 16),
+                  Text(
+                      'Haben Sie das Spiel schon einmal gespielt? Wenn ja, wie oft?'),
+                  SizedBox(height: 8),
+                  _buildGamePlayed(context),
+                  if (gamePlayed == 0)
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        controller: _gamePlayedController,
+                        decoration: const InputDecoration(
+                          border: UnderlineInputBorder(),
+                          labelText: 'Bitte beschreiben',
+                        ),
+                        validator: gamePlayed == 0 ? Validators.required : null,
+                      ),
+                    ),
+                  SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () => save(context),
                     child: Text('Speichern'),
@@ -160,6 +179,47 @@ class _ProfileDialogState extends State<ProfileDialog> {
     );
   }
 
+  Widget _buildGamePlayed(BuildContext context) => Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: Row(
+              children: [
+                Radio<int>(
+                    value: 0,
+                    groupValue: gamePlayed,
+                    onChanged: (index) {
+                      setState(() {
+                        gamePlayed = index!;
+                      });
+                    }),
+                Expanded(
+                  child: Text('Ja'),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Row(
+              children: [
+                Radio<int>(
+                    value: 1,
+                    groupValue: gamePlayed,
+                    onChanged: (index) {
+                      setState(() {
+                        gamePlayed = index!;
+                      });
+                    }),
+                Expanded(
+                  child: Text('Nein'),
+                ),
+              ],
+            ),
+          ),
+        ],
+      );
+
   save(BuildContext context) {
     if (_formKey.currentState?.validate() ?? false) {
       _formKey.currentState?.save();
@@ -170,6 +230,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
         salutation: getSalutation(),
         yearsOfExperience: int.parse(_yearsOfExperienceController.text),
         jobTitle: _jobController.text,
+        gamePlayed: gamePlayed == 0 ? _gamePlayedController.text : 'Nein',
       );
 
       widget.gameBloc.add(SaveProfile(profile: profile));
