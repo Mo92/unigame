@@ -5,6 +5,7 @@ import 'package:shadow_deals/core/helpers.dart';
 import 'package:shadow_deals/logic/game/game_bloc.dart';
 import 'package:shadow_deals/logic/game/game_event.dart';
 import 'package:shadow_deals/logic/game/game_state.dart';
+import 'package:shadow_deals/logic/game/models/profile_model.dart';
 import 'package:shadow_deals/pages/game/widgets/animated_button_row.dart';
 import 'package:shadow_deals/pages/game/post_game_dialog.dart';
 import 'package:shadow_deals/pages/game/profile_dialog.dart';
@@ -225,6 +226,7 @@ Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opf
                 (_) {
                   showDialog(
                     context: context,
+                    barrierDismissible: false,
                     builder: (innerContext) {
                       return ProfileDialog(
                         gameBloc: BlocProvider.of<GameBloc>(context),
@@ -233,6 +235,17 @@ Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opf
                   );
                 },
               );
+              // BlocProvider.of<GameBloc>(context).add(
+              //   SaveProfile(
+              //     profile: ProfileModel(
+              //         name: 'name',
+              //         age: 3,
+              //         salutation: 'salutation',
+              //         yearsOfExperience: 4,
+              //         jobTitle: 'jobTitle',
+              //         gamePlayed: 'gamePlayed'),
+              //   ),
+              // );
               return Center(
                 child: Text(
                   'Du hast dein Profil nicht gespeichert, bitte lade die Seite neu.',
@@ -256,7 +269,6 @@ Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opf
             if (state is GameStateLoaded) {
               return _buildBody(context, state);
             }
-
             return Center(
               child: Text(
                 'FEHLER LAN FEHLER',

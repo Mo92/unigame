@@ -4,6 +4,7 @@ import 'package:shadow_deals/core/text_validators.dart';
 import 'package:shadow_deals/logic/game/game_bloc.dart';
 import 'package:shadow_deals/logic/game/game_event.dart';
 import 'package:shadow_deals/logic/game/models/profile_model.dart';
+import 'package:shadow_deals/pages/game/widgets/conditional_inputs.dart';
 
 class ProfileDialog extends StatefulWidget {
   const ProfileDialog({required this.gameBloc, super.key});
@@ -22,7 +23,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
   final _gamePlayedController = TextEditingController();
 
   int selectedSalutation = 0;
-  int gamePlayed = 1;
+  int gamePlayed = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -151,19 +152,15 @@ class _ProfileDialogState extends State<ProfileDialog> {
                   Text(
                       'Haben Sie das Spiel schon einmal gespielt? Wenn ja, wie oft?'),
                   SizedBox(height: 8),
-                  _buildGamePlayed(context),
-                  if (gamePlayed == 0)
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextFormField(
-                        controller: _gamePlayedController,
-                        decoration: const InputDecoration(
-                          border: UnderlineInputBorder(),
-                          labelText: 'Bitte beschreiben',
-                        ),
-                        validator: gamePlayed == 0 ? Validators.required : null,
-                      ),
-                    ),
+                  ConditionalInputWidget(
+                    selectedValue: gamePlayed,
+                    onValueChanged: (value) {
+                      setState(() {
+                        gamePlayed = value!;
+                      });
+                    },
+                    textController: _gamePlayedController,
+                  ),
                   SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () => save(context),
@@ -179,46 +176,48 @@ class _ProfileDialogState extends State<ProfileDialog> {
     );
   }
 
-  Widget _buildGamePlayed(BuildContext context) => Row(
-        children: [
-          Expanded(
-            flex: 1,
-            child: Row(
-              children: [
-                Radio<int>(
-                    value: 0,
-                    groupValue: gamePlayed,
-                    onChanged: (index) {
-                      setState(() {
-                        gamePlayed = index!;
-                      });
-                    }),
-                Expanded(
-                  child: Text('Ja'),
-                ),
-              ],
-            ),
+  Widget _buildGamePlayed(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          flex: 1,
+          child: Row(
+            children: [
+              Radio<int>(
+                  value: 0,
+                  groupValue: gamePlayed,
+                  onChanged: (index) {
+                    setState(() {
+                      gamePlayed = index!;
+                    });
+                  }),
+              Expanded(
+                child: Text('Ja'),
+              ),
+            ],
           ),
-          Expanded(
-            flex: 1,
-            child: Row(
-              children: [
-                Radio<int>(
-                    value: 1,
-                    groupValue: gamePlayed,
-                    onChanged: (index) {
-                      setState(() {
-                        gamePlayed = index!;
-                      });
-                    }),
-                Expanded(
-                  child: Text('Nein'),
-                ),
-              ],
-            ),
+        ),
+        Expanded(
+          flex: 1,
+          child: Row(
+            children: [
+              Radio<int>(
+                  value: 1,
+                  groupValue: gamePlayed,
+                  onChanged: (index) {
+                    setState(() {
+                      gamePlayed = index!;
+                    });
+                  }),
+              Expanded(
+                child: Text('Nein'),
+              ),
+            ],
           ),
-        ],
-      );
+        ),
+      ],
+    );
+  }
 
   save(BuildContext context) {
     if (_formKey.currentState?.validate() ?? false) {
