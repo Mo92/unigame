@@ -4,6 +4,7 @@ import 'package:shadow_deals/core/text_validators.dart';
 import 'package:shadow_deals/logic/game/game_bloc.dart';
 import 'package:shadow_deals/logic/game/game_event.dart';
 import 'package:shadow_deals/logic/game/models/profile_model.dart';
+import 'package:shadow_deals/pages/game/widgets/conditional_inputs.dart';
 
 class ProfileDialog extends StatefulWidget {
   const ProfileDialog({required this.gameBloc, super.key});
@@ -19,8 +20,10 @@ class _ProfileDialogState extends State<ProfileDialog> {
   final _ageController = TextEditingController();
   final _jobController = TextEditingController();
   final _yearsOfExperienceController = TextEditingController();
+  final _gamePlayedController = TextEditingController();
 
   int selectedSalutation = 0;
+  int gamePlayed = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -146,6 +149,19 @@ class _ProfileDialogState extends State<ProfileDialog> {
                     ),
                   ),
                   SizedBox(height: 16),
+                  Text(
+                      'Haben Sie das Spiel schon einmal gespielt? Wenn ja, wie oft?'),
+                  SizedBox(height: 8),
+                  ConditionalInputWidget(
+                    selectedValue: gamePlayed,
+                    onValueChanged: (value) {
+                      setState(() {
+                        gamePlayed = value!;
+                      });
+                    },
+                    textController: _gamePlayedController,
+                  ),
+                  SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () => save(context),
                     child: Text('Speichern'),
@@ -170,6 +186,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
         salutation: getSalutation(),
         yearsOfExperience: int.parse(_yearsOfExperienceController.text),
         jobTitle: _jobController.text,
+        gamePlayed: gamePlayed == 1 ? _gamePlayedController.text : 'Nein',
       );
 
       widget.gameBloc.add(SaveProfile(profile: profile));

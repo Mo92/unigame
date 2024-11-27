@@ -24,6 +24,7 @@ class GameStateLoaded extends GameState {
   final bool isLoading;
   final bool hasGameEnded;
   final PostQuestionsModel? postQuestions;
+  final String usedStrategy; // Genutzte Strategie
 
   GameStateLoaded({
     required this.isLoading,
@@ -38,6 +39,7 @@ class GameStateLoaded extends GameState {
     this.prevScores,
     required this.hasGameEnded,
     this.postQuestions,
+    required this.usedStrategy,
   });
 
   @override
@@ -54,6 +56,7 @@ class GameStateLoaded extends GameState {
         prevScores,
         hasGameEnded,
         postQuestions,
+        usedStrategy,
       ];
 
   GameStateLoaded copyWith({
@@ -69,6 +72,7 @@ class GameStateLoaded extends GameState {
     List<int>? prevScores,
     bool? hasGameEnded,
     PostQuestionsModel? postQuestions,
+    String? usedStrategy,
   }) =>
       GameStateLoaded(
         isLoading: isLoading ?? this.isLoading,
@@ -83,9 +87,10 @@ class GameStateLoaded extends GameState {
         prevScores: prevScores ?? this.prevScores,
         hasGameEnded: hasGameEnded ?? this.hasGameEnded,
         postQuestions: postQuestions ?? this.postQuestions,
+        usedStrategy: usedStrategy ?? this.usedStrategy,
       );
 
   @override
   String toString() =>
-      'GameStateLoaded { currentRound: $currentRound | history: ${history.length} | CPU Score: $cpuScore | Player Score: $playerScore }';
+      'GameStateLoaded { currentRound: $currentRound | history: ${history.length} | CPU Score: $cpuScore | Player Score: $playerScore | Used Strategy: $usedStrategy}';
 }
