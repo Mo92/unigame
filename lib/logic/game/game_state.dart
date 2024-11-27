@@ -24,7 +24,7 @@ class GameStateLoaded extends GameState {
   final bool isLoading;
   final bool hasGameEnded;
   final PostQuestionsModel? postQuestions;
-  final String usedStrategy;
+  final String usedStrategy; // Genutzte Strategie
 
   GameStateLoaded({
     required this.isLoading,

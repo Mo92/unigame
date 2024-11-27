@@ -1,12 +1,12 @@
 import 'package:equatable/equatable.dart';
 
 class ProfileModel extends Equatable {
-  final String name;
-  final int age;
-  final String salutation;
-  final int yearsOfExperience;
-  final String jobTitle;
-  final String gamePlayed;
+  final String name; // Spielername
+  final int age; // Alter
+  final String salutation; // Anrede
+  final int yearsOfExperience; // Berufserfahrung
+  final String jobTitle; // Beruf
+  final String gamePlayed; // Schon gespielt
 
   const ProfileModel({
     required this.name,

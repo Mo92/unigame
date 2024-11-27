@@ -2,17 +2,17 @@
 import 'package:equatable/equatable.dart';
 
 class PostQuestionsModel extends Equatable {
-  final String understanding;
-  final String struggles;
-  final String fairness;
-  final String cooperations;
-  final String decisions;
-  final String enemyAnalytic;
-  final String enemyStrategy;
-  final String enemyDidManipulate;
-  final String performance;
-  final String optimization;
-  final String suggestions;
+  final String understanding; // Spielverständnis
+  final String struggles; // Schwierigkeiten
+  final String fairness; // Fairness
+  final String cooperations; // Spieler Strategie
+  final String decisions; // Sp. Strategie Begründung
+  final String enemyAnalytic; // Gegner analysiert
+  final String enemyStrategy; // Gegner Strategie
+  final String enemyDidManipulate; // Wurde Spieler beeinflusst
+  final String performance; // Spieler Leistung
+  final String optimization; // Vorschläge
+  final String suggestions; // Anmerkungen
 
   const PostQuestionsModel({
     required this.understanding,
