@@ -30,8 +30,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   /// Zwei Strategien
   List<String> strategies = ['Zen Dominator'];
 
-  /// Maximale Rundenanzahl
-  int maxRounds = 0;
+  /// Maximale Rundenanzahl (wert ist egal, da es neu zugewiesen wird)
+  int maxRounds = 4;
 
   /// Die grenze für das zufällige ende
   int maxRoundsScope = 22;
@@ -49,7 +49,6 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     /// Das Ergebnis ist die Anzahl der Gesamtrunden.
     maxRounds =
         Random().nextInt(maxRoundsScope - minRoundsScope) + minRoundsScope;
-    print(maxRounds);
 
     if (state is GameStateLoaded) {
       final currentState = state as GameStateLoaded;
@@ -146,6 +145,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         var prevHumanChoice = localHistory.last[0];
         var prevComputerChoice = localHistory.last[1];
         var prevScores = localHistory.last[2];
+
         emit(
           currentState.copyWith(
             history: localHistory,
@@ -219,12 +219,23 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
       emit(currentState.copyWith(postQuestions: event.postQuestions));
     }
+
+    add(UploadResults());
   }
 
   FutureOr<void> _uploadResults(
       UploadResults event, Emitter<GameState> emit) async {
-    final repo = GameRepository();
-
-    await repo.getDriveApi();
+    if (state is GameStateLoaded) {
+      final currentState = state as GameStateLoaded;
+      final repo = GameRepository();
+      await repo.getDriveApi(
+        currentState.profile!,
+        currentState.postQuestions!,
+        currentState.history,
+        currentState.playerScore,
+        currentState.cpuScore,
+        currentState.usedStrategy,
+      );
+    }
   }
 }

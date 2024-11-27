@@ -27,9 +27,9 @@ String mapUnderstanding(int input) {
 String mapStruggles(int value, String text) {
   switch (value) {
     case 0:
-      return 'Ja: $text';
-    case 1:
       return 'Nein';
+    case 1:
+      return 'Ja: $text';
   }
   return 'Error';
 }
@@ -69,9 +69,9 @@ String mapCooperations(int cooperations) {
 String mapDidAnalyze(int input, String text) {
   switch (input) {
     case 0:
-      return 'Ja: $text';
-    case 1:
       return 'Nein';
+    case 1:
+      return 'Ja: $text';
   }
   return 'Error';
 }
@@ -95,9 +95,9 @@ String mapHowWasEnemy(int input) {
 String mapDidCpuManipulate(int didCpuManipulate, String text) {
   switch (didCpuManipulate) {
     case 0:
-      return 'Ja: $text';
-    case 1:
       return 'Nein';
+    case 1:
+      return 'Ja: $text';
   }
   return 'Error';
 }

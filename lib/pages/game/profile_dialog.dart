@@ -176,49 +176,6 @@ class _ProfileDialogState extends State<ProfileDialog> {
     );
   }
 
-  Widget _buildGamePlayed(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          flex: 1,
-          child: Row(
-            children: [
-              Radio<int>(
-                  value: 0,
-                  groupValue: gamePlayed,
-                  onChanged: (index) {
-                    setState(() {
-                      gamePlayed = index!;
-                    });
-                  }),
-              Expanded(
-                child: Text('Ja'),
-              ),
-            ],
-          ),
-        ),
-        Expanded(
-          flex: 1,
-          child: Row(
-            children: [
-              Radio<int>(
-                  value: 1,
-                  groupValue: gamePlayed,
-                  onChanged: (index) {
-                    setState(() {
-                      gamePlayed = index!;
-                    });
-                  }),
-              Expanded(
-                child: Text('Nein'),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
   save(BuildContext context) {
     if (_formKey.currentState?.validate() ?? false) {
       _formKey.currentState?.save();
@@ -229,7 +186,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
         salutation: getSalutation(),
         yearsOfExperience: int.parse(_yearsOfExperienceController.text),
         jobTitle: _jobController.text,
-        gamePlayed: gamePlayed == 0 ? _gamePlayedController.text : 'Nein',
+        gamePlayed: gamePlayed == 1 ? _gamePlayedController.text : 'Nein',
       );
 
       widget.gameBloc.add(SaveProfile(profile: profile));

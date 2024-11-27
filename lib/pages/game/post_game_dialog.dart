@@ -78,6 +78,18 @@ class _PostGameDialogState extends State<PostGameDialog> {
   }
 
   @override
+  void dispose() {
+    _gameStrugglesController.dispose();
+    _decisionMaking.dispose();
+    _didYouAnalyzeComputerController.dispose();
+    _didCpuManipulateController.dispose();
+    _optimization.dispose();
+    _suggestions.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
       child: SingleChildScrollView(
