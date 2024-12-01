@@ -25,10 +25,37 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     }
   };
 
+  /// Für jede Strategie werden die jeweiligen Wahrscheinlichkeiten definiert
+  /// und anschließend bei `calculateCpuChoice()` ausgewählt
+  final Map<String, double> shadowParams = {
+    "CC": 0.7, // Beide kooperieren
+    "CD": 0.1, // Spieler kooperiert, CPU defektiert
+    "DC": 0.6, // Spieler defektiert, CPU kooperiert
+    "DD": 0.3 // beide defektieren
+  };
+
+  final Map<String, double> mindParams = {
+    "CC": 0.58, // Beide kooperieren
+    "CD": 0.1, // Spieler kooperiert, CPU defektiert
+    "DC": 0.3, // Spieler defektiert, CPU kooperiert
+    "DD": 0.06 // beide defektieren
+  };
+
+  final Map<String, double> dealerParams = {
+    "CC": 0.92, // Beide kooperieren
+    "CD": 0.28, // Spieler kooperiert, CPU defektiert
+    "DC": 0.88, // Spieler defektiert, CPU kooperiert
+    "DD": 0.56 // beide defektieren
+  };
+
   /// Hier die Liste erweitern für die Strategien
   /// ['Zen Dominator', 'Den Zominator'] <- das wären
   /// Zwei Strategien
-  List<String> strategies = ['Zen Dominator'];
+  List<String> strategies = [
+    'Zen Shadow',
+    'Zen Mind',
+    'Zen Dealer',
+  ];
 
   /// Maximale Rundenanzahl (wert ist egal, da es neu zugewiesen wird)
   int maxRounds = 4;
@@ -105,31 +132,12 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       // Computerentscheidung basierend auf ZDS
       String computerChoice;
 
-      /// Hier wird die ausgewählte Strategie überprüft
-      /// Um das zu erweitern, einfach mehr `case` einfügen und break nicht vergessen
-      /// Dafür muss eine neue function erstellt werden siehe `zenDominator`
-      ///
-      /// Bsp:
-      ///   case 'Zen Dominator':
-      ///      computerChoice = zenDominator(currentRound, localHistory, random);
-      ///      break;
-      ///   case 'Den Zominator':
-      ///      computerChoice = neueMethode(currentRound, localHistory, random);
-      ///      break;
-      switch (currentState.usedStrategy) {
-        case 'Zen Dominator':
-          computerChoice = zenDominator(currentRound, localHistory, random);
-          break;
-
-        /// case 'Den Zominator':
-        ///  computerChoice = neueMethode(currentRound, localHistory, random);
-        ///  break;
-
-        /// Die Standard Strategie, falls keine zugeordnet werden kann
-        /// (das sollte nicht passieren)
-        default:
-          computerChoice = zenDominator(currentRound, localHistory, random);
-      }
+      computerChoice = calculateCpuChoice(
+        currentRound,
+        localHistory,
+        random,
+        currentState.usedStrategy,
+      );
 
       // Ergebnisse berechnen
       var roundScore = payoffMatrix[event.decision]?[computerChoice];
@@ -160,7 +168,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
           ),
         );
         dev.log(
-          "Runde $prevRound: GESMAT: $roundScore "
+          "Runde $prevRound: GESAMT: $roundScore "
           "Runde $prevRound: Sie = $prevHumanChoice, Spieler 2 = $prevComputerChoice, "
           "Punkte: Sie = ${prevScores[0]}, Spieler 2 = ${prevScores[1]}",
         );
@@ -177,41 +185,43 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   }
 
   /// Die erste ZDS Strategie, hier kann man sich für zukünfite Strategien orientieren
-  String zenDominator(
-      int currentRound, List<List<dynamic>> localHistory, Random random) {
-    String computerChoice;
-    const zdsParams = {"p1": 0.7, "p2": 0.3, "p3": 0.4, "p4": 0.6};
+  String calculateCpuChoice(int currentRound, List<List<dynamic>> localHistory,
+      Random random, String usedStrategy) {
+    String computerChoice = '';
+    late Map<String, double> params;
+
+    /// Zieht sich die Params der jeweiligen Strategie
+    switch (usedStrategy) {
+      case 'Zen Shadow':
+        params = shadowParams;
+        break;
+      case 'Zen Mind':
+        params = mindParams;
+        break;
+      case 'Zen Dealer':
+        params = dealerParams;
+        break;
+    }
+
     if (currentRound == 1) {
       computerChoice = "C"; // Startet kooperativ
     } else {
+      double randomNumber = (random.nextDouble() * 100).floorToDouble() / 100;
       String lastHumanChoice = localHistory.last[0]; // Letzte Wahl des Menschen
-      if (lastHumanChoice == "C") {
-        computerChoice = random.nextDouble() < zdsParams["p1"]! ? "C" : "D";
-      } else {
-        computerChoice = random.nextDouble() < zdsParams["p3"]! ? "C" : "D";
+      String lastComputerChoice = localHistory.last[1]; // Letzte Wahl des CPU
+
+      if (lastHumanChoice == "C" && lastComputerChoice == "C") {
+        computerChoice = randomNumber < params['CC']! ? 'C' : 'D';
+      } else if (lastHumanChoice == 'C' && lastComputerChoice == 'D') {
+        computerChoice = randomNumber < params['CD']! ? 'C' : 'D';
+      } else if (lastHumanChoice == 'D' && lastComputerChoice == 'C') {
+        computerChoice = randomNumber < params['DC']! ? 'C' : 'D';
+      } else if (lastHumanChoice == 'D' && lastComputerChoice == 'C') {
+        computerChoice = randomNumber < params['DD']! ? 'C' : 'D';
       }
     }
     return computerChoice;
   }
-
-  /// BEISPIEL:
-  /// Eine Strategie die Analog zum Zen Dominator eine invertierte Matrix hat
-  // String denZominator(
-  //     int currentRound, List<List<dynamic>> localHistory, Random random) {
-  //   String computerChoice;
-  //   const zdsParams = {"p1": 0.3, "p2": 0.7, "p3": 0.6, "p4": 0.4};
-  //   if (currentRound == 1) {
-  //     computerChoice = "C"; // Startet kooperativ
-  //   } else {
-  //     String lastHumanChoice = localHistory.last[0]; // Letzte Wahl des Menschen
-  //     if (lastHumanChoice == "C") {
-  //       computerChoice = random.nextDouble() < zdsParams["p1"]! ? "C" : "D";
-  //     } else {
-  //       computerChoice = random.nextDouble() < zdsParams["p3"]! ? "C" : "D";
-  //     }
-  //   }
-  //   return computerChoice;
-  // }
 
   void _onSavePostQuestions(SavePostQuestions event, Emitter<GameState> emit) {
     if (state is GameStateLoaded) {
