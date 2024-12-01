@@ -81,8 +81,8 @@ class GameRepository {
       'Fairness',
       'Spieler Strategie',
       'Sp. Strategie Begründung',
-      'Gegner analysiert',
-      'Gegner Strategie',
+      'Dealer analysiert',
+      'Dealer Strategie',
       'Wurde Spieler beeinflusst',
       'Spieler Leistung',
       'Vorschläge',
@@ -120,9 +120,9 @@ class GameRepository {
     csvBuffer.writeln([
       'Runde',
       'Spielerzug',
-      'Gegnerzug',
+      'Dealerzug',
       'Spielerpunkte',
-      'Gegnerpunkte',
+      'Dealerpunkte',
       'X',
       'X',
       'X',
@@ -143,17 +143,17 @@ class GameRepository {
     for (int i = 0; i < history.length; i++) {
       final round = history[i];
       final playerMove = round[0]; // Spielerzug
-      final cpuMove = round[1]; // Gegnerzug
+      final cpuMove = round[1]; // Dealerzug
       final scores = round[2] as List; // Punkteliste
       final playerRoundScore = scores[0]; // Spielerpunkte
-      final cpuRoundScore = scores[1]; // Gegnerpunkte
+      final cpuRoundScore = scores[1]; // Dealerpunkte
 
       csvBuffer.writeln([
         i + 1, // Runde
         playerMove, // Spielerzug
-        cpuMove, // Gegnerzug
+        cpuMove, // Dealerzug
         playerRoundScore, // Spielerpunkte
-        cpuRoundScore, // Gegnerpunkte
+        cpuRoundScore, // Dealerpunkte
         'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'
       ].join(',')); // Werte für die Runde
     }
@@ -166,7 +166,7 @@ class GameRepository {
       'Gesamt Spieler:',
       playerScore,
       'X',
-      'Gesamt Gegner:',
+      'Gesamt Dealer:',
       cpuScore,
       'X',
       'X',

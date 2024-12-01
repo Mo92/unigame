@@ -22,7 +22,7 @@ class LandingPage extends StatelessWidget {
               ),
               SizedBox(height: 16),
               Text(
-                'Willkommen in der dunklen Welt des illegalen Handels – einem Ort, an dem Profit über alles geht und niemandem zu trauen ist. Du bist ein aufstrebender Dealer, der bereit ist, große Risiken einzugehen, um in der Unterwelt zu überleben. Deine Mission ist klar: Sorge dafür, dass am Ende möglichst viel Geld in deiner Tasche landet. Doch Vorsicht – dein Gegenüber hat dasselbe Ziel wie du.',
+                'Willkommen in der dunklen Welt des illegalen Handels – einem Ort, an dem Profit über alles geht und niemandem zu trauen ist. Du bist ein aufstrebender Dealer, der bereit ist, große Risiken einzugehen, um in der Unterwelt zu überleben. Deine Mission ist klar: Sorge dafür, dass am Ende möglichst viel Geld in deiner Tasche landet. Doch Vorsicht – dein Dealer hat dasselbe Ziel wie du.',
                 style: TextStyle(fontSize: 16),
               ),
               SizedBox(height: 16),
@@ -42,7 +42,7 @@ class LandingPage extends StatelessWidget {
                     ),
                     TextSpan(
                       text:
-                          ' Jede Entscheidung, die du triffst, kann dich entweder reicher machen oder deinen Gegner stärken. In jedem Deal entscheidest du, ob du ehrlich bist oder betrügst – doch denk daran: Jeder Schritt zählt.',
+                          ' Jede Entscheidung, die du triffst, kann dich entweder reicher oder ärmer machen. In jedem Deal entscheidest du, ob du ehrlich bist oder betrügst – doch denk daran: Jeder Schritt zählt.',
                     ),
                   ],
                 ),
@@ -73,16 +73,16 @@ class LandingPage extends StatelessWidget {
               SizedBox(height: 8),
               BulletPoint(
                 text:
-                    'Ehrlich handeln (Kooperation): Ihr haltet euch beide an die Abmachung und teilt den Gewinn.',
+                    'Ehrlich handeln: Ihr haltet euch beide an die Abmachung und teilt den Gewinn.',
               ),
               BulletPoint(
                 text:
-                    'Betrügen (Defektion): Du nimmst alles für dich – aber wenn dein Gegenüber dasselbe tut, bleibt kaum etwas übrig.',
+                    'Betrügen: Du nimmst alles für dich – aber wenn dein Dealer dasselbe tut, bleibt kaum etwas übrig.',
               ),
               SizedBox(height: 16),
               RichText(
                 text: TextSpan(
-                  text: 'Der Dealer, der gegen dich spielt ',
+                  text: 'Der Dealer, der im Spiel agiert ',
                   style: TextStyle(fontSize: 16, color: Colors.black),
                   children: [
                     TextSpan(
@@ -109,7 +109,7 @@ class LandingPage extends StatelessWidget {
               SizedBox(height: 8),
               BulletPoint(
                 text:
-                    'Ehrlich + Ehrlich (Kooperation): Beide halten sich an den Deal und verdienen solide.',
+                    'Ehrlich + Ehrlich: Beide halten sich an den Deal und verdienen solide.',
               ),
               BulletPoint(text: '3 Punkte für beide.'),
               SizedBox(height: 8),

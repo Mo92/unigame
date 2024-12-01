@@ -34,7 +34,7 @@ class GamePage extends StatelessWidget {
                   children: [
                     Text(defectOrCoop(state.prevCpuChoice!, extended: true)),
                     Text(
-                        'Punkte: Du = ${state.prevScores![0]} / Gegner = ${state.prevScores![1]}')
+                        'Punkte: Du = ${state.prevScores![0]} / Dealer = ${state.prevScores![1]}')
                   ],
                 ),
               );
@@ -59,18 +59,18 @@ class GamePage extends StatelessWidget {
               SizedBox(height: 12),
               if (state.playerScore > state.cpuScore)
                 Text(
-                    'Gratulation! Du hast das Geschäft dominiert und deinen Gegner übertroffen. Deine Entscheidungen haben dir den höchsten Profit eingebracht - eine beeindruckende Leistung in einer Welt voller Risiko und Misstrauen. Der Erfolg ist dein!'),
+                    'Gratulation! Du hast das Geschäft dominiert und deinen Dealer übertroffen. Deine Entscheidungen haben dir den höchsten Profit eingebracht - eine beeindruckende Leistung in einer Welt voller Risiko und Misstrauen. Der Erfolg ist dein!'),
               if (state.playerScore < state.cpuScore)
                 Text(
                     'Das Geschäft ist vorbei und dein Gegener hat dich überlistet. In der Unterwelt zählt jeder Deal, jede Entscheidung. Diesmal hast du Verloren, aber die Straßen von Gotham bieten immer eine neue Chance - bereit es beim nächsten mal besser zu machen?'),
               if (state.playerScore == state.cpuScore)
                 Text(
-                    'Das Geschäft endet im Gleichstand. Selbst in der Unterwelt hast du bewiesen, dass Täuschung, List und Risiko deine Waffen sind – und für einen Moment warst du deinem Gegenüber ebenbürtig.'),
+                    'Das Geschäft endet im Gleichstand. Selbst in der Unterwelt hast du bewiesen, dass Täuschung, List und Risiko deine Waffen sind – und für einen Moment warst du deinem Dealer ebenbürtig.'),
               SizedBox(height: 12),
               Text(
-                  'Gesamtergebnis: Du: ${state.playerScore} / Gegner: ${state.cpuScore}'),
+                  'Gesamtergebnis: Du: ${state.playerScore} / Dealer: ${state.cpuScore}'),
               SizedBox(height: 12),
-              Text('Ergbenisse der jeweiligen Runden'),
+              Text('Ergebnisse der jeweiligen Runden'),
               SizedBox(height: 12),
               ..._buildScores(context, state),
             ],
@@ -89,7 +89,7 @@ class GamePage extends StatelessWidget {
           ),
           Text(
             '''Hier geht es um Deals, Täuschung und das richtige Timing. 
-Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opfer eines Betrugs, der dich alles kostet?
+Kannst du das Spiel meistern und als erfolgreicher Dealer hervorgehen, oder wirst du zum Opfer eines Betrugs, der dich alles kostet?
 ''',
             style: Theme.of(context).textTheme.bodyMedium,
             textAlign: TextAlign.center,
@@ -127,7 +127,7 @@ Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opf
                             : () => BlocProvider.of<GameBloc>(context).add(
                                   PlayerMove(decision: 'C'),
                                 ),
-                        child: Text('Kooperieren'),
+                        child: Text('Ehrlich handeln'),
                       ),
                       SizedBox(width: 8),
                       ElevatedButton(
@@ -136,7 +136,7 @@ Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opf
                             : () => BlocProvider.of<GameBloc>(context).add(
                                   PlayerMove(decision: 'D'),
                                 ),
-                        child: Text('Defektieren'),
+                        child: Text('Betrügen'),
                       ),
                     ],
                   )
@@ -173,7 +173,7 @@ Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opf
             Text('Ergebnis der letzten Runde:'),
             Text(defectOrCoop(state.prevCpuChoice!, extended: true)),
             Text(
-                'Punkte: Du = ${state.prevScores![0]} / Gegner = ${state.prevScores![1]}')
+                'Punkte: Du = ${state.prevScores![0]} / Dealer = ${state.prevScores![1]}')
           ],
         ],
       ),
@@ -199,9 +199,9 @@ Kannst du das Spiel meistern und als Gewinner hervorgehen, oder wirst du zum Opf
               Text('Runde ${roundCount + 1}:'),
               SizedBox(width: 4),
               Text(
-                  'Du = ${defectOrCoop(hChoice)}, Gegner =  ${defectOrCoop(cChoice)}'),
+                  'Du = ${defectOrCoop(hChoice)}, Dealer =  ${defectOrCoop(cChoice)}'),
               SizedBox(width: 4),
-              Text('Punkte: Du = ${scores[0]}, Gegner= ${scores[1]}'),
+              Text('Punkte: Du = ${scores[0]}, Dealer= ${scores[1]}'),
               SizedBox(width: 12),
             ],
           ),

@@ -1,11 +1,11 @@
 String defectOrCoop(String input, {bool extended = false}) {
   if (extended) {
     return input == 'C'
-        ? 'Der Gegner hat kooperiert'
-        : 'Der Gegner hat Defektiert';
+        ? 'Der Dealer hat ehrlich gehandelt'
+        : 'Der Dealer hat betrogen';
   }
 
-  return input == 'C' ? 'Kooperiert' : 'Defektiert ';
+  return input == 'C' ? 'ehrlich gehandelt' : 'betrogen ';
 }
 
 String mapUnderstanding(int input) {

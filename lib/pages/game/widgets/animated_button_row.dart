@@ -44,7 +44,7 @@ class AnimatedButtonsRowState extends State<AnimatedButtonsRow> {
           ),
           child: ElevatedButton(
             onPressed: null,
-            child: Text('Kooperieren', style: TextStyle(color: Colors.white)),
+            child: Text('Ehrlich handeln', style: TextStyle(color: Colors.white)),
           ),
         ),
         SizedBox(width: 10),
@@ -63,7 +63,7 @@ class AnimatedButtonsRowState extends State<AnimatedButtonsRow> {
               backgroundColor: Colors.transparent,
               shadowColor: Colors.transparent,
             ),
-            child: Text('Defektieren', style: TextStyle(color: Colors.white)),
+            child: Text('Betrügen', style: TextStyle(color: Colors.white)),
           ),
         ),
       ],

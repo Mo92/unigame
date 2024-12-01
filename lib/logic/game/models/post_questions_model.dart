@@ -7,8 +7,8 @@ class PostQuestionsModel extends Equatable {
   final String fairness; // Fairness
   final String cooperations; // Spieler Strategie
   final String decisions; // Sp. Strategie Begründung
-  final String enemyAnalytic; // Gegner analysiert
-  final String enemyStrategy; // Gegner Strategie
+  final String enemyAnalytic; // Dealer analysiert
+  final String enemyStrategy; // Dealer Strategie
   final String enemyDidManipulate; // Wurde Spieler beeinflusst
   final String performance; // Spieler Leistung
   final String optimization; // Vorschläge
