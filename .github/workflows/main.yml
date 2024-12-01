@@ -38,8 +38,8 @@ jobs:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: build/web
-          server-dir: /var/www/web1.maitsolutions.de
+          local-dir: build/web/
+          server-dir: /var/www/html/web1.maitsolutions.de/
           exclude: |
             assets/credentials.json
 
