@@ -12,7 +12,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: "Set Flutter 3.10.6"
+      - name: "Set Flutter 3.24.4"
         uses: subosito/flutter-action@v2
         with:
           flutter-version: 3.24.4
@@ -23,5 +23,9 @@ jobs:
           git fetch --tags;
           git checkout 3.24.4;
           flutter --version;
+
+      - name: Create Empty Credentials File
+        run: echo "{}" > assets/credentials.json
+
       - name: Build Flutter Web Release
         run: flutter build web --release
