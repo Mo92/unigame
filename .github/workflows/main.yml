@@ -38,7 +38,7 @@ jobs:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: build/web
+          local-dir: build/web/
           server-dir: /var/www/web1.maitsolutions.de
 
       - name: Restart Nginx
