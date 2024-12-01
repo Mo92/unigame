@@ -15,13 +15,13 @@ jobs:
       - name: "Set Flutter 3.10.6"
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 3.10.6
-      - name: "Checkout Flutter 3.10.7"
+          flutter-version: 3.24.4
+      - name: "Checkout Flutter 3.24.5"
         shell: bash
         run: |
           cd $FLUTTER_ROOT;
           git fetch --tags;
-          git checkout 3.10.7;
+          git checkout 3.24.4;
           flutter --version;
       - name: Build Flutter Web Release
         run: flutter build web --release
