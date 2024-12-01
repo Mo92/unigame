@@ -1,0 +1,24 @@
+name: Build Flutter
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Fix flutter SDK folder permission
+        run: git config --global --add safe.directory /tmp/flutter/--
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "stable"
+
+      - name: Build Flutter Web Release
+        run: flutter build web --release
