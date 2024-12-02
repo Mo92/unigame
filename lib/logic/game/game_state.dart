@@ -25,6 +25,7 @@ class GameStateLoaded extends GameState {
   final bool hasGameEnded;
   final PostQuestionsModel? postQuestions;
   final String usedStrategy; // Genutzte Strategie
+  final bool usePlayerTerm;
 
   GameStateLoaded({
     required this.isLoading,
@@ -40,6 +41,7 @@ class GameStateLoaded extends GameState {
     required this.hasGameEnded,
     this.postQuestions,
     required this.usedStrategy,
+    required this.usePlayerTerm,
   });
 
   @override
@@ -51,12 +53,13 @@ class GameStateLoaded extends GameState {
         history,
         cpuScore,
         playerScore,
-        prevCpuChoice,
         prevHumanChoice,
+        prevCpuChoice,
         prevScores,
         hasGameEnded,
         postQuestions,
         usedStrategy,
+        usePlayerTerm,
       ];
 
   GameStateLoaded copyWith({
@@ -73,6 +76,7 @@ class GameStateLoaded extends GameState {
     bool? hasGameEnded,
     PostQuestionsModel? postQuestions,
     String? usedStrategy,
+    bool? usePlayerTerm,
   }) =>
       GameStateLoaded(
         isLoading: isLoading ?? this.isLoading,
@@ -88,6 +92,7 @@ class GameStateLoaded extends GameState {
         hasGameEnded: hasGameEnded ?? this.hasGameEnded,
         postQuestions: postQuestions ?? this.postQuestions,
         usedStrategy: usedStrategy ?? this.usedStrategy,
+        usePlayerTerm: usePlayerTerm ?? this.usePlayerTerm,
       );
 
   @override

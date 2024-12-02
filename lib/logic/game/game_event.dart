@@ -9,11 +9,15 @@ abstract class GameEvent extends Equatable {
 
 class SaveProfile extends GameEvent {
   final ProfileModel profile;
+  final bool usePlayerTerm;
 
-  SaveProfile({required this.profile});
+  SaveProfile({
+    required this.profile,
+    required this.usePlayerTerm,
+  });
 
   @override
-  List<Object> get props => [profile];
+  List<Object> get props => [profile, usePlayerTerm];
 }
 
 class UploadResults extends GameEvent {}

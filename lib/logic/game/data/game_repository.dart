@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
 import 'package:googleapis/drive/v3.dart';
 import 'package:googleapis_auth/auth_io.dart';
+import 'package:shadow_deals/core/helpers.dart';
 import 'package:shadow_deals/logic/game/models/post_questions_model.dart';
 import 'package:shadow_deals/logic/game/models/profile_model.dart';
 
@@ -15,24 +16,20 @@ class GameRepository {
   late String? accessToken;
 
   Future<void> getDriveApi(
-      ProfileModel profile,
-      PostQuestionsModel postQuestions,
-      List<List<dynamic>> history,
-      int playerScore,
-      int cpuScore,
-      String usedStrategy) async {
+    ProfileModel profile,
+    PostQuestionsModel postQuestions,
+    List<List<dynamic>> history,
+    int playerScore,
+    int cpuScore,
+    String usedStrategy,
+    bool usePlayerTerm,
+  ) async {
     // Lade die JSON-Datei mit den Anmeldedaten
     String jsonString = await rootBundle.loadString('assets/credentials.json');
 
     final accountCredentials = ServiceAccountCredentials.fromJson(jsonString);
-    final String csvContent = createCsv(
-      profile,
-      postQuestions,
-      history,
-      playerScore,
-      cpuScore,
-      usedStrategy,
-    ); // Beispielinhalt
+    final String csvContent = createCsv(profile, postQuestions, history,
+        playerScore, cpuScore, usedStrategy, usePlayerTerm); // Beispielinhalt
 
     var media = Media(
         Stream.fromIterable([utf8.encode(csvContent)]), csvContent.length);
@@ -60,12 +57,14 @@ class GameRepository {
   }
 
   String createCsv(
-      ProfileModel profile,
-      PostQuestionsModel postQuestions,
-      List<List<dynamic>> history,
-      int playerScore,
-      int cpuScore,
-      String usedStrategy) {
+    ProfileModel profile,
+    PostQuestionsModel postQuestions,
+    List<List<dynamic>> history,
+    int playerScore,
+    int cpuScore,
+    String usedStrategy,
+    bool usePlayerTerm,
+  ) {
     final csvBuffer = StringBuffer();
 
     // Kopfzeile für Profil, Post-Questions und `usedStrategy`
@@ -87,7 +86,8 @@ class GameRepository {
       'Spieler Leistung',
       'Vorschläge',
       'Anmerkungen',
-      'Genutzte Strategie'
+      'Genutzte Strategie',
+      'Spielerbegriff'
     ].join(',')); // Überschriften
 
     // Werte für Profil, Post-Questions und `usedStrategy`
@@ -109,7 +109,8 @@ class GameRepository {
       postQuestions.performance,
       postQuestions.optimization,
       postQuestions.suggestions,
-      usedStrategy
+      usedStrategy,
+      mapUsePlayerTermn(usePlayerTerm),
     ].join(',')); // Werte
 
     // Leere Zeilen

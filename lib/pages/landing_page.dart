@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shadow_deals/logic/game/game_bloc.dart';
@@ -8,6 +10,7 @@ class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
 
   Widget _buildBody(BuildContext context) {
+    final bool usePlayerTerm = Random().nextBool();
     return Center(
       child: SingleChildScrollView(
         child: Padding(
@@ -139,7 +142,7 @@ class LandingPage extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (context) => BlocProvider(
                       create: (_) => GameBloc(),
-                      child: GamePage(),
+                      child: GamePage(usePlayerTerm: usePlayerTerm),
                     ),
                   ),
                 ),

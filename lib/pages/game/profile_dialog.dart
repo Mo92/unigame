@@ -7,8 +7,14 @@ import 'package:shadow_deals/logic/game/models/profile_model.dart';
 import 'package:shadow_deals/pages/game/widgets/conditional_inputs.dart';
 
 class ProfileDialog extends StatefulWidget {
-  const ProfileDialog({required this.gameBloc, super.key});
+  const ProfileDialog({
+    required this.gameBloc,
+    required this.usePlayerTerm,
+    super.key,
+  });
+
   final GameBloc gameBloc;
+  final bool usePlayerTerm;
 
   @override
   State<ProfileDialog> createState() => _ProfileDialogState();
@@ -189,7 +195,12 @@ class _ProfileDialogState extends State<ProfileDialog> {
         gamePlayed: gamePlayed == 1 ? _gamePlayedController.text : 'Nein',
       );
 
-      widget.gameBloc.add(SaveProfile(profile: profile));
+      widget.gameBloc.add(
+        SaveProfile(
+          profile: profile,
+          usePlayerTerm: widget.usePlayerTerm,
+        ),
+      );
       Navigator.of(context).pop();
     }
   }
