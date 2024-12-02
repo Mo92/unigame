@@ -49,7 +49,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   };
 
   /// Hier die Liste erweitern für die Strategien
-  /// ['Zen Dominator', 'Den Zominator'] <- das wären
+  /// ['Zen Dominator', 'Zen Namitador'] <- das wären
   /// Zwei Strategien
   List<String> strategies = [
     'Zen Shadow',

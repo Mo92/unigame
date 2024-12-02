@@ -155,7 +155,12 @@ Kannst du das Spiel meistern und als erfolgreicher Dealer hervorgehen, oder wirs
                   Text(''),
                   SizedBox(height: 24),
                   Image.asset(
-                    'assets/images/cpu.png',
+                    /// Extrahiert den zweiten Teil des Namens der Strategie und sucht nach einem Bild
+                    /// das genau so heißt. Bsp.: Wennd die Strategie `Zen Dominator` heißt, würde der Pfad
+                    /// so aussehen: `assets/images/dominator.png`
+                    /// ! Der Name wird klein geschrieben !
+                    /// ! Es muss eine PNG Datei sein !
+                    'assets/images/${state.usedStrategy.split(' ').last.toLowerCase()}.png',
                     fit: BoxFit.contain,
                     height: 350,
                     width: 275,
