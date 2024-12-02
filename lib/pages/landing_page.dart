@@ -11,6 +11,7 @@ class LandingPage extends StatelessWidget {
 
   Widget _buildBody(BuildContext context) {
     final bool usePlayerTerm = Random().nextBool();
+    print(usePlayerTerm);
     return Center(
       child: SingleChildScrollView(
         child: Padding(
@@ -88,13 +89,14 @@ class LandingPage extends StatelessWidget {
                   text: 'Der Dealer, der im Spiel agiert ',
                   style: TextStyle(fontSize: 16, color: Colors.black),
                   children: [
-                    TextSpan(
-                      text: '(gesteuert vom Computer)',
-                      style: TextStyle(fontStyle: FontStyle.italic),
-                    ),
+                    if (!usePlayerTerm)
+                      TextSpan(
+                        text: '(gesteuert vom Computer), ',
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      ),
                     TextSpan(
                       text:
-                          ', hat eine eigene Strategie, die von uns entwickelt wurde. Kannst du ihn durchschauen?',
+                          'hat eine eigene Strategie${usePlayerTerm ? '' : ', die von uns entwickelt wurde'}. Kannst du ihn durchschauen?',
                     ),
                   ],
                 ),
