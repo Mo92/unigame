@@ -10,7 +10,12 @@ import 'package:shadow_deals/pages/game/post_game_dialog.dart';
 import 'package:shadow_deals/pages/game/profile_dialog.dart';
 
 class GamePage extends StatelessWidget {
-  const GamePage({super.key});
+  const GamePage({
+    super.key,
+    required this.usePlayerTerm,
+  });
+
+  final bool usePlayerTerm;
 
   Widget _buildBody(BuildContext context, GameStateLoaded state) {
     if ((state.prevCpuChoice != null && state.prevCpuChoice != null) &&
@@ -234,6 +239,7 @@ Kannst du das Spiel meistern und als erfolgreicher Dealer hervorgehen, oder wirs
                     builder: (innerContext) {
                       return ProfileDialog(
                         gameBloc: BlocProvider.of<GameBloc>(context),
+                        usePlayerTerm: usePlayerTerm,
                       );
                     },
                   );

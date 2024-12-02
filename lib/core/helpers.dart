@@ -117,3 +117,5 @@ String mapPerformance(int input) {
   }
   return 'Error';
 }
+
+String mapUsePlayerTermn(bool input) => input ? 'Spieler' : 'Computer';

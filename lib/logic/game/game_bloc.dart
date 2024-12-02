@@ -90,6 +90,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
           playerScore: 0,
           hasGameEnded: false,
           usedStrategy: selectedStrategy,
+          usePlayerTerm: event.usePlayerTerm,
         ),
       );
       return;
@@ -104,6 +105,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       isLoading: false,
       hasGameEnded: false,
       usedStrategy: selectedStrategy,
+      usePlayerTerm: event.usePlayerTerm,
     ));
   }
 
@@ -130,9 +132,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
       await Future.delayed(Duration(milliseconds: timeoutMillis));
       // Computerentscheidung basierend auf ZDS
-      String computerChoice;
-
-      computerChoice = calculateCpuChoice(
+      String computerChoice = calculateCpuChoice(
         currentRound,
         localHistory,
         random,
@@ -216,10 +216,11 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         computerChoice = randomNumber < params['CD']! ? 'C' : 'D';
       } else if (lastHumanChoice == 'D' && lastComputerChoice == 'C') {
         computerChoice = randomNumber < params['DC']! ? 'C' : 'D';
-      } else if (lastHumanChoice == 'D' && lastComputerChoice == 'C') {
+      } else if (lastHumanChoice == 'D' && lastComputerChoice == 'D') {
         computerChoice = randomNumber < params['DD']! ? 'C' : 'D';
       }
     }
+
     return computerChoice;
   }
 
@@ -245,6 +246,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         currentState.playerScore,
         currentState.cpuScore,
         currentState.usedStrategy,
+        currentState.usePlayerTerm,
       );
     }
   }
