@@ -5,13 +5,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shadow_deals/logic/game/game_bloc.dart';
 import 'package:shadow_deals/pages/game/widgets/bullet_point.dart';
 import 'package:shadow_deals/pages/game/game_page.dart';
+import 'package:shadow_deals/pages/shared/markdown_page.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
 
   Widget _buildBody(BuildContext context) {
     final bool usePlayerTerm = Random().nextBool();
-    print(usePlayerTerm);
+
     return Center(
       child: SingleChildScrollView(
         child: Padding(
@@ -158,6 +159,14 @@ class LandingPage extends StatelessWidget {
     );
   }
 
+  void routeToMarkdownPages(BuildContext context, bool isImprint) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => MarkdownPage(isImprint: isImprint),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -165,6 +174,17 @@ class LandingPage extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Shadow Deals'),
       ),
+      persistentFooterButtons: [
+        TextButton(
+          onPressed: () => routeToMarkdownPages(context, true),
+          child: Text('Impressum'),
+        ),
+        TextButton(
+          onPressed: () => routeToMarkdownPages(context, false),
+          child: Text('Datenschutzerklärung'),
+        )
+      ],
+      persistentFooterAlignment: AlignmentDirectional.centerEnd,
       body: _buildBody(context),
     );
   }
