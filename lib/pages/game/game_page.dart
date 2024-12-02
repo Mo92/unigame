@@ -8,6 +8,7 @@ import 'package:shadow_deals/logic/game/game_state.dart';
 import 'package:shadow_deals/pages/game/widgets/animated_button_row.dart';
 import 'package:shadow_deals/pages/game/post_game_dialog.dart';
 import 'package:shadow_deals/pages/game/profile_dialog.dart';
+import 'package:shadow_deals/pages/shared/markdown_page.dart';
 
 class GamePage extends StatelessWidget {
   const GamePage({
@@ -222,6 +223,14 @@ Kannst du das Spiel meistern und als erfolgreicher Dealer hervorgehen, oder wirs
     return rows;
   }
 
+  void routeToMarkdownPages(BuildContext context, bool isImprint) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => MarkdownPage(isImprint: isImprint),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -265,5 +274,16 @@ Kannst du das Spiel meistern und als erfolgreicher Dealer hervorgehen, oder wirs
             );
           },
         ),
+        persistentFooterButtons: [
+          TextButton(
+            onPressed: () => routeToMarkdownPages(context, true),
+            child: Text('Impressum'),
+          ),
+          TextButton(
+            onPressed: () => routeToMarkdownPages(context, false),
+            child: Text('Datenschutzerklärung'),
+          )
+        ],
+        persistentFooterAlignment: AlignmentDirectional.centerEnd,
       );
 }

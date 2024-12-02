@@ -17,6 +17,7 @@ dependencies:
   googleapis: ^13.2.0
   googleapis_auth: ^1.6.0
   universal_io: ^2.2.2
+  flutter_markdown: ^0.7.4+3
 
 dev_dependencies:
   flutter_test:
@@ -28,4 +29,5 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/markdown/
     - assets/credentials.json

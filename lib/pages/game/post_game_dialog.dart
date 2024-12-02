@@ -160,7 +160,8 @@ class _PostGameDialogState extends State<PostGameDialog> {
                   ],
                 ),
                 SizedBox(height: 32),
-                Text('Wie oft haben Sie während des Experiments ehrlich gehandelt?'),
+                Text(
+                    'Wie oft haben Sie während des Experiments ehrlich gehandelt?'),
                 SizedBox(height: 16),
                 RadioGroupWidget(
                   groupValue: cooperations,
