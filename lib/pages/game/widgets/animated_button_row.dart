@@ -33,37 +33,46 @@ class AnimatedButtonsRowState extends State<AnimatedButtonsRow> {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        AnimatedContainer(
-          duration: Duration(seconds: 2),
-          curve: Curves.easeInOut,
-          decoration: BoxDecoration(
-            color: _isFirstButtonActive
-                ? Colors.transparent
-                : Theme.of(context).primaryColor,
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: ElevatedButton(
-            onPressed: null,
-            child: Text('Ehrlich handeln', style: TextStyle(color: Colors.white)),
+        Flexible(
+          child: AnimatedContainer(
+            duration: Duration(seconds: 2),
+            curve: Curves.easeInOut,
+            decoration: BoxDecoration(
+              color: _isFirstButtonActive
+                  ? Colors.transparent
+                  : Theme.of(context).primaryColor,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: ElevatedButton(
+              onPressed: null,
+              child: Text(
+                'Ehrlich handeln',
+                style: TextStyle(color: Colors.white),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
           ),
         ),
         SizedBox(width: 10),
-        AnimatedContainer(
-          duration: Duration(seconds: 2),
-          curve: Curves.easeInOut,
-          decoration: BoxDecoration(
-            color: !_isFirstButtonActive
-                ? Colors.transparent
-                : Theme.of(context).primaryColor,
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: ElevatedButton(
-            onPressed: null,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.transparent,
-              shadowColor: Colors.transparent,
+        Flexible(
+          child: AnimatedContainer(
+            duration: Duration(seconds: 2),
+            curve: Curves.easeInOut,
+            decoration: BoxDecoration(
+              color: !_isFirstButtonActive
+                  ? Colors.transparent
+                  : Theme.of(context).primaryColor,
+              borderRadius: BorderRadius.circular(16),
             ),
-            child: Text('Betrügen', style: TextStyle(color: Colors.white)),
+            child: ElevatedButton(
+              onPressed: null,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.transparent,
+                shadowColor: Colors.transparent,
+              ),
+              child: Text('Betrügen', style: TextStyle(color: Colors.white)),
+            ),
           ),
         ),
       ],

@@ -78,7 +78,12 @@ class GamePage extends StatelessWidget {
               SizedBox(height: 12),
               Text('Ergebnisse der jeweiligen Runden'),
               SizedBox(height: 12),
-              ..._buildScores(context, state),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Column(
+                  children: _buildScores(context, state),
+                ),
+              ),
             ],
           ),
         )),
@@ -109,71 +114,81 @@ Kannst du das Spiel meistern und als erfolgreicher Dealer hervorgehen, oder wirs
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Text(
-                    '${state.profile?.name}',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  Text('Punkte: ${state.playerScore}'),
-                  SizedBox(height: 24),
-                  Image.asset(
-                    'assets/images/player.png',
-                    fit: BoxFit.contain,
-                    height: 350,
-                    width: 275,
-                  ),
-                  SizedBox(height: 12),
-                  Row(
-                    children: [
-                      ElevatedButton(
-                        onPressed: state.isLoading
-                            ? null
-                            : () => BlocProvider.of<GameBloc>(context).add(
-                                  PlayerMove(decision: 'C'),
-                                ),
-                        child: Text('Ehrlich handeln'),
-                      ),
-                      SizedBox(width: 8),
-                      ElevatedButton(
-                        onPressed: state.isLoading
-                            ? null
-                            : () => BlocProvider.of<GameBloc>(context).add(
-                                  PlayerMove(decision: 'D'),
-                                ),
-                        child: Text('Betrügen'),
-                      ),
-                    ],
-                  )
-                ],
+              Flexible(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Text(
+                      '${state.profile?.name}',
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                    Text('Punkte: ${state.playerScore}'),
+                    SizedBox(height: 24),
+                    Image.asset(
+                      'assets/images/player.png',
+                      fit: BoxFit.contain,
+                      height: 350,
+                      width: 275,
+                    ),
+                    SizedBox(height: 12),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Flexible(
+                          child: ElevatedButton(
+                            onPressed: state.isLoading
+                                ? null
+                                : () => BlocProvider.of<GameBloc>(context).add(
+                                      PlayerMove(decision: 'C'),
+                                    ),
+                            child: Text('Ehrlich handeln',
+                                maxLines: 2, overflow: TextOverflow.ellipsis),
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        Flexible(
+                          child: ElevatedButton(
+                            onPressed: state.isLoading
+                                ? null
+                                : () => BlocProvider.of<GameBloc>(context).add(
+                                      PlayerMove(decision: 'D'),
+                                    ),
+                            child: Text('Betrügen'),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               ),
               Text(
                 'VS',
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
-              Column(
-                children: [
-                  Text(
-                    state.usedStrategy,
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  Text(''),
-                  SizedBox(height: 24),
-                  Image.asset(
-                    /// Extrahiert den zweiten Teil des Namens der Strategie und sucht nach einem Bild
-                    /// das genau so heißt. Bsp.: Wennd die Strategie `Zen Dominator` heißt, würde der Pfad
-                    /// so aussehen: `assets/images/dominator.png`
-                    /// ! Der Name wird klein geschrieben !
-                    /// ! Es muss eine PNG Datei sein !
-                    'assets/images/${state.usedStrategy.split(' ').last.toLowerCase()}.png',
-                    fit: BoxFit.contain,
-                    height: 350,
-                    width: 275,
-                  ),
-                  SizedBox(height: 12),
-                  AnimatedButtonsRow(),
-                ],
+              Flexible(
+                child: Column(
+                  children: [
+                    Text(
+                      state.usedStrategy,
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                    Text(''),
+                    SizedBox(height: 24),
+                    Image.asset(
+                      /// Extrahiert den zweiten Teil des Namens der Strategie und sucht nach einem Bild
+                      /// das genau so heißt. Bsp.: Wennd die Strategie `Zen Dominator` heißt, würde der Pfad
+                      /// so aussehen: `assets/images/dominator.png`
+                      /// ! Der Name wird klein geschrieben !
+                      /// ! Es muss eine PNG Datei sein !
+                      'assets/images/${state.usedStrategy.split(' ').last.toLowerCase()}.png',
+                      fit: BoxFit.contain,
+                      height: 350,
+                      width: 275,
+                    ),
+                    SizedBox(height: 12),
+                    AnimatedButtonsRow(),
+                  ],
+                ),
               ),
             ],
           ),
