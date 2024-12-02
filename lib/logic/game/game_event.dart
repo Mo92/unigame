@@ -39,3 +39,5 @@ class SavePostQuestions extends GameEvent {
   @override
   List<Object> get props => [postQuestions];
 }
+
+class ResetGame extends GameEvent {}

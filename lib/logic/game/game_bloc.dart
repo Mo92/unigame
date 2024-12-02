@@ -12,6 +12,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     on<PlayerMove>(_onPlayerMove);
     on<SavePostQuestions>(_onSavePostQuestions);
     on<UploadResults>(_uploadResults);
+    on<ResetGame>(_onResetGame);
   }
 
   static const payoffMatrix = {
@@ -74,39 +75,22 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     /// Wählt eine zufällige Zahl zwischen der Differenz von `minRoundsScope`
     /// und `maxRoundsScope`, daraufhin wird die Mindestanforderung addiert.
     /// Das Ergebnis ist die Anzahl der Gesamtrunden.
-    maxRounds =
-        Random().nextInt(maxRoundsScope - minRoundsScope) + minRoundsScope;
+    // maxRounds =
+    //     Random().nextInt(maxRoundsScope - minRoundsScope) + minRoundsScope;
 
-    if (state is GameStateLoaded) {
-      final currentState = state as GameStateLoaded;
-
-      emit(
-        GameStateLoaded(
-          currentRound: currentState.currentRound,
-          profile: event.profile,
-          history: [],
-          cpuScore: 0,
-          isLoading: false,
-          playerScore: 0,
-          hasGameEnded: false,
-          usedStrategy: selectedStrategy,
-          usePlayerTerm: event.usePlayerTerm,
-        ),
-      );
-      return;
-    }
-
-    emit(GameStateLoaded(
-      currentRound: 1,
-      profile: event.profile,
-      history: [],
-      cpuScore: 0,
-      playerScore: 0,
-      isLoading: false,
-      hasGameEnded: false,
-      usedStrategy: selectedStrategy,
-      usePlayerTerm: event.usePlayerTerm,
-    ));
+    emit(
+      GameStateLoaded(
+        currentRound: 1,
+        profile: event.profile,
+        history: [],
+        cpuScore: 0,
+        playerScore: 0,
+        isLoading: false,
+        hasGameEnded: false,
+        usedStrategy: selectedStrategy,
+        usePlayerTerm: event.usePlayerTerm,
+      ),
+    );
   }
 
   Future<void> _onPlayerMove(PlayerMove event, Emitter<GameState> emit) async {
@@ -247,6 +231,22 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         currentState.cpuScore,
         currentState.usedStrategy,
         currentState.usePlayerTerm,
+      );
+    }
+  }
+
+  void _onResetGame(ResetGame event, Emitter<GameState> emit) {
+    if (state is GameStateLoaded) {
+      final currentState = state as GameStateLoaded;
+      final gamePlayed = currentState.profile!.gamePlayed == 'Nein'
+          ? '1'
+          : '${currentState.profile!.gamePlayed} + 1';
+
+      add(
+        SaveProfile(
+          profile: currentState.profile!.copyWith(gamePlayed: gamePlayed),
+          usePlayerTerm: currentState.usePlayerTerm,
+        ),
       );
     }
   }

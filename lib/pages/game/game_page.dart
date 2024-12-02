@@ -84,6 +84,13 @@ class GamePage extends StatelessWidget {
                   children: _buildScores(context, state),
                 ),
               ),
+              SizedBox(height: 24),
+              ElevatedButton(
+                onPressed: () => BlocProvider.of<GameBloc>(context).add(
+                  ResetGame(),
+                ),
+                child: Text('Erneut spielen!'),
+              ),
             ],
           ),
         )),
@@ -271,7 +278,7 @@ Kannst du das Spiel meistern und als erfolgreicher Dealer hervorgehen, oder wirs
               );
               return Center(
                 child: Text(
-                  'Du hast dein Profil nicht gespeichert, bitte lade die Seite neu.',
+                  'Du hast dein Profil nicht gespeichert, bitte Starte das Programm oder die Seite erneut',
                 ),
               );
             }

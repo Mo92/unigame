@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
 
 class ProfileModel extends Equatable {
@@ -26,4 +27,22 @@ class ProfileModel extends Equatable {
         jobTitle,
         gamePlayed,
       ];
+
+  ProfileModel copyWith({
+    String? name,
+    int? age,
+    String? salutation,
+    int? yearsOfExperience,
+    String? jobTitle,
+    String? gamePlayed,
+  }) {
+    return ProfileModel(
+      name: name ?? this.name,
+      age: age ?? this.age,
+      salutation: salutation ?? this.salutation,
+      yearsOfExperience: yearsOfExperience ?? this.yearsOfExperience,
+      jobTitle: jobTitle ?? this.jobTitle,
+      gamePlayed: gamePlayed ?? this.gamePlayed,
+    );
+  }
 }
