@@ -6,17 +6,17 @@ Dieses Dokument gibt einen groben Überblick über die Funktionsweise des Spiels
 
 Das Spiel lässt sich in sechs Hauptbestandteile unterteilen:
 
-1. **Einleitung**: Das Programm startet mit einer Einführung, die den User willkommen heißt und die Spielmechanik erklärt. In diesem Abschnitt erhält der User einen Überblick über die Spielregeln, die Ziele und den Ablauf des Spiels.
+1. [**Einleitung**](depth/1%20LANDING.md): Das Programm startet mit einer Einführung, die den User willkommen heißt und die Spielmechanik erklärt. In diesem Abschnitt erhält der User einen Überblick über die Spielregeln, die Ziele und den Ablauf des Spiels. In diesem Abschnitt erhält der User einen Überblick über die Spielregeln, die Ziele und den Ablauf des Spiels.
 
-2. **Eingabe von Profildaten**: Der User gibt seine Profildaten ein, die für das Spiel benötigt werden. Diese Daten sind wichtig, um eine personalisierte Spielerfahrung zu ermöglichen und um später statistische Auswertungen zu machen.
+2. [**Eingabe von Profildaten**](depth/2%20PROFIL.md): Der User gibt seine Profildaten ein, die für das Spiel benötigt werden. Diese Daten sind wichtig, um eine personalisierte Spielerfahrung zu ermöglichen und um später statistische Auswertungen zu machen. Diese Daten sind wichtig, um eine personalisierte Spielerfahrung zu ermöglichen und um später statistische Auswertungen zu machen.
 
-3. **Das Spiel an sich**: Das Herzstück des Programms ist das Spiel selbst. Es besteht aus mehreren Runden, in denen der User strategische Entscheidungen treffen muss. Jede Runde beeinflusst das Ergebnis und stellt den User vor neue Herausforderungen, bei denen es um Kooperation, Täuschung und Gewinnmaximierung geht.
+3. [**Das Spiel an sich**](depth/3%20GAME.md): Das Herzstück des Programms ist das Spiel selbst. Es besteht aus mehreren Runden, in denen der User strategische Entscheidungen treffen muss. Jede Runde beeinflusst das Ergebnis und stellt den User vor neue Herausforderungen, bei denen es um Kooperation, Täuschung und Gewinnmaximierung geht. Es besteht aus mehreren Runden, in denen der User strategische Entscheidungen treffen muss. Jede Runde beeinflusst das Ergebnis und stellt den User vor neue Herausforderungen, bei denen es um Kooperation, Täuschung und Gewinnmaximierung geht.
 
-4. **Fragebogen nach der letzten Runde**: Nach Abschluss der letzten Runde füllt der User einen Fragebogen aus. Dieser Fragebogen hilft dabei, Feedback zu sammeln und das Verhalten des Users während des Spiels zu analysieren. Die Fragen betreffen typischerweise die Entscheidungsfindung und die Erfahrungen des Users während des Spiels.
+4. [**Fragebogen nach der letzten Runde**](depth/4%20POST%20GAME%20QUESTION.md): Nach Abschluss der letzten Runde füllt der User einen Fragebogen aus. Dieser Fragebogen hilft dabei, Feedback zu sammeln und das Verhalten des Users während des Spiels zu analysieren. Die Fragen betreffen typischerweise die Entscheidungsfindung und die Erfahrungen des Users während des Spiels. Dieser Fragebogen hilft dabei, Feedback zu sammeln und das Verhalten des Users während des Spiels zu analysieren. Die Fragen betreffen typischerweise die Entscheidungsfindung und die Erfahrungen des Users während des Spiels.
 
-5. **Anzeige der Ergebnisse**: Nach dem Spiel werden die Ergebnisse für jede Runde und das Gesamtergebnis angezeigt. Dies gibt dem User die Möglichkeit, seine Leistung zu bewerten und zu sehen, wie er im Vergleich zu den möglichen Ergebnissen abgeschnitten hat. Die Anzeige der Ergebnisse ist interaktiv und bietet visuelle Darstellungen der gesammelten Daten.
+5. [**Anzeige der Ergebnisse**](depth/5%20SHOW%20SCORES.md): Nach dem Spiel werden die Ergebnisse für jede Runde und das Gesamtergebnis angezeigt. Dies gibt dem User die Möglichkeit, seine Leistung zu bewerten und zu sehen, wie er im Vergleich zu den möglichen Ergebnissen abgeschnitten hat. Die Anzeige der Ergebnisse ist interaktiv und bietet visuelle Darstellungen der gesammelten Daten. Dies gibt dem User die Möglichkeit, seine Leistung zu bewerten und zu sehen, wie er im Vergleich zu den möglichen Ergebnissen abgeschnitten hat. Die Anzeige der Ergebnisse ist interaktiv und bietet visuelle Darstellungen der gesammelten Daten.
 
-6. **Datenexport**: Während die Ergebnisse angezeigt werden, erfolgt ein Export der Daten in die Cloud. Dies stellt sicher, dass alle relevanten Informationen des Spiels gespeichert werden. Die Daten können zu Analysezwecken verwendet werden und helfen dabei, das Spiel und das Verhalten der User zu optimieren.
+6. [**Datenexport**](depth/6%20DATA%20EXPORT.md): Während die Ergebnisse angezeigt werden, erfolgt ein Export der Daten in die Cloud. Dies stellt sicher, dass alle relevanten Informationen des Spiels gespeichert werden. Die Daten können zu Analysezwecken verwendet werden und helfen dabei, das Spiel und das Verhalten der User zu optimieren. Dies stellt sicher, dass alle relevanten Informationen des Spiels gespeichert werden. Die Daten können zu Analysezwecken verwendet werden und helfen dabei, das Spiel und das Verhalten der User zu optimieren.
 
 ## ⚙️ Verwendung des BLoC Patterns in Flutter (Web)
 
@@ -31,8 +31,6 @@ BLoC steht für **Business Logic Component** und ist ein Architekturpattern, das
 2. **State**: Der **State** beschreibt den Zustand der Anwendung zu einem bestimmten Zeitpunkt. Während der User spielt, wird der aktuelle Zustand des Spiels im State gespeichert. Dieser Zustand ändert sich in Abhängigkeit von den Events, die durch den User oder das Spiel selbst ausgelöst werden.
 
 3. **BLoC**: Die **BLoC-Komponente** verbindet die **Events** mit den **States**. Wenn ein Event ausgelöst wird, verarbeitet der BLoC dieses Event und aktualisiert entsprechend den State. Der BLoC ist somit das Herzstück der Geschäftslogik und kümmert sich um alle Veränderungen des Zustands basierend auf den Aktionen des Users.
-
-![BLoC Pattern Übersicht](https://github.com/felangel/bloc/blob/master/assets/diagrams/bloc_architecture.png?raw=true)
 
 ### Wie wird das BLoC Pattern im Spiel genutzt?
 
