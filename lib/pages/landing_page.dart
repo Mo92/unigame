@@ -19,7 +19,7 @@ class LandingPage extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 42),
               Text(
@@ -38,9 +38,10 @@ class LandingPage extends StatelessWidget {
               ),
               SizedBox(height: 8),
               RichText(
+                textScaler: TextScaler.linear(1.2),
                 text: TextSpan(
+                  style: TextStyle(fontSize: 16),
                   text: 'Dein Ziel ist einfach: ',
-                  style: TextStyle(fontSize: 16, color: Colors.black),
                   children: [
                     TextSpan(
                       text: 'Verdiene so viel Profit wie möglich.',
@@ -65,10 +66,11 @@ class LandingPage extends StatelessWidget {
               ),
               SizedBox(height: 8),
               RichText(
+                textScaler: TextScaler.linear(1.2),
                 text: TextSpan(
+                  style: TextStyle(fontSize: 16, color: Colors.black),
                   text:
                       'Das Spiel besteht aus einer Reihe von heißen Deals, bei denen Geld und Ware getauscht werden. Doch in dieser Welt gibt es keine Regeln – nur deinen Instinkt und deine Gier.',
-                  style: TextStyle(fontSize: 16, color: Colors.black),
                 ),
               ),
               SizedBox(height: 16),
@@ -87,6 +89,7 @@ class LandingPage extends StatelessWidget {
               ),
               SizedBox(height: 16),
               RichText(
+                textScaler: TextScaler.linear(1.2),
                 text: TextSpan(
                   text: 'Der jeweilige Dealer, der im Spiel agiert ',
                   style: TextStyle(fontSize: 16, color: Colors.black),
