@@ -24,12 +24,13 @@ class _ProfileDialogState extends State<ProfileDialog> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _ageController = TextEditingController();
-  final _jobController = TextEditingController();
   final _yearsOfExperienceController = TextEditingController();
   final _gamePlayedController = TextEditingController();
 
   int selectedSalutation = 0;
   int gamePlayed = 0;
+  int selectedJob = -1;
+  int selectedJobDefiniton = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
             child: Form(
               key: _formKey,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Stell dich vor, bevor du Spielst:'),
                   SizedBox(height: 16),
@@ -130,15 +131,104 @@ class _ProfileDialogState extends State<ProfileDialog> {
                     ),
                   ),
                   SizedBox(height: 16),
-                  TextFormField(
-                    controller: _jobController,
-                    validator: Validators.required,
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText:
-                          'Was machst du beruflich? Und in welchem Bereich? ',
-                      helperText:
-                          '(Zb. Student der Wirtschaftswissenschaften, Junior Analyst im Controlling)',
+                  Text('Was ist dein aktueller Beschäftigungsstatus?'),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: RadioListTile(
+                          value: 1,
+                          groupValue: selectedJob,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedJob = value!;
+                            });
+                          },
+                          title: Text('Schüler:innen'),
+                        ),
+                      ),
+                      Expanded(
+                        child: RadioListTile(
+                          value: 2,
+                          groupValue: selectedJob,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedJob = value!;
+                            });
+                          },
+                          title: Text('Student:innen'),
+                        ),
+                      ),
+                      Expanded(
+                        child: RadioListTile(
+                          value: 3,
+                          groupValue: selectedJob,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedJob = value!;
+                            });
+                          },
+                          title: Text('Auszubildende:r'),
+                        ),
+                      ),
+                      Expanded(
+                        child: RadioListTile(
+                          value: 4,
+                          groupValue: selectedJob,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedJob = value!;
+                            });
+                          },
+                          title: Text('Berufstätig'),
+                        ),
+                      ),
+                      Expanded(
+                        child: RadioListTile(
+                          value: 5,
+                          groupValue: selectedJob,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedJob = value!;
+                            });
+                          },
+                          title: Text('Sonstige'),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16),
+                  Text('In welcher Berufsrichtung bist du tätig?'),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: DropdownMenu(
+                      enableSearch: false,
+                      onSelected: (value) => selectedJobDefiniton = value!,
+                      label: Text('Bitte auswählen'),
+                      dropdownMenuEntries: <DropdownMenuEntry<int>>[
+                        DropdownMenuEntry(
+                            value: 1,
+                            label: 'Handwerk, Technik und Produktion'),
+                        DropdownMenuEntry(
+                            value: 2,
+                            label: 'Dienstleistungen und Handlungsberufe'),
+                        DropdownMenuEntry(
+                            value: 3,
+                            label: 'Bildung, Kultur und kreative Berufe'),
+                        DropdownMenuEntry(
+                            value: 4, label: 'Gesundheit, Pflege und Soziales'),
+                        DropdownMenuEntry(
+                            value: 5,
+                            label: 'Natur, Umwelt und Landwirtschaft'),
+                        DropdownMenuEntry(
+                            value: 6, label: 'IT, Technik und Digitalisierung'),
+                        DropdownMenuEntry(
+                            value: 7,
+                            label: 'Wirtschaft, Verwaltung und Management'),
+                        DropdownMenuEntry(
+                            value: 8,
+                            label: 'Sicherheit, Verkehr und Logistik'),
+                        DropdownMenuEntry(value: 9, label: 'Sonstiges'),
+                      ],
                     ),
                   ),
                   SizedBox(height: 16),
@@ -185,13 +275,15 @@ class _ProfileDialogState extends State<ProfileDialog> {
   save(BuildContext context) {
     if (_formKey.currentState?.validate() ?? false) {
       _formKey.currentState?.save();
+      final job = getJob();
+      final jobDefiniton = getJobDefiniton();
 
       final profile = ProfileModel(
         name: _nameController.text,
         age: int.parse(_ageController.text),
         salutation: getSalutation(),
         yearsOfExperience: int.parse(_yearsOfExperienceController.text),
-        jobTitle: _jobController.text,
+        jobTitle: '$job - $jobDefiniton',
         gamePlayed: gamePlayed == 1 ? _gamePlayedController.text : 'Nein',
       );
 
@@ -213,6 +305,44 @@ class _ProfileDialogState extends State<ProfileDialog> {
         return 'F';
       default:
         return 'D';
+    }
+  }
+
+  String getJob() {
+    switch (selectedJob) {
+      case 1:
+        return 'Schüler:innen';
+      case 2:
+        return 'Student:innen';
+      case 3:
+        return 'Auszubildende:r';
+      case 4:
+        return 'Berufstätig:r';
+      default:
+        return 'Sonstige';
+    }
+  }
+
+  String getJobDefiniton() {
+    switch (selectedJobDefiniton) {
+      case 1:
+        return 'Handwerk / Technik / Produktion';
+      case 2:
+        return 'Dienstleistungen / Handlungsberufe';
+      case 3:
+        return 'Bildung / Kultur / kreative Berufe';
+      case 4:
+        return 'Gesundheit / Pflege / Soziales';
+      case 5:
+        return 'Natur / Umwelt / Landwirtschaft';
+      case 6:
+        return 'IT / Technik / Digitalisierung';
+      case 7:
+        return 'Wirtschaft / Verwaltung / Management';
+      case 8:
+        return 'Sicherheit / Verkehr / Logistik';
+      default:
+        return 'Sonstige';
     }
   }
 }
