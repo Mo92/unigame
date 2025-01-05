@@ -6,6 +6,7 @@ import 'package:shadow_deals/logic/game/game_bloc.dart';
 import 'package:shadow_deals/pages/game/widgets/bullet_point.dart';
 import 'package:shadow_deals/pages/game/game_page.dart';
 import 'package:shadow_deals/pages/shared/markdown_page.dart';
+import 'package:shadow_deals/pages/shared/page.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
@@ -169,7 +170,7 @@ class LandingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ScaffoldWrapper(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Shadow Deals'),
@@ -185,7 +186,7 @@ class LandingPage extends StatelessWidget {
         )
       ],
       persistentFooterAlignment: AlignmentDirectional.centerEnd,
-      body: _buildBody(context),
+      child: _buildBody(context),
     );
   }
 }
