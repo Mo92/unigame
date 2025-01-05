@@ -143,7 +143,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
                               selectedJob = value!;
                             });
                           },
-                          title: Text('Schüler:innen'),
+                          title: Text('Schüler:in'),
                         ),
                       ),
                       Expanded(
@@ -155,7 +155,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
                               selectedJob = value!;
                             });
                           },
-                          title: Text('Student:innen'),
+                          title: Text('Student:in'),
                         ),
                       ),
                       Expanded(
@@ -197,7 +197,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
                     ],
                   ),
                   SizedBox(height: 16),
-                  Text('In welcher Berufsrichtung bist du tätig?'),
+                  Text('In welcher Branche bist du tätig?'),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: DropdownMenu(
@@ -246,7 +246,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
                   ),
                   SizedBox(height: 16),
                   Text(
-                      'Haben Sie das Spiel schon einmal gespielt? Wenn ja, wie oft?'),
+                      'Hast du das Spiel schon einmal gespielt? Wenn ja, wie oft?'),
                   SizedBox(height: 8),
                   ConditionalInputWidget(
                     selectedValue: gamePlayed,
@@ -311,9 +311,9 @@ class _ProfileDialogState extends State<ProfileDialog> {
   String getJob() {
     switch (selectedJob) {
       case 1:
-        return 'Schüler:innen';
+        return 'Schüler:in';
       case 2:
-        return 'Student:innen';
+        return 'Student:in';
       case 3:
         return 'Auszubildende:r';
       case 4:

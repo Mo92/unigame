@@ -97,7 +97,7 @@ class _PostGameDialogState extends State<PostGameDialog> {
             children: [
               Center(
                 child: Text(
-                  'Vielen Dank für Ihre Teilnahme und Ihre Zeit. Ihre Antworten sind für unser wissenschaftliches Experiment, sehr wertvoll! Darum bitten wir Sie, die folgenden Fragen zu beantworten. Anschließend können Sie Ihre Gesamtleistung im Spiel begutachten.',
+                  'Vielen Dank für deine Teilnahme und deine Zeit. Deine Antworten sind für unser wissenschaftliches Experiment, sehr wertvoll! Darum bitten wir dich, die folgenden Fragen zu beantworten. Anschließend kannst du deine Gesamtleistung im Spiel begutachten.',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
@@ -112,7 +112,7 @@ class _PostGameDialogState extends State<PostGameDialog> {
                 ),
               SizedBox(height: 32),
               Text(
-                'Wie gut haben Sie das Ziel des Experiments verstanden?',
+                'Wie gut hast du das Ziel des Experiments verstanden?',
               ),
               SizedBox(height: 16),
               RadioGroupWidget(
@@ -128,7 +128,7 @@ class _PostGameDialogState extends State<PostGameDialog> {
               ),
               SizedBox(height: 32),
               Text(
-                  'Hatten Sie während des Experiments Schwierigkeiten? Wenn ja, bitte beschreiben.'),
+                  'Hattest du während des Experiments Schwierigkeiten? Wenn ja, bitte beschreiben.'),
               SizedBox(height: 16),
               ConditionalInputWidget(
                 selectedValue: struggles,
@@ -141,7 +141,7 @@ class _PostGameDialogState extends State<PostGameDialog> {
               ),
               SizedBox(height: 32),
               Text(
-                  'Wie oft haben Sie während des Experiments ehrlich gehandelt?'),
+                  'Wie oft hast du während des Experiments ehrlich gehandelt?'),
               SizedBox(height: 16),
               RadioGroupWidget(
                 groupValue: cooperations,
@@ -159,7 +159,7 @@ class _PostGameDialogState extends State<PostGameDialog> {
                 ],
               ),
               SizedBox(height: 32),
-              Text('Warum haben Sie sich so entschieden?'),
+              Text('Warum hast du dich so entschieden?'),
               SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -173,7 +173,7 @@ class _PostGameDialogState extends State<PostGameDialog> {
               ),
               SizedBox(height: 32),
               Text(
-                  'Haben Sie die Strategie Ihres Gegenspielers bewusst analysiert? Wenn ja, bitte beschreiben'),
+                  'Hast du die Strategie deines Dealers bewusst analysiert? Wenn ja, bitte beschreiben'),
               SizedBox(height: 16),
               ConditionalInputWidget(
                 selectedValue: didAnalyze,
@@ -185,8 +185,7 @@ class _PostGameDialogState extends State<PostGameDialog> {
                 textController: _didYouAnalyzeComputerController,
               ),
               SizedBox(height: 32),
-              Text(
-                  'Wie haben Sie die Strategie Ihres Gegenspielers wahrgenommen?'),
+              Text('Wie hast du die Strategie deines Dealers wahrgenommen?'),
               SizedBox(height: 16),
               RadioGroupWidget(
                 groupValue: howWasEnemy,
@@ -205,7 +204,7 @@ class _PostGameDialogState extends State<PostGameDialog> {
               ),
               SizedBox(height: 32),
               Text(
-                  'Hat Ihr Gegenspieler Ihre Entscheidung beeinflusst? Wenn ja, wie?'),
+                  'Hat dein Dealer deine Entscheidung beeinflusst? Wenn ja, wie?'),
               SizedBox(height: 16),
               ConditionalInputWidget(
                 selectedValue: didCpuManipulate,
@@ -217,7 +216,7 @@ class _PostGameDialogState extends State<PostGameDialog> {
                 textController: _didCpuManipulateController,
               ),
               SizedBox(height: 32),
-              Text('Wie zufrieden sind Sie mit Ihrer Leistung im Experiment?'),
+              Text('Wie zufrieden bist du mit deiner Leistung im Experiment?'),
               SizedBox(height: 16),
               RadioGroupWidget(
                 groupValue: performance,
@@ -236,7 +235,7 @@ class _PostGameDialogState extends State<PostGameDialog> {
               ),
               SizedBox(height: 32),
               Text(
-                  'Haben Sie Verbesserungsvorschläge für zukünfitge Experimente?'),
+                  'Hast du Verbesserungsvorschläge für zukünfitge Experimente?'),
               SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -249,7 +248,7 @@ class _PostGameDialogState extends State<PostGameDialog> {
                 ),
               ),
               SizedBox(height: 32),
-              Text('Haben Sie weiter Anmerkungen?'),
+              Text('Hast du weiter Anmerkungen?'),
               SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.all(8.0),
