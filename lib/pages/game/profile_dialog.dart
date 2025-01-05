@@ -113,7 +113,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
                     validator: Validators.required,
                     decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
-                      labelText: 'Wie lautet dein Spielername?',
+                      labelText: 'Wie willst du dich im Spiel nennen?',
                     ),
                   ),
                   SizedBox(height: 16),
@@ -138,7 +138,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
                       labelText:
                           'Was machst du beruflich? Und in welchem Bereich? ',
                       helperText:
-                          '(Zb. Student der Wirttschaftswissenschaften, Junior Analyst im Controlling)',
+                          '(Zb. Student der Wirtschaftswissenschaften, Junior Analyst im Controlling)',
                     ),
                   ),
                   SizedBox(height: 16),

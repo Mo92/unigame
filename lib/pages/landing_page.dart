@@ -28,7 +28,7 @@ class LandingPage extends StatelessWidget {
               ),
               SizedBox(height: 16),
               Text(
-                'Willkommen in der dunklen Welt des illegalen Handels – einem Ort, an dem Profit über alles geht und niemandem zu trauen ist. Du bist ein aufstrebender Dealer, der bereit ist, große Risiken einzugehen, um in der Unterwelt zu überleben. Deine Mission ist klar: Sorge dafür, dass am Ende möglichst viel Geld in deiner Tasche landet. Doch Vorsicht – dein Dealer hat dasselbe Ziel wie du.',
+                'Willkommen in der dunklen Welt des illegalen Handels – einem Ort, an dem Profit über alles geht und niemandem zu trauen ist. Du bist ein aufstrebender Dealer, der bereit ist, große Risiken einzugehen, um in der Unterwelt zu überleben. Deine Mission ist klar: Sorge dafür, dass am Ende möglichst viel Geld in deiner Tasche landet. Doch Vorsicht – deine Dealer haben dasselbe Ziel wie du.',
                 style: TextStyle(fontSize: 16),
               ),
               SizedBox(height: 16),
@@ -48,7 +48,7 @@ class LandingPage extends StatelessWidget {
                     ),
                     TextSpan(
                       text:
-                          ' Jede Entscheidung, die du triffst, kann dich entweder reicher oder ärmer machen. In jedem Deal entscheidest du, ob du ehrlich bist oder betrügst – doch denk daran: Jeder Schritt zählt.',
+                          ' Jede Entscheidung, die du triffst, kann dich entweder reicher oder ärmer machen. In jedem Deal entscheidest du, ob du ehrlich bist oder betrügst.',
                     ),
                   ],
                 ),
@@ -88,7 +88,7 @@ class LandingPage extends StatelessWidget {
               SizedBox(height: 16),
               RichText(
                 text: TextSpan(
-                  text: 'Der Dealer, der im Spiel agiert ',
+                  text: 'Der jeweilige Dealer, der im Spiel agiert ',
                   style: TextStyle(fontSize: 16, color: Colors.black),
                   children: [
                     if (!usePlayerTerm)
