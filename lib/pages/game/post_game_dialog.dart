@@ -24,7 +24,6 @@ class _PostGameDialogState extends State<PostGameDialog> {
   final _suggestions = TextEditingController();
   int understanding = -1;
   int struggles = -1;
-  int fairness = -1;
   int cooperations = -1;
   int didAnalyze = -1;
   int howWasEnemy = -1;
@@ -35,7 +34,6 @@ class _PostGameDialogState extends State<PostGameDialog> {
   bool get noRadiosSelected =>
       understanding < 0 ||
       struggles < 0 ||
-      fairness < 0 ||
       cooperations < 0 ||
       didAnalyze < 0 ||
       howWasEnemy < 0 ||
@@ -59,7 +57,6 @@ class _PostGameDialogState extends State<PostGameDialog> {
       final PostQuestionsModel postQuestionsModel = PostQuestionsModel(
         understanding: mapUnderstanding(understanding),
         struggles: mapStruggles(struggles, _gameStrugglesController.text),
-        fairness: mapFairness(fairness),
         cooperations: mapCooperations(cooperations),
         decisions: _decisionMaking.text,
         enemyAnalytic:
@@ -141,24 +138,6 @@ class _PostGameDialogState extends State<PostGameDialog> {
                   });
                 },
                 textController: _gameStrugglesController,
-              ),
-              SizedBox(height: 32),
-              Text('Wie fair empfanden Sie das Experiment?'),
-              SizedBox(height: 16),
-              RadioGroupWidget(
-                groupValue: fairness,
-                onChanged: (value) {
-                  setState(() {
-                    fairness = value!;
-                  });
-                },
-                options: [
-                  'Sehr unfair',
-                  'Unfair',
-                  'Neutral',
-                  'Fair',
-                  'Sehr fair',
-                ],
               ),
               SizedBox(height: 32),
               Text(
