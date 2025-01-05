@@ -9,6 +9,7 @@ import 'package:shadow_deals/pages/game/widgets/animated_button_row.dart';
 import 'package:shadow_deals/pages/game/post_game_dialog.dart';
 import 'package:shadow_deals/pages/game/profile_dialog.dart';
 import 'package:shadow_deals/pages/shared/markdown_page.dart';
+import 'package:shadow_deals/pages/shared/page.dart';
 
 class GamePage extends StatelessWidget {
   const GamePage({
@@ -63,15 +64,13 @@ class GamePage extends StatelessWidget {
               Text('Vielen Dank für deine Teilnahme',
                   style: Theme.of(context).textTheme.headlineMedium),
               SizedBox(height: 12),
-              if (state.playerScore > state.cpuScore)
+              if (state.playerScore > state.cpuScore ||
+                  state.playerScore == state.cpuScore)
                 Text(
-                    'Gratulation! Du hast das Geschäft dominiert und deinen Dealer übertroffen. Deine Entscheidungen haben dir den höchsten Profit eingebracht - eine beeindruckende Leistung in einer Welt voller Risiko und Misstrauen. Der Erfolg ist dein!'),
+                    'Du beherrschst den Untergrundmarkt wie kein anderer! Deine Deals sind präzise und extrem profitabel – du weißt genau, wie man jede Gelegenheit zu deinem Vorteil nutzt. Setze deine Taktik fort und steigere deine Gewinne weiter, bis dir der Markt gehört.'),
               if (state.playerScore < state.cpuScore)
                 Text(
-                    'Das Geschäft ist vorbei und dein Gegener hat dich überlistet. In der Unterwelt zählt jeder Deal, jede Entscheidung. Diesmal hast du Verloren, aber die Straßen von Gotham bieten immer eine neue Chance - bereit es beim nächsten mal besser zu machen?'),
-              if (state.playerScore == state.cpuScore)
-                Text(
-                    'Das Geschäft endet im Gleichstand. Selbst in der Unterwelt hast du bewiesen, dass Täuschung, List und Risiko deine Waffen sind – und für einen Moment warst du deinem Dealer ebenbürtig.'),
+                    'Deine Shadow Deals zeigen noch Luft nach oben. In den Tiefen des Untergrundmarktes zählt nur eines: präzise Entscheidungen und maximale Profite. Feile an deiner Strategie, finde lukrativere Deals und bringe dein Geschäft auf die nächste Stufe.'),
               SizedBox(height: 12),
               Text(
                   'Gesamtergebnis: Du: ${state.playerScore} / Dealer: ${state.cpuScore}'),
@@ -232,58 +231,60 @@ Kannst du das Spiel meistern und als erfolgreicher Dealer hervorgehen, oder wirs
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: const Text('Shadow Deals'),
+  Widget build(BuildContext context) {
+    return ScaffoldWrapper(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text('Shadow Deals'),
+      ),
+      persistentFooterButtons: [
+        TextButton(
+          onPressed: () => routeToMarkdownPages(context, true),
+          child: Text('Impressum'),
         ),
-        body: BlocBuilder<GameBloc, GameState>(
-          builder: (context, state) {
-            if (state is GameStateLoading) {
-              SchedulerBinding.instance.addPostFrameCallback(
-                (_) {
-                  showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (innerContext) {
-                      return ProfileDialog(
-                        gameBloc: BlocProvider.of<GameBloc>(context),
-                        usePlayerTerm: usePlayerTerm,
-                      );
-                    },
-                  );
-                },
-              );
-              return Center(
-                child: Text(
-                  'Du hast dein Profil nicht gespeichert, bitte lade die Seite neu.',
-                ),
-              );
-            }
-            if (state is GameStateLoaded) {
-              return _buildBody(context, state);
-            }
+        TextButton(
+          onPressed: () => routeToMarkdownPages(context, false),
+          child: Text('Datenschutzerklärung'),
+        )
+      ],
+      persistentFooterAlignment: AlignmentDirectional.centerEnd,
+      child: BlocBuilder<GameBloc, GameState>(
+        builder: (context, state) {
+          if (state is GameStateLoading) {
+            SchedulerBinding.instance.addPostFrameCallback(
+              (_) {
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (innerContext) {
+                    return ProfileDialog(
+                      gameBloc: BlocProvider.of<GameBloc>(context),
+                      usePlayerTerm: usePlayerTerm,
+                    );
+                  },
+                );
+              },
+            );
             return Center(
               child: Text(
-                'FEHLER LAN FEHLER',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge
-                    ?.copyWith(color: Colors.red),
+                'Du hast dein Profil nicht gespeichert, bitte lade die Seite neu.',
               ),
             );
-          },
-        ),
-        persistentFooterButtons: [
-          TextButton(
-            onPressed: () => routeToMarkdownPages(context, true),
-            child: Text('Impressum'),
-          ),
-          TextButton(
-            onPressed: () => routeToMarkdownPages(context, false),
-            child: Text('Datenschutzerklärung'),
-          )
-        ],
-        persistentFooterAlignment: AlignmentDirectional.centerEnd,
-      );
+          }
+          if (state is GameStateLoaded) {
+            return _buildBody(context, state);
+          }
+          return Center(
+            child: Text(
+              'FEHLER LAN FEHLER',
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge
+                  ?.copyWith(color: Colors.red),
+            ),
+          );
+        },
+      ),
+    );
+  }
 }
