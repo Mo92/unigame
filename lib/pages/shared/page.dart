@@ -17,15 +17,10 @@ class ScaffoldWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: DefaultTextStyle(
-        style: TextStyle(
-          fontSize: 1,
-        ),
-        child: MediaQuery(
-          data: MediaQuery.of(context)
-              .copyWith(textScaler: TextScaler.linear(1.2)),
-          child: child,
-        ),
+      body: MediaQuery(
+        data:
+            MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.2)),
+        child: child,
       ),
       appBar: appBar,
       persistentFooterButtons: persistentFooterButtons,
