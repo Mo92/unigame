@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shadow_deals/core/helpers.dart';
-import 'package:shadow_deals/core/text_validators.dart';
 import 'package:shadow_deals/logic/game/game_bloc.dart';
 import 'package:shadow_deals/logic/game/game_event.dart';
 import 'package:shadow_deals/logic/game/models/post_questions_model.dart';
@@ -189,7 +188,6 @@ class _PostGameDialogState extends State<PostGameDialog> {
                       border: UnderlineInputBorder(),
                       labelText: 'Bitte beschreiben',
                     ),
-                    validator: Validators.required,
                   ),
                 ),
                 SizedBox(height: 32),
@@ -268,7 +266,6 @@ class _PostGameDialogState extends State<PostGameDialog> {
                       border: UnderlineInputBorder(),
                       labelText: 'Bitte beschreiben',
                     ),
-                    validator: Validators.required,
                   ),
                 ),
                 SizedBox(height: 32),
@@ -282,7 +279,6 @@ class _PostGameDialogState extends State<PostGameDialog> {
                       border: UnderlineInputBorder(),
                       labelText: 'Bitte beschreiben',
                     ),
-                    validator: Validators.required,
                   ),
                 ),
                 SizedBox(height: 48),
