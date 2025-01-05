@@ -50,6 +50,30 @@ class GamePage extends StatelessWidget {
         },
       );
     }
+    if (state.profile != null && state.currentRound == 1 && !state.isLoading) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        Future.delayed(Duration(milliseconds: 4000), () {
+          // ignore: use_build_context_synchronously
+          if (Navigator.canPop(context)) Navigator.of(context).pop(true);
+        });
+        showDialog(
+            context: context,
+            builder: (innerContext) {
+              return Dialog.fullscreen(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Ein Dealer wird gesucht...'),
+                      SizedBox(height: 24),
+                      CircularProgressIndicator(),
+                    ],
+                  ),
+                ),
+              );
+            });
+      });
+    }
     if (state.hasGameEnded && state.postQuestions == null) {
       return PostGameDialog(gameBloc: BlocProvider.of<GameBloc>(context));
     }
@@ -60,9 +84,11 @@ class GamePage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 48),
           child: Column(
             mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Vielen Dank für deine Teilnahme',
-                  style: Theme.of(context).textTheme.headlineMedium),
+                  style: Theme.of(context).textTheme.headlineMedium,
+                  textAlign: TextAlign.center),
               SizedBox(height: 12),
               if (state.playerScore > state.cpuScore ||
                   state.playerScore == state.cpuScore)
@@ -203,9 +229,7 @@ Kannst du das Spiel meistern und als erfolgreicher Dealer hervorgehen, oder wirs
       rows.add(
         Center(
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(width: 12),
               Text('Runde ${roundCount + 1}:'),
               SizedBox(width: 4),
               Text(

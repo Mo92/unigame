@@ -34,22 +34,6 @@ String mapStruggles(int value, String text) {
   return 'Error';
 }
 
-String mapFairness(int fairness) {
-  switch (fairness) {
-    case 0:
-      return 'Sehr unfair';
-    case 1:
-      return 'Unfair';
-    case 2:
-      return 'Neutral';
-    case 3:
-      return 'Fair';
-    case 4:
-      return 'Sehr fair';
-  }
-  return 'Error';
-}
-
 String mapCooperations(int cooperations) {
   switch (cooperations) {
     case 0:

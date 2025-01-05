@@ -66,6 +66,8 @@ class GameRepository {
     bool usePlayerTerm,
   ) {
     final csvBuffer = StringBuffer();
+    final double playerAverage = playerScore / history.length;
+    final double cpuAverage = cpuScore / history.length;
 
     // Kopfzeile für Profil, Post-Questions und `usedStrategy`
     csvBuffer.writeln([
@@ -77,7 +79,7 @@ class GameRepository {
       'Schon gespielt',
       'Spielverständnis',
       'Schwierigkeiten',
-      'Fairness',
+      'Durchschnitt',
       'Spieler Strategie',
       'Sp. Strategie Begründung',
       'Dealer analysiert',
@@ -100,7 +102,7 @@ class GameRepository {
       profile.gamePlayed,
       postQuestions.understanding,
       postQuestions.struggles,
-      postQuestions.fairness,
+      'Spieler $playerAverage | CPU $cpuAverage',
       postQuestions.cooperations,
       postQuestions.decisions,
       postQuestions.enemyAnalytic,

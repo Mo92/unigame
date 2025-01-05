@@ -1,10 +1,8 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
 
 class PostQuestionsModel extends Equatable {
   final String understanding; // Spielverständnis
   final String struggles; // Schwierigkeiten
-  final String fairness; // Fairness
   final String cooperations; // Spieler Strategie
   final String decisions; // Sp. Strategie Begründung
   final String enemyAnalytic; // Dealer analysiert
@@ -17,7 +15,6 @@ class PostQuestionsModel extends Equatable {
   const PostQuestionsModel({
     required this.understanding,
     required this.struggles,
-    required this.fairness,
     required this.cooperations,
     required this.decisions,
     required this.enemyAnalytic,
@@ -32,7 +29,6 @@ class PostQuestionsModel extends Equatable {
   List<Object> get props => [
         understanding,
         struggles,
-        fairness,
         cooperations,
         decisions,
         enemyAnalytic,

@@ -55,9 +55,6 @@ class ConditionalInputWidget extends StatelessWidget {
                 controller: textController,
                 decoration: InputDecoration(
                   labelText: label,
-                  errorText: textController.text.isEmpty
-                      ? 'Dieses Feld darf nicht leer sein'
-                      : null,
                 ),
               ),
             ],

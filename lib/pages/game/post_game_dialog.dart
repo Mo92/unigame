@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shadow_deals/core/helpers.dart';
-import 'package:shadow_deals/core/text_validators.dart';
 import 'package:shadow_deals/logic/game/game_bloc.dart';
 import 'package:shadow_deals/logic/game/game_event.dart';
 import 'package:shadow_deals/logic/game/models/post_questions_model.dart';
@@ -25,7 +24,6 @@ class _PostGameDialogState extends State<PostGameDialog> {
   final _suggestions = TextEditingController();
   int understanding = -1;
   int struggles = -1;
-  int fairness = -1;
   int cooperations = -1;
   int didAnalyze = -1;
   int howWasEnemy = -1;
@@ -36,7 +34,6 @@ class _PostGameDialogState extends State<PostGameDialog> {
   bool get noRadiosSelected =>
       understanding < 0 ||
       struggles < 0 ||
-      fairness < 0 ||
       cooperations < 0 ||
       didAnalyze < 0 ||
       howWasEnemy < 0 ||
@@ -60,7 +57,6 @@ class _PostGameDialogState extends State<PostGameDialog> {
       final PostQuestionsModel postQuestionsModel = PostQuestionsModel(
         understanding: mapUnderstanding(understanding),
         struggles: mapStruggles(struggles, _gameStrugglesController.text),
-        fairness: mapFairness(fairness),
         cooperations: mapCooperations(cooperations),
         decisions: _decisionMaking.text,
         enemyAnalytic:
@@ -91,215 +87,193 @@ class _PostGameDialogState extends State<PostGameDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(16),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                Center(
-                  child: Text(
-                    'Vielen Dank für Ihre Teilnahme und Ihre Zeit. Ihre Antworten sind für unser wissenschaftliches Experiment, sehr wertvoll! Darum bitten wir Sie, die folgenden Fragen zu beantworten. Anschließend können Sie Ihre Gesamtleistung im Spiel begutachten.',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ),
-                if (showError)
-                  ListTile(
-                    iconColor: Colors.red,
-                    textColor: Colors.red,
-                    leading: Icon(Icons.warning),
-                    title: Text(
-                      'Es wurden nicht alle Felder ausgewählt',
-                    ),
-                  ),
-                SizedBox(height: 32),
-                Text('Wie gut haben Sie das Ziel des Experiments verstanden?'),
-                SizedBox(height: 16),
-                RadioGroupWidget(
-                  groupValue: understanding,
-                  onChanged: (value) => setState(() => understanding = value!),
-                  options: [
-                    'Gar nicht',
-                    'Wenig',
-                    'Mittelmäßig',
-                    'Gut',
-                    'Sehr gut'
-                  ],
-                ),
-                SizedBox(height: 32),
-                Text(
-                    'Hatten Sie während des Experiments Schwierigkeiten? Wenn ja, bitte beschreiben.'),
-                SizedBox(height: 16),
-                ConditionalInputWidget(
-                  selectedValue: struggles,
-                  onValueChanged: (value) {
-                    setState(() {
-                      struggles = value!;
-                    });
-                  },
-                  textController: _gameStrugglesController,
-                ),
-                SizedBox(height: 32),
-                Text('Wie fair empfanden Sie das Experiment?'),
-                SizedBox(height: 16),
-                RadioGroupWidget(
-                  groupValue: fairness,
-                  onChanged: (value) {
-                    setState(() {
-                      fairness = value!;
-                    });
-                  },
-                  options: [
-                    'Sehr unfair',
-                    'Unfair',
-                    'Neutral',
-                    'Fair',
-                    'Sehr fair',
-                  ],
-                ),
-                SizedBox(height: 32),
-                Text(
-                    'Wie oft haben Sie während des Experiments ehrlich gehandelt?'),
-                SizedBox(height: 16),
-                RadioGroupWidget(
-                  groupValue: cooperations,
-                  onChanged: (value) {
-                    setState(() {
-                      cooperations = value!;
-                    });
-                  },
-                  options: [
-                    'Nie',
-                    'Selten',
-                    'Manchmal',
-                    'Oft',
-                    'Immer',
-                  ],
-                ),
-                SizedBox(height: 32),
-                Text('Warum haben Sie sich so entschieden?'),
-                SizedBox(height: 16),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(
-                    controller: _decisionMaking,
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Bitte beschreiben',
-                    ),
-                    validator: Validators.required,
-                  ),
-                ),
-                SizedBox(height: 32),
-                Text(
-                    'Haben Sie die Strategie Ihres Gegenspielers bewusst analysiert? Wenn ja, bitte beschreiben'),
-                SizedBox(height: 16),
-                ConditionalInputWidget(
-                  selectedValue: didAnalyze,
-                  onValueChanged: (value) {
-                    setState(() {
-                      didAnalyze = value!;
-                    });
-                  },
-                  textController: _didYouAnalyzeComputerController,
-                ),
-                SizedBox(height: 32),
-                Text(
-                    'Wie haben Sie die Strategie Ihres Gegenspielers wahrgenommen?'),
-                SizedBox(height: 16),
-                RadioGroupWidget(
-                  groupValue: howWasEnemy,
-                  onChanged: (value) {
-                    setState(() {
-                      howWasEnemy = value!;
-                    });
-                  },
-                  options: [
-                    'Sehr kooperativ',
-                    'Kooperativ',
-                    'Neutral',
-                    'Konkurrenzorientiert',
-                    'Sehr konkurrenzorientiert',
-                  ],
-                ),
-                SizedBox(height: 32),
-                Text(
-                    'Hat Ihr Gegenspieler Ihre Entscheidung beeinflusst? Wenn ja, wie?'),
-                SizedBox(height: 16),
-                ConditionalInputWidget(
-                  selectedValue: didCpuManipulate,
-                  onValueChanged: (value) {
-                    setState(() {
-                      didCpuManipulate = value!;
-                    });
-                  },
-                  textController: _didCpuManipulateController,
-                ),
-                SizedBox(height: 32),
-                Text(
-                    'Wie zufrieden sind Sie mit Ihrer Leistung im Experiment?'),
-                SizedBox(height: 16),
-                RadioGroupWidget(
-                  groupValue: performance,
-                  onChanged: (value) {
-                    setState(() {
-                      performance = value!;
-                    });
-                  },
-                  options: [
-                    'Sehr unzufrieden',
-                    'Unzufrieden',
-                    'Neutral',
-                    'Zufrieden',
-                    'Sehr zufrieden',
-                  ],
-                ),
-                SizedBox(height: 32),
-                Text(
-                    'Haben Sie Verbesserungsvorschläge für zukünfitge Experimente?'),
-                SizedBox(height: 16),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(
-                    controller: _optimization,
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Bitte beschreiben',
-                    ),
-                    validator: Validators.required,
-                  ),
-                ),
-                SizedBox(height: 32),
-                Text('Haben Sie weiter Anmerkungen?'),
-                SizedBox(height: 16),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(
-                    controller: _suggestions,
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Bitte beschreiben',
-                    ),
-                    validator: Validators.required,
-                  ),
-                ),
-                SizedBox(height: 48),
-                Text(
-                  'Einverständniserklärung:',
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.all(16),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Text(
+                  'Vielen Dank für deine Teilnahme und deine Zeit. Deine Antworten sind für unser wissenschaftliches Experiment, sehr wertvoll! Darum bitten wir dich, die folgenden Fragen zu beantworten. Anschließend kannst du deine Gesamtleistung im Spiel begutachten.',
                   style: Theme.of(context).textTheme.titleMedium,
-                  textAlign: TextAlign.left,
                 ),
-                Text(
-                    'Durch das Abesenden dieses Fragebogens erkläre ich mich damit einverstanden, dass meine Daten analysiert und ausschließlich zu wissenschaftlichen Zwecken verwendet werden.'),
-                SizedBox(height: 32),
-                ElevatedButton(
-                  onPressed: () => submitData(context),
-                  child: Text('Absenden'),
-                )
-              ],
-            ),
+              ),
+              if (showError)
+                ListTile(
+                  iconColor: Colors.red,
+                  textColor: Colors.red,
+                  leading: Icon(Icons.warning),
+                  title: Text(
+                    'Es wurden nicht alle Felder ausgewählt',
+                  ),
+                ),
+              SizedBox(height: 32),
+              Text(
+                'Wie gut hast du das Ziel des Experiments verstanden?',
+              ),
+              SizedBox(height: 16),
+              RadioGroupWidget(
+                groupValue: understanding,
+                onChanged: (value) => setState(() => understanding = value!),
+                options: [
+                  'Gar nicht',
+                  'Wenig',
+                  'Mittelmäßig',
+                  'Gut',
+                  'Sehr gut'
+                ],
+              ),
+              SizedBox(height: 32),
+              Text(
+                  'Hattest du während des Experiments Schwierigkeiten? Wenn ja, bitte beschreiben.'),
+              SizedBox(height: 16),
+              ConditionalInputWidget(
+                selectedValue: struggles,
+                onValueChanged: (value) {
+                  setState(() {
+                    struggles = value!;
+                  });
+                },
+                textController: _gameStrugglesController,
+              ),
+              SizedBox(height: 32),
+              Text(
+                  'Wie oft hast du während des Experiments ehrlich gehandelt?'),
+              SizedBox(height: 16),
+              RadioGroupWidget(
+                groupValue: cooperations,
+                onChanged: (value) {
+                  setState(() {
+                    cooperations = value!;
+                  });
+                },
+                options: [
+                  'Nie',
+                  'Selten',
+                  'Manchmal',
+                  'Oft',
+                  'Immer',
+                ],
+              ),
+              SizedBox(height: 32),
+              Text('Warum hast du dich so entschieden?'),
+              SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  controller: _decisionMaking,
+                  decoration: const InputDecoration(
+                    border: UnderlineInputBorder(),
+                    labelText: 'Bitte beschreiben',
+                  ),
+                ),
+              ),
+              SizedBox(height: 32),
+              Text(
+                  'Hast du die Strategie deines Dealers bewusst analysiert? Wenn ja, bitte beschreiben'),
+              SizedBox(height: 16),
+              ConditionalInputWidget(
+                selectedValue: didAnalyze,
+                onValueChanged: (value) {
+                  setState(() {
+                    didAnalyze = value!;
+                  });
+                },
+                textController: _didYouAnalyzeComputerController,
+              ),
+              SizedBox(height: 32),
+              Text('Wie hast du die Strategie deines Dealers wahrgenommen?'),
+              SizedBox(height: 16),
+              RadioGroupWidget(
+                groupValue: howWasEnemy,
+                onChanged: (value) {
+                  setState(() {
+                    howWasEnemy = value!;
+                  });
+                },
+                options: [
+                  'Sehr kooperativ',
+                  'Kooperativ',
+                  'Neutral',
+                  'Konkurrenzorientiert',
+                  'Sehr konkurrenzorientiert',
+                ],
+              ),
+              SizedBox(height: 32),
+              Text(
+                  'Hat dein Dealer deine Entscheidung beeinflusst? Wenn ja, wie?'),
+              SizedBox(height: 16),
+              ConditionalInputWidget(
+                selectedValue: didCpuManipulate,
+                onValueChanged: (value) {
+                  setState(() {
+                    didCpuManipulate = value!;
+                  });
+                },
+                textController: _didCpuManipulateController,
+              ),
+              SizedBox(height: 32),
+              Text('Wie zufrieden bist du mit deiner Leistung im Experiment?'),
+              SizedBox(height: 16),
+              RadioGroupWidget(
+                groupValue: performance,
+                onChanged: (value) {
+                  setState(() {
+                    performance = value!;
+                  });
+                },
+                options: [
+                  'Sehr unzufrieden',
+                  'Unzufrieden',
+                  'Neutral',
+                  'Zufrieden',
+                  'Sehr zufrieden',
+                ],
+              ),
+              SizedBox(height: 32),
+              Text(
+                  'Hast du Verbesserungsvorschläge für zukünfitge Experimente?'),
+              SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  controller: _optimization,
+                  decoration: const InputDecoration(
+                    border: UnderlineInputBorder(),
+                    labelText: 'Bitte beschreiben',
+                  ),
+                ),
+              ),
+              SizedBox(height: 32),
+              Text('Hast du weiter Anmerkungen?'),
+              SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  controller: _suggestions,
+                  decoration: const InputDecoration(
+                    border: UnderlineInputBorder(),
+                    labelText: 'Bitte beschreiben',
+                  ),
+                ),
+              ),
+              SizedBox(height: 48),
+              Text(
+                'Einverständniserklärung:',
+                style: Theme.of(context).textTheme.titleMedium,
+                textAlign: TextAlign.left,
+              ),
+              Text(
+                  'Durch das Abesenden dieses Fragebogens erkläre ich mich damit einverstanden, dass meine Daten analysiert und ausschließlich zu wissenschaftlichen Zwecken verwendet werden.'),
+              SizedBox(height: 32),
+              ElevatedButton(
+                onPressed: () => submitData(context),
+                child: Text('Absenden'),
+              )
+            ],
           ),
         ),
       ),
