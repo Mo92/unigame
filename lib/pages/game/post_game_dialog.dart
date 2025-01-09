@@ -188,6 +188,7 @@ class _PostGameDialogState extends State<PostGameDialog> {
               Text('Wie hast du die Strategie deines Dealers wahrgenommen?'),
               SizedBox(height: 16),
               RadioGroupWidget(
+                widthTolerance: 800,
                 groupValue: howWasEnemy,
                 onChanged: (value) {
                   setState(() {
@@ -219,6 +220,7 @@ class _PostGameDialogState extends State<PostGameDialog> {
               Text('Wie zufrieden bist du mit deiner Leistung im Experiment?'),
               SizedBox(height: 16),
               RadioGroupWidget(
+                widthTolerance: 800,
                 groupValue: performance,
                 onChanged: (value) {
                   setState(() {

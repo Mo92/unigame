@@ -8,6 +8,7 @@ import 'package:shadow_deals/logic/game/game_state.dart';
 import 'package:shadow_deals/pages/game/widgets/animated_button_row.dart';
 import 'package:shadow_deals/pages/game/post_game_dialog.dart';
 import 'package:shadow_deals/pages/game/profile_dialog.dart';
+import 'package:shadow_deals/pages/game/widgets/responsive_selection_list.dart';
 import 'package:shadow_deals/pages/shared/markdown_page.dart';
 import 'package:shadow_deals/pages/shared/page.dart';
 
@@ -117,6 +118,7 @@ class GamePage extends StatelessWidget {
           Text(
             'Willkommen in der Unterwelt!',
             style: Theme.of(context).textTheme.headlineMedium,
+            textAlign: TextAlign.center,
           ),
           Text(
             '''Hier geht es um Deals, Täuschung und das richtige Timing. 
@@ -124,6 +126,7 @@ Kannst du das Spiel meistern und als erfolgreicher Dealer hervorgehen, oder wirs
 ''',
             style: Theme.of(context).textTheme.bodyMedium,
             textAlign: TextAlign.center,
+            softWrap: true,
           ),
           SizedBox(height: 12),
           Text(
@@ -131,8 +134,10 @@ Kannst du das Spiel meistern und als erfolgreicher Dealer hervorgehen, oder wirs
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           SizedBox(height: 24),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+          ResponsiveSelectionList(
+            widthTolerance: 700,
+            horizontallMainAxisAlignment: MainAxisAlignment.spaceAround,
+            horizontallMainAxisAxisSize: MainAxisSize.max,
             children: [
               Column(
                 mainAxisSize: MainAxisSize.max,
@@ -151,6 +156,7 @@ Kannst du das Spiel meistern und als erfolgreicher Dealer hervorgehen, oder wirs
                   ),
                   SizedBox(height: 12),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ElevatedButton(
                         onPressed: state.isLoading
@@ -173,9 +179,14 @@ Kannst du das Spiel meistern und als erfolgreicher Dealer hervorgehen, oder wirs
                   )
                 ],
               ),
+              SizedBox(height: 24, width: 24),
               Text(
                 'VS',
                 style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              SizedBox(
+                height: 24,
+                width: 24,
               ),
               Column(
                 children: [
@@ -228,17 +239,34 @@ Kannst du das Spiel meistern und als erfolgreicher Dealer hervorgehen, oder wirs
 
       rows.add(
         Center(
-          child: Row(
-            children: [
-              Text('Runde ${roundCount + 1}:'),
-              SizedBox(width: 4),
-              Text(
-                  'Du = ${defectOrCoop(hChoice)}, Dealer =  ${defectOrCoop(cChoice)}'),
-              SizedBox(width: 4),
-              Text('Punkte: Du = ${scores[0]}, Dealer= ${scores[1]}'),
-              SizedBox(width: 12),
-            ],
-          ),
+          child: MediaQuery.of(context).size.width > 650
+              ? Row(
+                  children: [
+                    Text('Runde ${roundCount + 1}:'),
+                    SizedBox(width: 4),
+                    Text(
+                        'Du = ${defectOrCoop(hChoice)}, Dealer =  ${defectOrCoop(cChoice)}'),
+                    SizedBox(width: 4),
+                    Text('Punkte: Du = ${scores[0]}, Dealer= ${scores[1]}'),
+                    SizedBox(width: 12),
+                  ],
+                )
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text('Runde ${roundCount + 1}:'),
+                      ],
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                        'Du = ${defectOrCoop(hChoice)}, Dealer =  ${defectOrCoop(cChoice)}'),
+                    SizedBox(height: 4),
+                    Text('Punkte: Du = ${scores[0]}, Dealer= ${scores[1]}'),
+                    SizedBox(height: 12),
+                  ],
+                ),
         ),
       );
     }

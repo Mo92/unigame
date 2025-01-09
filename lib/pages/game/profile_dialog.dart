@@ -5,6 +5,7 @@ import 'package:shadow_deals/logic/game/game_bloc.dart';
 import 'package:shadow_deals/logic/game/game_event.dart';
 import 'package:shadow_deals/logic/game/models/profile_model.dart';
 import 'package:shadow_deals/pages/game/widgets/conditional_inputs.dart';
+import 'package:shadow_deals/pages/game/widgets/responsive_selection_list.dart';
 
 class ProfileDialog extends StatefulWidget {
   const ProfileDialog({
@@ -52,11 +53,11 @@ class _ProfileDialogState extends State<ProfileDialog> {
                   SizedBox(height: 16),
                   Text('Was ist dein Geschlecht?'),
                   Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    child: ResponsiveSelectionList(
+                      horizontallMainAxisAlignment:
+                          MainAxisAlignment.spaceAround,
                       children: [
-                        Expanded(
-                          flex: 1,
+                        Flexible(
                           child: Row(
                             children: [
                               Radio<int>(
@@ -67,14 +68,11 @@ class _ProfileDialogState extends State<ProfileDialog> {
                                       selectedSalutation = index!;
                                     });
                                   }),
-                              Expanded(
-                                child: Text('Männlich'),
-                              )
+                              Text('Männlich')
                             ],
                           ),
                         ),
-                        Expanded(
-                          flex: 1,
+                        Flexible(
                           child: Row(
                             children: [
                               Radio(
@@ -85,12 +83,11 @@ class _ProfileDialogState extends State<ProfileDialog> {
                                       selectedSalutation = index!;
                                     });
                                   }),
-                              Expanded(child: Text('Weiblich'))
+                              Text('Weiblich')
                             ],
                           ),
                         ),
-                        Expanded(
-                          flex: 1,
+                        Flexible(
                           child: Row(
                             children: [
                               Radio(
@@ -101,7 +98,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
                                       selectedSalutation = index!;
                                     });
                                   }),
-                              Expanded(child: Text('Divers'))
+                              Text('Divers')
                             ],
                           ),
                         ),
@@ -132,9 +129,10 @@ class _ProfileDialogState extends State<ProfileDialog> {
                   ),
                   SizedBox(height: 16),
                   Text('Was ist dein aktueller Beschäftigungsstatus?'),
-                  Row(
+                  ResponsiveSelectionList(
+                    widthTolerance: 1100,
                     children: [
-                      Expanded(
+                      Flexible(
                         child: RadioListTile(
                           value: 1,
                           groupValue: selectedJob,
@@ -146,7 +144,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
                           title: Text('Schüler:in'),
                         ),
                       ),
-                      Expanded(
+                      Flexible(
                         child: RadioListTile(
                           value: 2,
                           groupValue: selectedJob,
@@ -158,7 +156,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
                           title: Text('Student:in'),
                         ),
                       ),
-                      Expanded(
+                      Flexible(
                         child: RadioListTile(
                           value: 3,
                           groupValue: selectedJob,
@@ -170,7 +168,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
                           title: Text('Auszubildende:r'),
                         ),
                       ),
-                      Expanded(
+                      Flexible(
                         child: RadioListTile(
                           value: 4,
                           groupValue: selectedJob,
@@ -182,7 +180,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
                           title: Text('Berufstätig'),
                         ),
                       ),
-                      Expanded(
+                      Flexible(
                         child: RadioListTile(
                           value: 5,
                           groupValue: selectedJob,
