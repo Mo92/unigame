@@ -93,11 +93,11 @@ class GameRepository {
     ].join(',')); // Überschriften
 
     // Werte für Profil, Post-Questions und `usedStrategy`
-    csvBuffer.writeln([
+    csvBuffer.writeln(<String>[
       profile.name,
-      profile.age,
+      profile.age.toString(),
       profile.salutation,
-      profile.yearsOfExperience,
+      profile.yearsOfExperience.toString(),
       profile.jobTitle,
       profile.gamePlayed,
       postQuestions.understanding,
@@ -113,7 +113,7 @@ class GameRepository {
       postQuestions.suggestions,
       usedStrategy,
       mapUsePlayerTermn(usePlayerTerm),
-    ].join(',')); // Werte
+    ].map((x) => x.replaceAll(',', '')).toList().join(',')); // Werte
 
     // Leere Zeilen
     csvBuffer.writeln('');
