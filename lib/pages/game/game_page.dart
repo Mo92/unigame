@@ -137,6 +137,7 @@ Kannst du das Spiel meistern und als erfolgreicher Dealer hervorgehen, oder wirs
           ResponsiveSelectionList(
             widthTolerance: 700,
             horizontallMainAxisAlignment: MainAxisAlignment.spaceAround,
+            horizontallMainAxisAxisSize: MainAxisSize.max,
             children: [
               Column(
                 mainAxisSize: MainAxisSize.max,
@@ -238,17 +239,34 @@ Kannst du das Spiel meistern und als erfolgreicher Dealer hervorgehen, oder wirs
 
       rows.add(
         Center(
-          child: Row(
-            children: [
-              Text('Runde ${roundCount + 1}:'),
-              SizedBox(width: 4),
-              Text(
-                  'Du = ${defectOrCoop(hChoice)}, Dealer =  ${defectOrCoop(cChoice)}'),
-              SizedBox(width: 4),
-              Text('Punkte: Du = ${scores[0]}, Dealer= ${scores[1]}'),
-              SizedBox(width: 12),
-            ],
-          ),
+          child: MediaQuery.of(context).size.width > 650
+              ? Row(
+                  children: [
+                    Text('Runde ${roundCount + 1}:'),
+                    SizedBox(width: 4),
+                    Text(
+                        'Du = ${defectOrCoop(hChoice)}, Dealer =  ${defectOrCoop(cChoice)}'),
+                    SizedBox(width: 4),
+                    Text('Punkte: Du = ${scores[0]}, Dealer= ${scores[1]}'),
+                    SizedBox(width: 12),
+                  ],
+                )
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text('Runde ${roundCount + 1}:'),
+                      ],
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                        'Du = ${defectOrCoop(hChoice)}, Dealer =  ${defectOrCoop(cChoice)}'),
+                    SizedBox(height: 4),
+                    Text('Punkte: Du = ${scores[0]}, Dealer= ${scores[1]}'),
+                    SizedBox(height: 12),
+                  ],
+                ),
         ),
       );
     }
