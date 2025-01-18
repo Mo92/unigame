@@ -48,6 +48,20 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     "DD": 0.56 // beide defektieren
   };
 
+  final Map<String, double> walkerParams = {
+    "CC": 1.0, // Beide kooperieren
+    "CD": 0.0, // Spieler kooperiert, CPU defektiert
+    "DC": 1.0, // Spieler defektiert, CPU kooperiert
+    "DD": 0.0 // beide defektieren
+  };
+
+  final Map<String, double> whisperParams = {
+    "CC": 0.0, // Beide kooperieren
+    "CD": 1.0, // Spieler kooperiert, CPU defektiert
+    "DC": 0.0, // Spieler defektiert, CPU kooperiert
+    "DD": 1.0 // beide defektieren
+  };
+
   /// Hier die Liste erweitern für die Strategien
   /// ['Zen Dominator', 'Zen Namitador'] <- das wären
   /// Zwei Strategien
@@ -55,6 +69,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     'Zen Shadow',
     'Zen Mind',
     'Zen Dealer',
+    'Zen Walker',
+    'Zen Whisper',
   ];
 
   /// Maximale Rundenanzahl (wert ist egal, da es neu zugewiesen wird)
@@ -200,6 +216,12 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         break;
       case 'Zen Dealer':
         params = dealerParams;
+        break;
+      case 'Zen Walker':
+        params = walkerParams;
+        break;
+      case 'Zen Whisper':
+        params = whisperParams;
         break;
     }
 
