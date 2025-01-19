@@ -50,15 +50,15 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
   final Map<String, double> walkerParams = {
     "CC": 1.0, // Beide kooperieren
-    "CD": 0.0, // Spieler kooperiert, CPU defektiert
-    "DC": 1.0, // Spieler defektiert, CPU kooperiert
+    "CD": 1.0, // Spieler kooperiert, CPU defektiert
+    "DC": 0.0, // Spieler defektiert, CPU kooperiert
     "DD": 0.0 // beide defektieren
   };
 
   final Map<String, double> whisperParams = {
     "CC": 0.0, // Beide kooperieren
-    "CD": 1.0, // Spieler kooperiert, CPU defektiert
-    "DC": 0.0, // Spieler defektiert, CPU kooperiert
+    "CD": 0.0, // Spieler kooperiert, CPU defektiert
+    "DC": 1.0, // Spieler defektiert, CPU kooperiert
     "DD": 1.0 // beide defektieren
   };
 
