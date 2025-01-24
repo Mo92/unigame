@@ -56,10 +56,10 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   };
 
   final Map<String, double> whisperParams = {
-    "CC": 0.06, // Beide kooperieren
-    "CD": 0.3, // Spieler kooperiert, CPU defektiert
-    "DC": 0.1, // Spieler defektiert, CPU kooperiert
-    "DD": 0.58 // beide defektieren
+    "CC": 0.25, // Beide kooperieren
+    "CD": 0.25, // Spieler kooperiert, CPU defektiert
+    "DC": 0.75, // Spieler defektiert, CPU kooperiert
+    "DD": 0.75 // beide defektieren
   };
 
   /// Hier die Liste erweitern für die Strategien
